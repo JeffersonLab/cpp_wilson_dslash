@@ -7,7 +7,7 @@
 #include <qmp.h>
 using namespace std;
 
-#include "shift_table_types.h"
+#include "shift_table_parscalar_types.h"
 
 namespace CPlusPlusWilsonDslash {
 
