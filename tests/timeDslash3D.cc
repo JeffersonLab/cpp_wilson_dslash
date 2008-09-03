@@ -122,7 +122,7 @@ timeDslash3D::run(void)
 
   QDPIO::cout << "\t " << iters << " iterations in " << time << " seconds " << endl;
   QDPIO::cout << "\t " << 1.0e6*time/(double)iters << " u sec/iteration" << endl;    
-  double Mflops = 1320.0f*(double)(iters)*(double)(Layout::vol()/2)/1.0e6;
+  double Mflops = 984.0f*(double)(iters)*(double)(Layout::vol()/2)/1.0e6;
   double perf = Mflops/time;
   QDPIO::cout << "\t Performance is: " << perf << " Mflops (sp) in Total" << endl;
   QDPIO::cout << "\t Performance is: " << perf / (double)Layout::numNodes() << " per MPI Process" << endl;
