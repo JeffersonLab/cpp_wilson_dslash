@@ -7,7 +7,7 @@
 #define ALIGN __attribute__ ((aligned(16)))
 #endif
 
-#include <cpp_dslash_scalar_types.h>
+#include <cpp_dslash_types.h>
 
 namespace CPlusPlusWilsonDslash {
 
@@ -26,7 +26,7 @@ namespace CPlusPlusWilsonDslash {
     void DPsiMinus3D(size_t lo, size_t hi, int id, const void *ptr);
 
 
-    using namespace DslashScalar64BitTypes;
+    using namespace Dslash64BitTypes;
     
     typedef union { 
       unsigned int c[4];

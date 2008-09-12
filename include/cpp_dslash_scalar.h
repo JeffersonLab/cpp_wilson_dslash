@@ -7,7 +7,7 @@ using namespace std;
 
 /* This is the scalar dslash */ 
 /* Use the scalar types */
-#include <cpp_dslash_scalar_types.h>
+#include <cpp_dslash_types.h>
 
 namespace CPlusPlusWilsonDslash {
 
@@ -27,9 +27,9 @@ namespace CPlusPlusWilsonDslash {
   public:
 
     /* Use the 32 bit types here */
-    typedef DslashScalar32BitTypes::GaugeMatrix GaugeMatrix;   /* 3x3 complex matrices */
-    typedef DslashScalar32BitTypes::FourSpinor FourSpinor;    /* 4x3 dirac spinors */
-    typedef DslashScalar32BitTypes::HalfSpinor HalfSpinor;
+    typedef Dslash32BitTypes::GaugeMatrix GaugeMatrix;   /* 3x3 complex matrices */
+    typedef Dslash32BitTypes::FourSpinor FourSpinor;    /* 4x3 dirac spinors */
+    typedef Dslash32BitTypes::HalfSpinor HalfSpinor;
 
     /* Constructor */
     /* Parameters: latt_size[] - total lattice size */
@@ -66,9 +66,9 @@ namespace CPlusPlusWilsonDslash {
   public:
 
     /* Use the 32 bit types here */
-    typedef DslashScalar64BitTypes::GaugeMatrix GaugeMatrix;   /* 3x3 complex matrices */
-    typedef DslashScalar64BitTypes::FourSpinor FourSpinor;    /* 4x3 dirac spinors */
-    typedef DslashScalar64BitTypes::HalfSpinor HalfSpinor;
+    typedef Dslash64BitTypes::GaugeMatrix GaugeMatrix;   /* 3x3 complex matrices */
+    typedef Dslash64BitTypes::FourSpinor FourSpinor;    /* 4x3 dirac spinors */
+    typedef Dslash64BitTypes::HalfSpinor HalfSpinor;
 
     /* Constructor */
     /* Parameters: latt_size[] - total lattice size */
@@ -110,9 +110,9 @@ namespace CPlusPlusWilsonDslash {
   public:
 
     /* Use the 32 bit types here */
-    typedef DslashScalar32BitTypes::GaugeMatrix GaugeMatrix;   /* 3x3 complex matrices */
-    typedef DslashScalar32BitTypes::FourSpinor FourSpinor;    /* 4x3 dirac spinors */
-    typedef DslashScalar32BitTypes::HalfSpinor HalfSpinor;
+    typedef Dslash32BitTypes::GaugeMatrix GaugeMatrix;   /* 3x3 complex matrices */
+    typedef Dslash32BitTypes::FourSpinor FourSpinor;    /* 4x3 dirac spinors */
+    typedef Dslash32BitTypes::HalfSpinor HalfSpinor;
 
     /* Constructor */
     /* Parameters: latt_size[] - total lattice size */
@@ -149,9 +149,9 @@ namespace CPlusPlusWilsonDslash {
   public:
 
     /* Use the 32 bit types here */
-    typedef DslashScalar64BitTypes::GaugeMatrix GaugeMatrix;   /* 3x3 complex matrices */
-    typedef DslashScalar64BitTypes::FourSpinor FourSpinor;    /* 4x3 dirac spinors */
-    typedef DslashScalar64BitTypes::HalfSpinor HalfSpinor;
+    typedef Dslash64BitTypes::GaugeMatrix GaugeMatrix;   /* 3x3 complex matrices */
+    typedef Dslash64BitTypes::FourSpinor FourSpinor;    /* 4x3 dirac spinors */
+    typedef Dslash64BitTypes::HalfSpinor HalfSpinor;
 
     /* Constructor */
     /* Parameters: latt_size[] - total lattice size */

@@ -11,8 +11,8 @@ using namespace std;
 
 #include <dispatch_parscalar.h>
 
-#include <cpp_dslash_parscalar_types.h>
-using namespace CPlusPlusWilsonDslash::DslashParscalar32BitTypes;
+#include <cpp_dslash_types.h>
+using namespace CPlusPlusWilsonDslash::Dslash32BitTypes;
 
 #include <shift_table_parscalar.h>
 

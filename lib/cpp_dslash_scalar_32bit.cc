@@ -1,10 +1,12 @@
 #include <cpp_dslash_scalar.h>
 #include <shift_table_scalar.h>
 #include <dispatch_scalar.h>
-#include <cpp_dslash_scalar_32bit.h>
+#include <cpp_dslash_scalar_32bit_c.h>
+
+#warning "USing C Stuff"
 
 using namespace CPlusPlusWilsonDslash::DslashScalar32Bit;
-using namespace CPlusPlusWilsonDslash::DslashScalar32BitTypes;
+using namespace CPlusPlusWilsonDslash::Dslash32BitTypes;
 
 namespace CPlusPlusWilsonDslash {
  

@@ -7,8 +7,10 @@
 #define ALIGN __attribute__ ((aligned(16)))
 #endif
 
-#include <cpp_dslash_scalar_types.h>
+#include <cpp_dslash_types.h>
 #warning "Using C stuff for 64 bit"
+
+#include "cpp_dslash_matvec64bit_c.h"
 
 namespace CPlusPlusWilsonDslash {
 
@@ -27,78 +29,8 @@ namespace CPlusPlusWilsonDslash {
     void DPsiMinus3D(size_t lo, size_t hi, int id, const void *ptr);
 
 
-    using namespace DslashScalar64BitTypes;
+    using namespace Dslash64BitTypes;
     
-    typedef union { 
-      unsigned int c[4];
-      __m128d vector;
-    } SSESgn;
-    
-    typedef union { 
-      double c[2];
-      __m128d vector;
-    } SSESgn2;
-    
-    // Gauge Matrix is 3x3x2 (Natural ordering)
-    // HalfSpinor is 2x3x2 (spin, color, reim)
-    inline 
-    void su3_mult(HalfSpinor res, const GaugeMatrix u, const HalfSpinor src) 
-    {
-
-      int re=0;
-      int im=1;
-      for(int spin=0; spin < 2; spin++) { 
-	for(int row=0; row < 3; row++) { 
-	  
-	  res[spin][row][re] = u[0][row][re]*src[spin][0][re]
-	    -u[0][row][im]*src[spin][0][im];
-
-	  res[spin][row][im] = u[0][row][re]*src[spin][0][im]
-	    +u[0][row][im]*src[spin][0][re];
-
-	  res[spin][row][re] += u[1][row][re]*src[spin][1][re]
-	    -u[0][row][im]*src[spin][1][im];
-
-	  res[spin][row][im] += u[1][row][re]*src[spin][1][im]
-	    +u[0][row][im]*src[spin][1][re];
-
-	  res[spin][row][re] += u[2][row][re]*src[spin][2][re]
-	    -u[0][row][im]*src[spin][2][im];
-
-	  res[spin][row][im] += u[2][row][re]*src[spin][2][im]
-	    +u[0][row][im]*src[spin][2][re];
-	}
-      }
-    }
-
-    inline 
-      void su3_adj_mult(HalfSpinor res, GaugeMatrix u, HalfSpinor src)
-    {
-      int re=0;
-      int im=1;
-
-      for(int spin=0; spin < 2; spin++) {
-	// col = 1
-	
-	for(int row=0; row < 3; row++) { 
-	  res[spin][row][re] = u[0][row][re]*src[spin][0][re]
-	                     + u[0][row][im]*src[spin][0][im];
-	  res[spin][row][im] = u[0][row][re]*src[spin][0][im]
-	                     - u[0][row][im]*src[spin][0][re];
-	}
-
-	for(int col=1; col < 3; col++) {
-	  for(int row=0; row < 3; row++) { 
-	    res[spin][row][re] += u[col][row][re]*src[spin][col][re]
-	                        + u[col][row][im]*src[spin][col][im];
-
-	    res[spin][row][im] += u[col][row][re]*src[spin][col][im]
-	                         - u[col][row][im]*src[spin][0][re];
-	  }
-	}
-
-      }
-    }
 
     inline
     void dslash_plus_dir0_forward(FourSpinor  spinor_in,

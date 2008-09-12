@@ -56,13 +56,15 @@ testDslashFull::run(void)
   multi1d<LatticeColorMatrixD> ud(4);
 
   for(int mu=0; mu < 4; mu++) { 
-       gaussian(u[mu]);
-       reunit(u[mu]);
+    gaussian(u[mu]);
+    reunit(u[mu]);
+    ud[mu] = u[mu];
   }
 
   // Make a random source
   gaussian(psi);
-  gaussian(psid);
+  // Downcast
+  psid=psi;
 
   Dslash<float> D32(Layout::lattSize().slice(),
 		    Layout::QDPXX_getSiteCoords,
@@ -76,7 +78,7 @@ testDslashFull::run(void)
   packed_gauge.resize(4*Layout::sitesOnNode());
   qdp_pack_gauge(u, packed_gauge);
 
-
+  QDPIO::cout << endl;
 
   // Go through the test cases -- apply SSE dslash versus, QDP Dslash 
   for(int isign=1; isign >= -1; isign -=2) {
@@ -118,12 +120,9 @@ testDslashFull::run(void)
    /// Pack the gauge fields
    multi1d<PrimitiveSU3MatrixD> packed_gauged __attribute__((aligned(16)));
    packed_gauged.resize( 4 * Layout::sitesOnNode() );
-   for(int mu=0; mu < 4; mu++) { 
-     u[mu] = ud[mu];
-   }
-   qdp_pack_gauge(ud, packed_gauged);
-   psi = psid;  // Downcasts 
 
+   qdp_pack_gauge(ud, packed_gauged);
+   
    QDPIO::cout << endl;
 
    // Go through the test cases -- apply SSE dslash versus, QDP Dslash 
@@ -131,7 +130,7 @@ testDslashFull::run(void)
      for(int cb=0; cb < 2; cb++) { 
       int source_cb = 1 - cb;
       int target_cb = cb;
-      chi = zero;
+      chid = zero;
       chi2 = zero;
 
       // Apply SSE Dslash
@@ -142,12 +141,16 @@ testDslashFull::run(void)
 	  source_cb);
       
       // Apply QDP Dslash
+
       chi = chid;
+
+
       dslash(chi2,u,psi, isign, target_cb);
-      chi2 = chi2d;
+
+
       
       // Check the difference per number in chi vector
-      LatticeFermionF diff = chi2 -chi;
+      LatticeFermionF diff = chi2 - chi;
 
       Double diff_norm = sqrt( norm2( diff ) ) 
 	/ ( Real(4*3*2*Layout::vol()) / Real(2));

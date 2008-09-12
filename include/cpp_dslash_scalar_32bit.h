@@ -9,7 +9,7 @@ using namespace std;
 #define ALIGN __attribute__ ((aligned(16)))
 #endif
 
-#include <cpp_dslash_scalar_types.h>
+#include <cpp_dslash_types.h>
 
 namespace CPlusPlusWilsonDslash {
 
@@ -33,7 +33,7 @@ namespace CPlusPlusWilsonDslash {
       __m128 vector;
     } SSESign;
 
-    using namespace DslashScalar32BitTypes;
+    using namespace Dslash32BitTypes;
     
 
     inline

@@ -1,10 +1,11 @@
 #include <cpp_dslash_scalar.h>
 #include <shift_table_scalar.h>
 #include <dispatch_scalar.h>
-#include <cpp_dslash_scalar_64bit.h>
+#include <cpp_dslash_scalar_64bit_c.h>
+//#include <cpp_dslash_scalar_64bit.h>
 
 using namespace CPlusPlusWilsonDslash::DslashScalar64Bit;
-using namespace CPlusPlusWilsonDslash::DslashScalar64BitTypes;
+using namespace CPlusPlusWilsonDslash::Dslash64BitTypes;
 
 namespace CPlusPlusWilsonDslash {
  

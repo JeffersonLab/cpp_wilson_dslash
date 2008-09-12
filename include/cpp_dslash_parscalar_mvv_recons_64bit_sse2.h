@@ -1,11 +1,11 @@
-#ifndef CPP_DSLASH_PARSCALAR_MVV_RECONS_64BIT_SSE_H
-#define CPP_DSLASH_PARSCALAR_MVV_RECONS_64BIT_SSE_H
+#ifndef CPP_DSLASH_PARSCALAR_MVV_RECONS_64BIT_SSE2_H
+#define CPP_DSLASH_PARSCALAR_MVV_RECONS_64BIT_SSE2_H
 
 #include <xmmintrin.h>
-#include <cpp_dslash_parscalar_types.h>
+#include <cpp_dslash_types.h>
 #include <sse_sign_64bit.h>
 
-using namespace CPlusPlusWilsonDslash::DslashParscalar64BitTypes;
+using namespace CPlusPlusWilsonDslash::Dslash64BitTypes;
 
 namespace CPlusPlusWilsonDslash { 
   namespace  DslashParscalar64Bit { 

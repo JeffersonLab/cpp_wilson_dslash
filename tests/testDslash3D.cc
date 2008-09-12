@@ -58,6 +58,8 @@ testDslash3D::run(void)
   for(int mu=0; mu < 4; mu++) { 
        gaussian(u[mu]);
        reunit(u[mu]);
+       ud[mu] = u[mu];
+       
   }
 
   // Make a random source
@@ -119,9 +121,6 @@ testDslash3D::run(void)
    /// Pack the gauge fields
    multi1d<PrimitiveSU3MatrixD> packed_gauged __attribute__((aligned(16)));
    packed_gauged.resize( 4 * Layout::sitesOnNode() );
-   for(int mu=0; mu < 4; mu++) { 
-     u[mu] = ud[mu];
-   }
    qdp_pack_gauge_3d(ud, packed_gauged);
    psi = psid;  // Downcasts 
 
@@ -132,8 +131,8 @@ testDslash3D::run(void)
      for(int cb=0; cb < 2; cb++) { 
       int source_cb = 1 - cb;
       int target_cb = cb;
-      chi = zero;
-      chi2 = zero;
+      chid = zero;
+      chi2= zero;
 
       // Apply SSE Dslash
       D64((double *)&(chid.elem(0).elem(0).elem(0).real()),	  
@@ -144,8 +143,13 @@ testDslash3D::run(void)
       
       // Apply QDP Dslash
       chi = chid;
-      dslash_3d(chi2,u,psi, isign, target_cb);
-      chi2 = chi2d;
+      //      dslash_3d(chi2,u,psi, isign, target_cb);
+      D32((float *)&(chi2.elem(0).elem(0).elem(0).real()),	  
+	  (float *)&(psi.elem(0).elem(0).elem(0).real()),
+	  (float *)&(packed_gauge[0]),
+	  isign, 
+	  source_cb);
+
       
       // Check the difference per number in chi vector
       LatticeFermionF diff = chi2 -chi;

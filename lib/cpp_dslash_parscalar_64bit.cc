@@ -10,8 +10,8 @@ using namespace std;
 #include <tables_parscalar.h>
 #include <dispatch_parscalar.h>
 
-#include <cpp_dslash_parscalar_types.h>
-using namespace CPlusPlusWilsonDslash::DslashParscalar64BitTypes;
+#include <cpp_dslash_types.h>
+using namespace CPlusPlusWilsonDslash::Dslash64BitTypes;
 
 #include <shift_table_parscalar.h> 
 
