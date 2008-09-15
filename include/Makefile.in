@@ -438,8 +438,10 @@ uninstall-am: uninstall-nobase_includeHEADERS \
 @SCALAR_TRUE@	shift_table_scalar.h \
 @SCALAR_TRUE@	shift_table_3d_scalar.h\
 @SCALAR_TRUE@	cpp_dslash_scalar_32bit.h \
-@SCALAR_TRUE@	cpp_dslash_scalar_32bit_c.h \
 @SCALAR_TRUE@	cpp_dslash_scalar_64bit.h \
+@SCALAR_TRUE@	cpp_dslash_scalar_32bit_sse.h \
+@SCALAR_TRUE@	cpp_dslash_scalar_32bit_c.h \
+@SCALAR_TRUE@	cpp_dslash_scalar_64bit_sse.h \
 @SCALAR_TRUE@	cpp_dslash_scalar_64bit_c.h
 @PARSCALAR_TRUE@	dispatch_parscalar.h \
 @PARSCALAR_TRUE@	shift_table_parscalar_types.h \

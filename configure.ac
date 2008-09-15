@@ -85,6 +85,15 @@ AC_ARG_ENABLE(nocomms,
 	[ nocomms_enabled="no" ]
 )
 
+AC_ARG_ENABLE(sse,
+   AC_HELP_STRING(
+     [--enable-sse],
+     [Enables the SSE optimized code. This needs you to have a compiler which can cope with intel style xmmintrin intrinsics, and this option may not be suitable for non SSE Compatible platforms]
+   ),
+   [ sse_enabled=${enableval} ],
+   [ sse_enabled="no"]
+)
+
 dnl with QDP -- QDP will override everything else
 dnl since a parallel QDP will know its architecture
 dnl precition and have all the flags for QMP set already
@@ -349,6 +358,14 @@ then
 	fi
 	  
 	AC_DEFINE([DSLASH_USE_OMP_THREADS], [1], [ Use OpenMP Threads ])
+fi
+
+if test "X${sse_enabled}X" == "XyesX";
+then 
+     AC_MSG_NOTICE([Configuring SSE2 Code]);
+     AC_DEFINE([DSLASH_USE_SSE2],[1], [ Use SSE2 Code in kernels])
+else
+     AC_MSG_NOTICE([Not Configuring SSE2 Code]);
 fi
 
 AM_CONDITIONAL(BUILD_QMT, [test "x${qmt_enabled}x" = "xyesx" ])

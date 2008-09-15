@@ -12,6 +12,9 @@
 /* Use QMT Threads library */
 #undef DSLASH_USE_QMT_THREADS
 
+/* Use SSE2 Code in kernels */
+#undef DSLASH_USE_SSE2
+
 /* Name of package */
 #undef PACKAGE
 

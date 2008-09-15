@@ -1,5 +1,5 @@
-#ifndef CPP_DSLASH_SCALAR_32BIT_H
-#define CPP_DSLASH_SCALAR_32BIT_H
+#ifndef CPP_DSLASH_SCALAR_32BIT_SSE_H
+#define CPP_DSLASH_SCALAR_32BIT_SSE_H
 
 #include <xmmintrin.h>
 

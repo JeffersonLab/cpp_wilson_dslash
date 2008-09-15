@@ -1,9 +1,8 @@
 #include <cpp_dslash_scalar.h>
 #include <shift_table_scalar.h>
 #include <dispatch_scalar.h>
-#include <cpp_dslash_scalar_32bit_c.h>
 
-#warning "USing C Stuff"
+#include <cpp_dslash_scalar_32bit.h>
 
 using namespace CPlusPlusWilsonDslash::DslashScalar32Bit;
 using namespace CPlusPlusWilsonDslash::Dslash32BitTypes;

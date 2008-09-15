@@ -13,8 +13,10 @@ nobase_include_HEADERS +=
 	shift_table_scalar.h \
 	shift_table_3d_scalar.h\
 	cpp_dslash_scalar_32bit.h \
-	cpp_dslash_scalar_32bit_c.h \
 	cpp_dslash_scalar_64bit.h \
+	cpp_dslash_scalar_32bit_sse.h \
+	cpp_dslash_scalar_32bit_c.h \
+	cpp_dslash_scalar_64bit_sse.h \
 	cpp_dslash_scalar_64bit_c.h
 endif
 

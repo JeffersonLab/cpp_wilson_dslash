@@ -1302,6 +1302,10 @@ Optional Features:
                           timing of the routine with only communications.
   --enable-nocomms        Disable the comms parts of dslash. This allows one
                           to gauge the effect of communications.
+  --enable-sse            Enables the SSE optimized code. This needs you to
+                          have a compiler which can cope with intel style
+                          xmmintrin intrinsics, and this option may not be
+                          suitable for non SSE Compatible platforms
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -4054,6 +4058,15 @@ else
 fi
 
 
+# Check whether --enable-sse was given.
+if test "${enable_sse+set}" = set; then
+  enableval=$enable_sse;  sse_enabled=${enableval}
+else
+   sse_enabled="no"
+
+fi
+
+
 
 # Check whether --with-qdp was given.
 if test "${with_qdp+set}" = set; then
@@ -5097,6 +5110,20 @@ cat >>confdefs.h <<\_ACEOF
 #define DSLASH_USE_OMP_THREADS 1
 _ACEOF
 
+fi
+
+if test "X${sse_enabled}X" == "XyesX";
+then
+     { echo "$as_me:$LINENO: Configuring SSE2 Code" >&5
+echo "$as_me: Configuring SSE2 Code" >&6;};
+
+cat >>confdefs.h <<\_ACEOF
+#define DSLASH_USE_SSE2 1
+_ACEOF
+
+else
+     { echo "$as_me:$LINENO: Not Configuring SSE2 Code" >&5
+echo "$as_me: Not Configuring SSE2 Code" >&6;};
 fi
 
  if test "x${qmt_enabled}x" = "xyesx" ; then
