@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <cache.h>
-
+#include <cstdlib>
 using namespace std;
 
 namespace CPlusPlusWilsonDslash {
@@ -14,8 +14,8 @@ namespace CPlusPlusWilsonDslash {
 
     
     ~ShiftTable3D() {
-      free(xshift_table);
-      free(xsite_table);
+      std::free(xshift_table);
+      std::free(xsite_table);
     }
 
     inline
