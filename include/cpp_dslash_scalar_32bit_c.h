@@ -551,16 +551,15 @@ namespace CPlusPlusWilsonDslash {
     // Top half
     spinor_out[0][0][0] = upper_sum[0][0][0] + proj_matvec[0][0][0];
     spinor_out[0][0][1] = upper_sum[0][0][1] + proj_matvec[0][0][1];
-    spinor_out[1][0][0] = upper_sum[0][1][0] + proj_matvec[0][1][0];
-    spinor_out[1][0][1] = upper_sum[0][1][1] + proj_matvec[0][1][1];
-    
     spinor_out[0][1][0] = upper_sum[1][0][0] + proj_matvec[1][0][0];
     spinor_out[0][1][1] = upper_sum[1][0][1] + proj_matvec[1][0][1];
-    spinor_out[1][1][0] = upper_sum[1][1][0] + proj_matvec[1][1][0];
-    spinor_out[1][1][1] = upper_sum[1][1][1] + proj_matvec[1][1][1];
-    
     spinor_out[0][2][0] = upper_sum[2][0][0] + proj_matvec[2][0][0];
     spinor_out[0][2][1] = upper_sum[2][0][1] + proj_matvec[2][0][1];
+
+    spinor_out[1][0][0] = upper_sum[0][1][0] + proj_matvec[0][1][0];
+    spinor_out[1][0][1] = upper_sum[0][1][1] + proj_matvec[0][1][1];
+    spinor_out[1][1][0] = upper_sum[1][1][0] + proj_matvec[1][1][0];
+    spinor_out[1][1][1] = upper_sum[1][1][1] + proj_matvec[1][1][1];
     spinor_out[1][2][0] = upper_sum[2][1][0] + proj_matvec[2][1][0];
     spinor_out[1][2][1] = upper_sum[2][1][1] + proj_matvec[2][1][1];
     
@@ -569,18 +568,18 @@ namespace CPlusPlusWilsonDslash {
      *      ( b3r + i b3i )     ( {a3r - a1i} + i{a3i + a1r} )     ( - b1i + i b1r ) 
      */
 
+    // Arrange for linear storage order 
     spinor_out[2][0][0] = lower_sum[0][0][0] + proj_matvec[0][0][1];
     spinor_out[2][0][1] = lower_sum[0][0][1] - proj_matvec[0][0][0];
-    spinor_out[3][0][0] = lower_sum[0][1][0] - proj_matvec[0][1][1];
-    spinor_out[3][0][1] = lower_sum[0][1][1] + proj_matvec[0][1][0];
-
     spinor_out[2][1][0] = lower_sum[1][0][0] + proj_matvec[1][0][1];
     spinor_out[2][1][1] = lower_sum[1][0][1] - proj_matvec[1][0][0];
-    spinor_out[3][1][0] = lower_sum[1][1][0] - proj_matvec[1][1][1];
-    spinor_out[3][1][1] = lower_sum[1][1][1] + proj_matvec[1][1][0];
-
     spinor_out[2][2][0] = lower_sum[2][0][0] + proj_matvec[2][0][1];
     spinor_out[2][2][1] = lower_sum[2][0][1] - proj_matvec[2][0][0];
+
+    spinor_out[3][0][0] = lower_sum[0][1][0] - proj_matvec[0][1][1];
+    spinor_out[3][0][1] = lower_sum[0][1][1] + proj_matvec[0][1][0];
+    spinor_out[3][1][0] = lower_sum[1][1][0] - proj_matvec[1][1][1];
+    spinor_out[3][1][1] = lower_sum[1][1][1] + proj_matvec[1][1][0];
     spinor_out[3][2][0] = lower_sum[2][1][0] - proj_matvec[2][1][1];
     spinor_out[3][2][1] = lower_sum[2][1][1] + proj_matvec[2][1][0];
 
@@ -707,19 +706,19 @@ namespace CPlusPlusWilsonDslash {
 
     su3_adj_mult(proj_matvec, u, proj_result);
 
-    // Top half
+    // Top half 
+    // rearrange for linear storage
     spinor_out[0][0][0] = upper_sum[0][0][0] + proj_matvec[0][0][0];
     spinor_out[0][0][1] = upper_sum[0][0][1] + proj_matvec[0][0][1];
-    spinor_out[1][0][0] = upper_sum[0][1][0] + proj_matvec[0][1][0];
-    spinor_out[1][0][1] = upper_sum[0][1][1] + proj_matvec[0][1][1];
-    
     spinor_out[0][1][0] = upper_sum[1][0][0] + proj_matvec[1][0][0];
     spinor_out[0][1][1] = upper_sum[1][0][1] + proj_matvec[1][0][1];
-    spinor_out[1][1][0] = upper_sum[1][1][0] + proj_matvec[1][1][0];
-    spinor_out[1][1][1] = upper_sum[1][1][1] + proj_matvec[1][1][1];
-    
     spinor_out[0][2][0] = upper_sum[2][0][0] + proj_matvec[2][0][0];
     spinor_out[0][2][1] = upper_sum[2][0][1] + proj_matvec[2][0][1];
+
+    spinor_out[1][0][0] = upper_sum[0][1][0] + proj_matvec[0][1][0];
+    spinor_out[1][0][1] = upper_sum[0][1][1] + proj_matvec[0][1][1];
+    spinor_out[1][1][0] = upper_sum[1][1][0] + proj_matvec[1][1][0];
+    spinor_out[1][1][1] = upper_sum[1][1][1] + proj_matvec[1][1][1];
     spinor_out[1][2][0] = upper_sum[2][1][0] + proj_matvec[2][1][0];
     spinor_out[1][2][1] = upper_sum[2][1][1] + proj_matvec[2][1][1];
  
@@ -727,18 +726,18 @@ namespace CPlusPlusWilsonDslash {
      *      ( b2r + i b2i )  =  ( {a2r + a0r} + i{a2i + a0i} )  =  ( b0r + i b0i )
      *      ( b3r + i b3i )     ( {a3r + a1r} + i{a3i + a1i} )     ( b1r + i b1i ) 
      */
+    
     spinor_out[2][0][0] = lower_sum[0][0][0]+ proj_matvec[0][0][0];
     spinor_out[2][0][1] = lower_sum[0][0][1]+ proj_matvec[0][0][1];
-    spinor_out[3][0][0] = lower_sum[0][1][0]+ proj_matvec[0][1][0];
-    spinor_out[3][0][1] = lower_sum[0][1][1]+ proj_matvec[0][1][1];
-
     spinor_out[2][1][0] = lower_sum[1][0][0]+ proj_matvec[1][0][0];
     spinor_out[2][1][1] = lower_sum[1][0][1]+ proj_matvec[1][0][1];
-    spinor_out[3][1][0] = lower_sum[1][1][0]+ proj_matvec[1][1][0];
-    spinor_out[3][1][1] = lower_sum[1][1][1]+ proj_matvec[1][1][1];
-
     spinor_out[2][2][0] = lower_sum[2][0][0]+ proj_matvec[2][0][0];
     spinor_out[2][2][1] = lower_sum[2][0][1]+ proj_matvec[2][0][1];
+
+    spinor_out[3][0][0] = lower_sum[0][1][0]+ proj_matvec[0][1][0];
+    spinor_out[3][0][1] = lower_sum[0][1][1]+ proj_matvec[0][1][1];
+    spinor_out[3][1][0] = lower_sum[1][1][0]+ proj_matvec[1][1][0];
+    spinor_out[3][1][1] = lower_sum[1][1][1]+ proj_matvec[1][1][1];
     spinor_out[3][2][0] = lower_sum[2][1][0]+ proj_matvec[2][1][0];
     spinor_out[3][2][1] = lower_sum[2][1][1]+ proj_matvec[2][1][1];
   }
@@ -1254,18 +1253,18 @@ namespace CPlusPlusWilsonDslash {
 
 
     // Top half
+    // rearrange for linear storage order 
     spinor_out[0][0][0] = upper_sum[0][0][0] + proj_matvec[0][0][0];
     spinor_out[0][0][1] = upper_sum[0][0][1] + proj_matvec[0][0][1];
-    spinor_out[1][0][0] = upper_sum[0][1][0] + proj_matvec[0][1][0];
-    spinor_out[1][0][1] = upper_sum[0][1][1] + proj_matvec[0][1][1];
-    
     spinor_out[0][1][0] = upper_sum[1][0][0] + proj_matvec[1][0][0];
     spinor_out[0][1][1] = upper_sum[1][0][1] + proj_matvec[1][0][1];
-    spinor_out[1][1][0] = upper_sum[1][1][0] + proj_matvec[1][1][0];
-    spinor_out[1][1][1] = upper_sum[1][1][1] + proj_matvec[1][1][1];
-    
     spinor_out[0][2][0] = upper_sum[2][0][0] + proj_matvec[2][0][0];
     spinor_out[0][2][1] = upper_sum[2][0][1] + proj_matvec[2][0][1];
+
+    spinor_out[1][0][0] = upper_sum[0][1][0] + proj_matvec[0][1][0];
+    spinor_out[1][0][1] = upper_sum[0][1][1] + proj_matvec[0][1][1];
+    spinor_out[1][1][0] = upper_sum[1][1][0] + proj_matvec[1][1][0];
+    spinor_out[1][1][1] = upper_sum[1][1][1] + proj_matvec[1][1][1];
     spinor_out[1][2][0] = upper_sum[2][1][0] + proj_matvec[2][1][0];
     spinor_out[1][2][1] = upper_sum[2][1][1] + proj_matvec[2][1][1];
 
@@ -1278,16 +1277,15 @@ namespace CPlusPlusWilsonDslash {
 
     spinor_out[2][0][0] = lower_sum[0][0][0] - proj_matvec[0][0][1];
     spinor_out[2][0][1] = lower_sum[0][0][1] + proj_matvec[0][0][0];
-    spinor_out[3][0][0] = lower_sum[0][1][0] + proj_matvec[0][1][1];
-    spinor_out[3][0][1] = lower_sum[0][1][1] - proj_matvec[0][1][0];
-
     spinor_out[2][1][0] = lower_sum[1][0][0] - proj_matvec[1][0][1];
     spinor_out[2][1][1] = lower_sum[1][0][1] + proj_matvec[1][0][0];
-    spinor_out[3][1][0] = lower_sum[1][1][0] + proj_matvec[1][1][1];
-    spinor_out[3][1][1] = lower_sum[1][1][1] - proj_matvec[1][1][0];
-
     spinor_out[2][2][0] = lower_sum[2][0][0] - proj_matvec[2][0][1];
     spinor_out[2][2][1] = lower_sum[2][0][1] + proj_matvec[2][0][0];
+
+    spinor_out[3][0][0] = lower_sum[0][1][0] + proj_matvec[0][1][1];
+    spinor_out[3][0][1] = lower_sum[0][1][1] - proj_matvec[0][1][0];
+    spinor_out[3][1][0] = lower_sum[1][1][0] + proj_matvec[1][1][1];
+    spinor_out[3][1][1] = lower_sum[1][1][1] - proj_matvec[1][1][0];
     spinor_out[3][2][0] = lower_sum[2][1][0] + proj_matvec[2][1][1];
     spinor_out[3][2][1] = lower_sum[2][1][1] - proj_matvec[2][1][0];
 
@@ -1407,18 +1405,18 @@ namespace CPlusPlusWilsonDslash {
     su3_adj_mult(proj_matvec, u, proj_result);
     
     // Top half
+    // rearrange for linear storage order 
     spinor_out[0][0][0] = upper_sum[0][0][0] + proj_matvec[0][0][0];
     spinor_out[0][0][1] = upper_sum[0][0][1] + proj_matvec[0][0][1];
-    spinor_out[1][0][0] = upper_sum[0][1][0] + proj_matvec[0][1][0];
-    spinor_out[1][0][1] = upper_sum[0][1][1] + proj_matvec[0][1][1];
-    
     spinor_out[0][1][0] = upper_sum[1][0][0] + proj_matvec[1][0][0];
     spinor_out[0][1][1] = upper_sum[1][0][1] + proj_matvec[1][0][1];
-    spinor_out[1][1][0] = upper_sum[1][1][0] + proj_matvec[1][1][0];
-    spinor_out[1][1][1] = upper_sum[1][1][1] + proj_matvec[1][1][1];
-    
     spinor_out[0][2][0] = upper_sum[2][0][0] + proj_matvec[2][0][0];
     spinor_out[0][2][1] = upper_sum[2][0][1] + proj_matvec[2][0][1];
+
+    spinor_out[1][0][0] = upper_sum[0][1][0] + proj_matvec[0][1][0];
+    spinor_out[1][0][1] = upper_sum[0][1][1] + proj_matvec[0][1][1];
+    spinor_out[1][1][0] = upper_sum[1][1][0] + proj_matvec[1][1][0];
+    spinor_out[1][1][1] = upper_sum[1][1][1] + proj_matvec[1][1][1];
     spinor_out[1][2][0] = upper_sum[2][1][0] + proj_matvec[2][1][0];
     spinor_out[1][2][1] = upper_sum[2][1][1] + proj_matvec[2][1][1];
 
@@ -1430,16 +1428,15 @@ namespace CPlusPlusWilsonDslash {
 
     spinor_out[2][0][0] = lower_sum[0][0][0] - proj_matvec[0][0][0];
     spinor_out[2][0][1] = lower_sum[0][0][1] - proj_matvec[0][0][1];
-    spinor_out[3][0][0] = lower_sum[0][1][0] - proj_matvec[0][1][0];
-    spinor_out[3][0][1] = lower_sum[0][1][1] - proj_matvec[0][1][1];
-
     spinor_out[2][1][0] = lower_sum[1][0][0] - proj_matvec[1][0][0];
     spinor_out[2][1][1] = lower_sum[1][0][1] - proj_matvec[1][0][1];
-    spinor_out[3][1][0] = lower_sum[1][1][0] - proj_matvec[1][1][0];
-    spinor_out[3][1][1] = lower_sum[1][1][1] - proj_matvec[1][1][1];
-
     spinor_out[2][2][0] = lower_sum[2][0][0] - proj_matvec[2][0][0];
     spinor_out[2][2][1] = lower_sum[2][0][1] - proj_matvec[2][0][1];
+
+    spinor_out[3][0][0] = lower_sum[0][1][0] - proj_matvec[0][1][0];
+    spinor_out[3][0][1] = lower_sum[0][1][1] - proj_matvec[0][1][1];
+    spinor_out[3][1][0] = lower_sum[1][1][0] - proj_matvec[1][1][0];
+    spinor_out[3][1][1] = lower_sum[1][1][1] - proj_matvec[1][1][1];
     spinor_out[3][2][0] = lower_sum[2][1][0] - proj_matvec[2][1][0];
     spinor_out[3][2][1] = lower_sum[2][1][1] - proj_matvec[2][1][1];
 

@@ -17,82 +17,128 @@ namespace CPlusPlusWilsonDslash {
 
       int re=0;
       int im=1;
-
-      
+ 
+      // col=0     
       // row = 0
+      // spin=0
       res[0][0][re] = u[0][0][re]*src[0][0][re] 
 	-u[0][0][im]*src[0][0][im];
       
       res[0][0][im] = u[0][0][re]*src[0][0][im]
 	+u[0][0][im]*src[0][0][re];
       
+      // spin=1
       res[0][1][re] = u[0][0][re]*src[0][1][re]
 	-u[0][0][im]*src[0][1][im];
       
       res[0][1][im] = u[0][0][re]*src[0][1][im]
 	+u[0][0][im]*src[0][1][re];
+   
       
+      // row = 1
+      // spin =0
+      res[1][0][re] = u[0][1][re]*src[0][0][re]
+	-u[0][1][im]*src[0][0][im];
+      
+      res[1][0][im] = u[0][1][re]*src[0][0][im]
+	+u[0][1][im]*src[0][0][re];
+
+      // spin =1
+      res[1][1][re] = u[0][1][re]*src[0][1][re]
+	-u[0][1][im]*src[0][1][im];
+      
+      res[1][1][im] = u[0][1][re]*src[0][1][im]
+	+u[0][1][im]*src[0][1][re];
+
+      // row = 2
+      // spin=0
+      res[2][0][re] = u[0][2][re]*src[0][0][re]
+	-u[0][2][im]*src[0][0][im];
+      
+      res[2][0][im] = u[0][2][re]*src[0][0][im]
+	+u[0][2][im]*src[0][0][re];
+      
+      // spin=1
+      res[2][1][re] = u[0][2][re]*src[0][1][re]
+	-u[0][2][im]*src[0][1][im];
+      
+      res[2][1][im] = u[0][2][re]*src[0][1][im]
+	+u[0][2][im]*src[0][1][re];
+
+
       // col=1
+      // row=0
+      // spin=0
       res[0][0][re] += u[1][0][re]*src[1][0][re]
 	-u[1][0][im]*src[1][0][im];
       
       res[0][0][im] += u[1][0][re]*src[1][0][im]
 	+u[1][0][im]*src[1][0][re];
       
+      // spin=1
       res[0][1][re] += u[1][0][re]*src[1][1][re]
 	-u[1][0][im]*src[1][1][im];
-      
+
       res[0][1][im] += u[1][0][re]*src[1][1][im]
 	+u[1][0][im]*src[1][1][re];
+
+      // row=1
+      // spin=0
+      res[1][0][re] += u[1][1][re]*src[1][0][re]
+	-u[1][1][im]*src[1][0][im];
       
+      res[1][0][im] += u[1][1][re]*src[1][0][im]
+	+u[1][1][im]*src[1][0][re];
+
+      // spin=1
+      res[1][1][re] += u[1][1][re]*src[1][1][re]
+	-u[1][1][im]*src[1][1][im];
+      
+      res[1][1][im] += u[1][1][re]*src[1][1][im]
+	+u[1][1][im]*src[1][1][re];
+
+      // row=2
+      // spin=0
+      res[2][0][re] += u[1][2][re]*src[1][0][re]
+	-u[1][2][im]*src[1][0][im];
+      
+      res[2][0][im] += u[1][2][re]*src[1][0][im]
+	+u[1][2][im]*src[1][0][re];
+      
+      // spin=1
+      res[2][1][re] += u[1][2][re]*src[1][1][re]
+	-u[1][2][im]*src[1][1][im];
+      
+      res[2][1][im] += u[1][2][re]*src[1][1][im]
+	+u[1][2][im]*src[1][1][re];
+     
+
+
       // col=2
+      // row=0
+      // spin=0
       res[0][0][re] += u[2][0][re]*src[2][0][re]
 	-u[2][0][im]*src[2][0][im];
       
       res[0][0][im] += u[2][0][re]*src[2][0][im]
 	+u[2][0][im]*src[2][0][re];
       
+      // spin=1
       res[0][1][re] += u[2][0][re]*src[2][1][re]
 	-u[2][0][im]*src[2][1][im];
       
       res[0][1][im] += u[2][0][re]*src[2][1][im]
 	+u[2][0][im]*src[2][1][re];
       
-      
-      // row = 1
-      // col = 0
-      res[1][0][re] = u[0][1][re]*src[0][0][re]
-	-u[0][1][im]*src[0][0][im];
-      
-      res[1][0][im] = u[0][1][re]*src[0][0][im]
-	+u[0][1][im]*src[0][0][re];
-      
-      res[1][1][re] = u[0][1][re]*src[0][1][re]
-	-u[0][1][im]*src[0][1][im];
-      
-      res[1][1][im] = u[0][1][re]*src[0][1][im]
-	+u[0][1][im]*src[0][1][re];
-      
-      // col=1
-      res[1][0][re] += u[1][1][re]*src[1][0][re]
-	-u[1][1][im]*src[1][0][im];
-      
-      res[1][0][im] += u[1][1][re]*src[1][0][im]
-	+u[1][1][im]*src[1][0][re];
-      
-      res[1][1][re] += u[1][1][re]*src[1][1][re]
-	-u[1][1][im]*src[1][1][im];
-      
-      res[1][1][im] += u[1][1][re]*src[1][1][im]
-	+u[1][1][im]*src[1][1][re];
-      
-      // col=2
+      // row=1
+      // spin=0
       res[1][0][re] += u[2][1][re]*src[2][0][re]
 	-u[2][1][im]*src[2][0][im];
       
       res[1][0][im] += u[2][1][re]*src[2][0][im]
 	+u[2][1][im]*src[2][0][re];
       
+      // spin=1
       res[1][1][re] += u[2][1][re]*src[2][1][re]
 	-u[2][1][im]*src[2][1][im];
       
@@ -100,39 +146,14 @@ namespace CPlusPlusWilsonDslash {
 	+u[2][1][im]*src[2][1][re];
       
       // row = 2
-      // col = 0
-      res[2][0][re] = u[0][2][re]*src[0][0][re]
-	-u[0][2][im]*src[0][0][im];
-      
-      res[2][0][im] = u[0][2][re]*src[0][0][im]
-	+u[0][2][im]*src[0][0][re];
-      
-      res[2][1][re] = u[0][2][re]*src[0][1][re]
-	-u[0][2][im]*src[0][1][im];
-      
-      res[2][1][im] = u[0][2][re]*src[0][1][im]
-	+u[0][2][im]*src[0][1][re];
-      
-      // col=1
-      res[2][0][re] += u[1][2][re]*src[1][0][re]
-	-u[1][2][im]*src[1][0][im];
-      
-      res[2][0][im] += u[1][2][re]*src[1][0][im]
-	+u[1][2][im]*src[1][0][re];
-      
-      res[2][1][re] += u[1][2][re]*src[1][1][re]
-	-u[1][2][im]*src[1][1][im];
-      
-      res[2][1][im] += u[1][2][re]*src[1][1][im]
-	+u[1][2][im]*src[1][1][re];
-      
-      // col=2
+      // spin = 0
       res[2][0][re] += u[2][2][re]*src[2][0][re]
 	-u[2][2][im]*src[2][0][im];
       
       res[2][0][im] += u[2][2][re]*src[2][0][im]
 	+u[2][2][im]*src[2][0][re];
-      
+     
+      // spin= 1
       res[2][1][re] += u[2][2][re]*src[2][1][re]
 	-u[2][2][im]*src[2][1][im];
       
@@ -161,36 +182,7 @@ namespace CPlusPlusWilsonDslash {
       res[0][1][im] = u[0][0][re]*src[0][1][im]
 	  - u[0][0][im]*src[0][1][re];
       
-      // row =1 
-      // spin =0 
-      res[1][0][re] = u[1][0][re]*src[0][0][re]
-	+ u[1][0][im]*src[0][0][im];
-      res[1][0][im] = u[1][0][re]*src[0][0][im]
-	- u[1][0][im]*src[0][0][re];
-	
-      // spin=1
-      res[1][1][re] = u[1][0][re]*src[0][1][re]
-	+ u[1][0][im]*src[0][1][im];
-      res[1][1][im] = u[1][0][re]*src[0][1][im]
-	- u[1][0][im]*src[0][1][re];
-      
-
-      // row =2
-      // spin =0 
-      res[2][0][re] = u[2][0][re]*src[0][0][re]
-	+ u[2][0][im]*src[0][0][im];
-      res[2][0][im] = u[2][0][re]*src[0][0][im]
-	- u[2][0][im]*src[0][0][re];
-	
-      // spin=1
-      res[2][1][re] = u[2][0][re]*src[0][1][re]
-	+ u[2][0][im]*src[0][1][im];
-      res[2][1][im] = u[2][0][re]*src[0][1][im]
-	- u[2][0][im]*src[0][1][re];
-      
-      
-      // col=1
-      // row = 0
+      // col = 1
       // spin =0 
       res[0][0][re] += u[0][1][re]*src[1][0][re]
 	+ u[0][1][im]*src[1][0][im];
@@ -204,8 +196,39 @@ namespace CPlusPlusWilsonDslash {
       
       res[0][1][im] += u[0][1][re]*src[1][1][im]
 	- u[0][1][im]*src[1][1][re];
+
+      // col=2
+      // spin =0 
+      res[0][0][re] += u[0][2][re]*src[2][0][re]
+	+ u[0][2][im]*src[2][0][im];
       
-      // row = 1
+      res[0][0][im] += u[0][2][re]*src[2][0][im]
+	- u[0][2][im]*src[2][0][re];
+      
+      // spin =1
+      res[0][1][re] += u[0][2][re]*src[2][1][re]
+	+ u[0][2][im]*src[2][1][im];
+      
+      res[0][1][im] += u[0][2][re]*src[2][1][im]
+	- u[0][2][im]*src[2][1][re];
+
+
+
+      // row =1 
+      // col =0
+      // spin =0 
+      res[1][0][re] = u[1][0][re]*src[0][0][re]
+	+ u[1][0][im]*src[0][0][im];
+      res[1][0][im] = u[1][0][re]*src[0][0][im]
+	- u[1][0][im]*src[0][0][re];
+	
+      // spin=1
+      res[1][1][re] = u[1][0][re]*src[0][1][re]
+	+ u[1][0][im]*src[0][1][im];
+      res[1][1][im] = u[1][0][re]*src[0][1][im]
+	- u[1][0][im]*src[0][1][re];
+      
+      // col=1
       // spin =0 
       res[1][0][re] += u[1][1][re]*src[1][0][re]
 	+ u[1][1][im]*src[1][0][im];
@@ -219,8 +242,37 @@ namespace CPlusPlusWilsonDslash {
       
       res[1][1][im] += u[1][1][re]*src[1][1][im]
 	- u[1][1][im]*src[1][1][re];
+
+      // col=2 
+      // spin =0 
+      res[1][0][re] += u[1][2][re]*src[2][0][re]
+	+ u[1][2][im]*src[2][0][im];
       
-      // row = 2
+      res[1][0][im] += u[1][2][re]*src[2][0][im]
+	- u[1][2][im]*src[2][0][re];
+      
+      // spin =1
+      res[1][1][re] += u[1][2][re]*src[2][1][re]
+	+ u[1][2][im]*src[2][1][im];
+      
+      res[1][1][im] += u[1][2][re]*src[2][1][im]
+	- u[1][2][im]*src[2][1][re];
+
+
+      // row=2
+      // spin =0 
+      res[2][0][re] = u[2][0][re]*src[0][0][re]
+	+ u[2][0][im]*src[0][0][im];
+      res[2][0][im] = u[2][0][re]*src[0][0][im]
+	- u[2][0][im]*src[0][0][re];
+	
+      // spin=1
+      res[2][1][re] = u[2][0][re]*src[0][1][re]
+	+ u[2][0][im]*src[0][1][im];
+      res[2][1][im] = u[2][0][re]*src[0][1][im]
+	- u[2][0][im]*src[0][1][re];
+      
+      // col=1
       // spin =0 
       res[2][0][re] += u[2][1][re]*src[1][0][re]
 	+ u[2][1][im]*src[1][0][im];
@@ -236,37 +288,6 @@ namespace CPlusPlusWilsonDslash {
 	- u[2][1][im]*src[1][1][re];
       
       // col=2
-      // row = 0
-      // spin =0 
-      res[0][0][re] += u[0][2][re]*src[2][0][re]
-	+ u[0][2][im]*src[2][0][im];
-      
-      res[0][0][im] += u[0][2][re]*src[2][0][im]
-	- u[0][2][im]*src[2][0][re];
-      
-      // spin =1
-      res[0][1][re] += u[0][2][re]*src[2][1][re]
-	+ u[0][2][im]*src[2][1][im];
-      
-      res[0][1][im] += u[0][2][re]*src[2][1][im]
-	- u[0][2][im]*src[2][1][re];
-      
-      // row = 1
-      // spin =0 
-      res[1][0][re] += u[1][2][re]*src[2][0][re]
-	+ u[1][2][im]*src[2][0][im];
-      
-      res[1][0][im] += u[1][2][re]*src[2][0][im]
-	- u[1][2][im]*src[2][0][re];
-      
-      // spin =1
-      res[1][1][re] += u[1][2][re]*src[2][1][re]
-	+ u[1][2][im]*src[2][1][im];
-      
-      res[1][1][im] += u[1][2][re]*src[2][1][im]
-	- u[1][2][im]*src[2][1][re];
-      
-      // row = 2
       // spin =0 
       res[2][0][re] += u[2][2][re]*src[2][0][re]
 	+ u[2][2][im]*src[2][0][im];
