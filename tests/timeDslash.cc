@@ -90,7 +90,7 @@ timeDslash::run(void)
   StopWatch swatch;
   double time=0;
   double n_secs = 25;
-  int iters=65000;
+  int iters=130000;
   QDPIO::cout << endl;
   QDPIO::cout << "\t Timing with " << iters << " counts" << endl;
 

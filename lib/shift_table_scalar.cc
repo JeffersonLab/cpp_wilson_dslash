@@ -41,7 +41,7 @@ namespace CPlusPlusWilsonDslash {
 
     ptrdiff_t pad = 0;
     if ( (ptrdiff_t)xshift_table % Cache::CacheLineSize != 0 ) {
-      pad=Cache::CacheLineSize-((int)xshift_table % Cache::CacheLineSize);
+      pad=Cache::CacheLineSize-((ptrdiff_t)xshift_table % Cache::CacheLineSize);
     }
     shift_table = (int *)((char *)xshift_table + pad);
 
