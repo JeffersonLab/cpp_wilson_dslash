@@ -3,7 +3,8 @@ nobase_include_HEADERS= cpp_dslash.h \
 	dslash_config.h \
 	sse_sign_32bit.h \
 	sse_sign_64bit.h \
-	cpp_dslash_types.h
+	cpp_dslash_types.h \
+	cpp_clover_types.h
 
 
 if SCALAR
@@ -17,7 +18,10 @@ nobase_include_HEADERS +=
 	cpp_dslash_scalar_32bit_sse.h \
 	cpp_dslash_scalar_32bit_c.h \
 	cpp_dslash_scalar_64bit_sse.h \
-	cpp_dslash_scalar_64bit_c.h
+	cpp_dslash_scalar_64bit_c.h \
+	cpp_clover_scalar.h \
+	cpp_clover_site_apply_32bit.h \
+	cpp_clover_site_apply_64bit.h
 endif
 
 if PARSCALAR

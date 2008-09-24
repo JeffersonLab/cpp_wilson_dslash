@@ -14,9 +14,9 @@ namespace CPlusPlusWilsonDslash {
   struct ThreadWorkerArgs {
     void *res;           /*!< Spinor either read */
     void *psi;           /*!< Spinor to  write */
-    void *u;        /*!< Gauge field - suitably packed */
-    void *s;
-    int cb;            /*!< Checkerboard (source) */
+    void *u;             /*!< Gauge field - suitably packed */
+    void *s;             /* Shift table */
+    int cb;              /*!< Checkerboard (source) */
 
   };
 
@@ -30,5 +30,28 @@ namespace CPlusPlusWilsonDslash {
 			 int n_sites);
 
 }; // namespace
+
+namespace CPlusPlusClover { 
+
+  struct CloverThreadWorkerArgs { 
+    void *res;
+    void *psi;
+    void *u;
+    void *invclov_ee;
+    void *clov_oo;
+    void *t_spinor;
+    void *s;
+  };
+  void dispatchToThreads(void (*func)(size_t, size_t, int, const void *),
+			 void* source,
+			 void* result, 
+			 void* u,
+			 void* invclov_ee,
+			 void* clov_oo,
+			 void* t_spinor,
+			 void* s,
+			 int n_sites);
+
+};
 
 #endif

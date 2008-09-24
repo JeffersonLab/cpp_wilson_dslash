@@ -1,4 +1,4 @@
-# $Id: Makefile.am,v 1.1 2008-08-26 13:24:29 bjoo Exp $
+# $Id: Makefile.am,v 1.2 2008-09-24 20:01:01 bjoo Exp $
 #
 # Path for all files used in building the library
 # This file was automatically generated
@@ -35,7 +35,9 @@ if SCALAR
 libdslash_a_SOURCES += shift_table_scalar.cc cpp_dslash_scalar_32bit.cc \
 	cpp_dslash_3d_scalar_32bit.cc \
 	cpp_dslash_scalar_64bit.cc \
-	cpp_dslash_3d_scalar_64bit.cc
+	cpp_dslash_3d_scalar_64bit.cc \
+	cpp_clover_scalar_32bit.cc \
+	cpp_clover_scalar_64bit.cc
 
 if BUILD_NOTHREADS
 libdslash_a_SOURCES += dispatch_scalar.cc

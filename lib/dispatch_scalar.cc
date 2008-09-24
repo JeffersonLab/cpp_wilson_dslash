@@ -23,3 +23,31 @@ void dispatchToThreads(void (*func)(size_t, size_t, int, const void *),
 
   
 }; // End Namespace
+
+
+namespace CPlusPlusClover { 
+
+  void dispatchToThreads(void (*func)(size_t, size_t, int, const void *),
+			 void* source,
+			 void* result, 
+			 void* u,
+			 void* invclov_ee,
+			 void* clov_oo,
+			 void* t_spinor,
+			 void* s,
+			 int n_sites) 
+  {
+    struct CloverThreadWorkerArgs a;
+    a.psi = source;
+    a.res =result;
+    a.u = u;
+    a.invclov_ee = invclov_ee;
+    a.clov_oo = clov_oo;
+    a.t_spinor = t_spinor;
+    a.s = s;
+    /* Call dispatch function, with lo=0, hi=n_sites */
+    (*func)(0, n_sites, 0, &a);
+    
+  }
+
+};
