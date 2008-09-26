@@ -47,7 +47,7 @@ namespace CPlusPlusClover {
   using namespace Clover32BitTypes;
 using namespace Dslash32BitTypes;
 
-  namespace CloverSiteApply32Bit { 
+  namespace CPlusPlusClover32Bit { 
 
     inline 
     void cloverSiteApply(FourSpinor result, const CloverTerm clov, const FourSpinor src) {

@@ -10,7 +10,7 @@ using namespace CPlusPlusWilsonDslash::Dslash64BitTypes;
 namespace CPlusPlusWilsonDslash { 
   namespace  DslashParscalar64Bit { 
 
-void decomp_gamma0_minus( FourSpinor src, HalfSpinor dst) 
+inline void decomp_gamma0_minus( FourSpinor src, HalfSpinor dst) 
 {
   __m128d xmm0 ALIGN;
   __m128d xmm1 ALIGN;
@@ -80,7 +80,7 @@ void decomp_gamma0_minus( FourSpinor src, HalfSpinor dst)
 }
 
 
-void decomp_gamma1_minus( FourSpinor src, HalfSpinor dst)
+inline void decomp_gamma1_minus( FourSpinor src, HalfSpinor dst)
 {
   __m128d xmm0 ALIGN;
   __m128d xmm1 ALIGN;
@@ -132,7 +132,7 @@ void decomp_gamma1_minus( FourSpinor src, HalfSpinor dst)
 
 }
 
-void decomp_gamma2_minus( FourSpinor src, HalfSpinor dst) 
+inline void decomp_gamma2_minus( FourSpinor src, HalfSpinor dst) 
 {
   __m128d xmm0 ALIGN;
   __m128d xmm1 ALIGN;
@@ -201,7 +201,7 @@ void decomp_gamma2_minus( FourSpinor src, HalfSpinor dst)
 
 }
 
-void decomp_gamma3_minus( FourSpinor src, HalfSpinor dst) 
+inline void decomp_gamma3_minus( FourSpinor src, HalfSpinor dst) 
 {
   __m128d xmm0 ALIGN;
   __m128d xmm1 ALIGN;
@@ -251,7 +251,7 @@ void decomp_gamma3_minus( FourSpinor src, HalfSpinor dst)
 
 
 
-void decomp_gamma0_plus( FourSpinor src, HalfSpinor dst) 
+inline void decomp_gamma0_plus( FourSpinor src, HalfSpinor dst) 
 {
   __m128d xmm0 ALIGN;
   __m128d xmm1 ALIGN;
@@ -321,7 +321,7 @@ void decomp_gamma0_plus( FourSpinor src, HalfSpinor dst)
 
 }
 
-void decomp_gamma1_plus( FourSpinor src, HalfSpinor dst) 
+inline void decomp_gamma1_plus( FourSpinor src, HalfSpinor dst) 
 {
   __m128d xmm0 ALIGN;
   __m128d xmm1 ALIGN;
@@ -374,7 +374,7 @@ void decomp_gamma1_plus( FourSpinor src, HalfSpinor dst)
 
 }
 
-void decomp_gamma2_plus( FourSpinor src, HalfSpinor dst) 
+inline void decomp_gamma2_plus( FourSpinor src, HalfSpinor dst) 
 {
   __m128d xmm0 ALIGN;
   __m128d xmm1 ALIGN;
@@ -443,7 +443,7 @@ void decomp_gamma2_plus( FourSpinor src, HalfSpinor dst)
 
 }
 
-void decomp_gamma3_plus( FourSpinor src, HalfSpinor dst) 
+inline void decomp_gamma3_plus( FourSpinor src, HalfSpinor dst) 
 {
   __m128d xmm0 ALIGN;
   __m128d xmm1 ALIGN;

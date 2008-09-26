@@ -50,7 +50,11 @@ nobase_include_HEADERS += cpp_dslash_parscalar.h
 	cpp_dslash_parscalar_decomp_64bit_sse2.h \
 	cpp_dslash_parscalar_decomp_hvv_64bit_sse2.h \
 	cpp_dslash_parscalar_mvv_recons_64bit_sse2.h \
-	cpp_dslash_parscalar_recons_64bit_sse2.h
+	cpp_dslash_parscalar_recons_64bit_sse2.h \
+	cpp_clover_parscalar.h \
+	cpp_clover_site_apply_32bit.h \
+	cpp_clover_site_apply_64bit.h
+
 endif
 
 if BUILD_QDP_PACKERS

@@ -17,7 +17,7 @@ using namespace QDP;
 #include "reunit.h"
 #endif
 
-#include "cpp_clover_scalar.h"
+#include "cpp_clover_parscalar.h"
 #include "cpp_dslash_qdp_packer.h"
 
 using namespace Assertions;
@@ -116,9 +116,9 @@ timeClover::run(void)
       Klov32((float *)&(chi.elem(0).elem(0).elem(0).real()),	  
 	     (float *)&(psi.elem(0).elem(0).elem(0).real()),
 	     (float *)&(packed_gauge[0]),
-	     (float *)&(invclov[0]),
 	     (float *)&(clov[0]),
-	     1); 
+	     (float *)&(invclov[0]),
+	     -1); 
     }
   
     swatch.stop();
@@ -131,7 +131,7 @@ timeClover::run(void)
     QDPIO::cout << "\t " << iters << " iterations in " << time << " seconds " << endl;
     QDPIO::cout << "\t " << 1.0e6*time/(double)iters << " u sec/iteration" << endl;    
     // Mflops=2Dslash + 2Clover Terms + 24 flops for subtractig them
-    double Mflops =2.0f*(552.0f + 1320.0f+24.0f)*(double)(iters)*(double)(Layout::vol()/2)/1.0e6;
+    double Mflops =(2.0f*(552.0f + 1320.0f)+24.0f)*(double)(iters)*(double)(Layout::vol()/2)/1.0e6;
     double perf = Mflops/time;
     QDPIO::cout << "\t Performance is: " << perf << " Mflops (sp) in Total" << endl;
     QDPIO::cout << "\t Performance is: " << perf / (double)Layout::numNodes() << " per MPI Process" << endl;
@@ -201,7 +201,7 @@ timeClover::run(void)
     QDPIO::cout << "\t " << iters << " iterations in " << time << " seconds " << endl;
     QDPIO::cout << "\t " << 1.0e6*time/(double)iters << " u sec/iteration" << endl;    
     // Mflops=2Dslash + 2Clover Terms + 24 flops for subtractig them
-    double Mflops =2.0f*(552.0f + 1320.0f+24.0f)*(double)(iters)*(double)(Layout::vol()/2)/1.0e6;
+    double Mflops =(2.0f*(552.0f + 1320.0f)+24.0f)*(double)(iters)*(double)(Layout::vol()/2)/1.0e6;
     double perf = Mflops/time;
     QDPIO::cout << "\t Performance is: " << perf << " Mflops (sp) in Total" << endl;
     QDPIO::cout << "\t Performance is: " << perf / (double)Layout::numNodes() << " per MPI Process" << endl;

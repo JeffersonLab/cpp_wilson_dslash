@@ -11,7 +11,7 @@ namespace CPlusPlusWilsonDslash {
   namespace  DslashParscalar64Bit { 
   
 
-void recons_4dir_plus( HalfSpinor hs0,
+inline void recons_4dir_plus( HalfSpinor hs0,
 		       HalfSpinor hs1,
 		       HalfSpinor hs2,
 		       HalfSpinor hs3,
@@ -186,7 +186,7 @@ void recons_4dir_plus( HalfSpinor hs0,
 
 }
 
-void recons_3dir_plus( HalfSpinor hs0,
+inline void recons_3dir_plus( HalfSpinor hs0,
 		       HalfSpinor hs1,
 		       HalfSpinor hs2,
 		       FourSpinor spinor)
@@ -322,7 +322,7 @@ void recons_3dir_plus( HalfSpinor hs0,
 
 }
 
-void recons_4dir_minus( HalfSpinor hs0,
+inline void recons_4dir_minus( HalfSpinor hs0,
 		        HalfSpinor hs1,
 		        HalfSpinor hs2,
 		        HalfSpinor hs3,
@@ -514,7 +514,7 @@ void recons_4dir_minus( HalfSpinor hs0,
 
 }
 
-void recons_3dir_minus( HalfSpinor hs0,
+inline void recons_3dir_minus( HalfSpinor hs0,
 		        HalfSpinor hs1,
 		        HalfSpinor hs2,
 			FourSpinor spinor)

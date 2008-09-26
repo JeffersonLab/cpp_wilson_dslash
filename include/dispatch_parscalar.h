@@ -5,10 +5,6 @@
 using namespace std;
 
 namespace CPlusPlusWilsonDslash {
-
-
-  /* This is absolutely horrible -- There must be a better way */
-
   /* Thread worker argument structure */
   struct ThreadWorkerArgs {
     void *spinor;           /*!< Spinor either read */
@@ -27,6 +23,32 @@ namespace CPlusPlusWilsonDslash {
 			 int cb,
 			 int n_sites);
 
+}; // namespace
+
+namespace CPlusPlusClover {
+  /* Thread worker argument structure */
+  struct CloverThreadWorkerArgs {
+    void *spinor;           /*!< Spinor either read */
+    void *half_spinor;      /*!< Spinor to  write */
+    void *u;                /*!< Gauge field - suitably packed */
+    void *clov;       /*!< Inverse Clover */
+    void *spinor2;
+    void *s;
+    int half;
+  };
+
+
+  /* Functions: Thread Dispatch */
+  void dispatchToThreads(void (*func)(size_t, size_t, int, const void *),
+			 void* the_spinor,
+			 void* the_halfspinor, 
+			 void* u,
+			 void* clov,
+			 void* spinor2,
+			 void* s,
+			 int half,
+			 int n_sites);
+    
 }; // namespace
 
 #endif

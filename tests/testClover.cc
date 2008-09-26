@@ -14,7 +14,7 @@ using namespace QDP;
 
 #include "cpp_dslash.h"
 #include "cpp_dslash_qdp_packer.h"
-#include "cpp_clover_scalar.h"
+#include "cpp_clover_parscalar.h"
 #include "cpp_clover_site_apply_32bit.h"
 
 #include <cmath>
@@ -23,7 +23,7 @@ using namespace Assertions;
 using namespace std;
 using namespace CPlusPlusWilsonDslash;
 using namespace CPlusPlusClover;
-using namespace CloverSiteApply32Bit;
+using namespace CPlusPlusClover::CPlusPlusClover32Bit;
 using namespace Dslash32BitTypes;
 #ifdef DSLASH_USE_OMP_THREADS
 #include <omp.h>
@@ -93,7 +93,7 @@ testClover::run(void)
 			   Layout::QDPXX_getSiteCoords,
 			   Layout::QDPXX_getLinearSiteIndex,
 			   Layout::QDPXX_nodeNumber);
-  
+
   
   multi1d<PrimitiveSU3MatrixF> packed_gauge __attribute__((aligned(16)));
   packed_gauge.resize(4*Layout::sitesOnNode());
@@ -162,7 +162,10 @@ testClover::run(void)
 	isign, // Isign = 1 (PLUS)  
 	1); // source CB = 1 (odd)
     
-    
+
+
+
+
     const int *rb0tab = rb[0].siteTable().slice();
     for(int j=0; j < rb[0].siteTable().size(); j++) { 
       
@@ -175,15 +178,15 @@ testClover::run(void)
 		      *src
 		      );
     }
-    
-    
-    
+
+
+
     D32((float *)&(Dpsi.elem(0).elem(0).elem(0).real()),	  
 	(float *)&(ADpsi.elem(0).elem(0).elem(0).real()),
 	(float *)&(packed_gauge[0]),
 	isign, 
 	0); // source CB = 0 (even)
-    
+
     
     
     // Apply chi2 = A_oo psi
@@ -198,10 +201,10 @@ testClover::run(void)
     chi2[rb[1]] -= Dpsi;
     LatticeFermionF3 diff_float = chi2 - chi;
     QDPIO::cout << endl;
-    QDPIO::cout << "\t isign = " << isign << "\t || diff || = "<< sqrt(norm2(diff_float, rb[1])) / ( Real(4*3*2*Layout::vol()) / Real(2))  << endl;
+    QDPIO::cout << "\t isign = " << isign << "\t norm2(chi2,rb[1])=" << norm2(chi2, rb[1]) << "\t || diff || = "<< sqrt(norm2(diff_float, rb[1])) / ( Real(4*3*2*Layout::vol()) / Real(2))  << endl;
   }
   
- 
+
 
   //for(int isign=-1; isign < 2; isign+=2) {
   for(int isign=+1; isign > -2; isign-=2) {

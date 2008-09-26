@@ -1,4 +1,4 @@
-# $Id: Makefile.am,v 1.2 2008-09-24 20:01:01 bjoo Exp $
+# $Id: Makefile.am,v 1.3 2008-09-26 15:45:32 bjoo Exp $
 #
 # Path for all files used in building the library
 # This file was automatically generated
@@ -57,7 +57,7 @@ endif
 
 
 if PARSCALAR
-libdslash_a_SOURCES += cpp_dslash_parscalar_32bit.cc cpp_dslash_parscalar_64bit.cc cpp_dslash_parscalar_3d_32bit.cc cpp_dslash_parscalar_3d_64bit.cc
+libdslash_a_SOURCES += cpp_dslash_parscalar_32bit.cc cpp_clover_parscalar_32bit.cc cpp_dslash_parscalar_64bit.cc cpp_clover_parscalar_64bit.cc cpp_dslash_parscalar_3d_32bit.cc cpp_dslash_parscalar_3d_64bit.cc cpp_dslash_parscalar_utils_32bit.cc cpp_dslash_parscalar_utils_64bit.cc
 
 if BUILD_NOTHREADS
 libdslash_a_SOURCES += dispatch_parscalar.cc

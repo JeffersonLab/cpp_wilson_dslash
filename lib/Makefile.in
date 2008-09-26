@@ -14,7 +14,7 @@
 
 @SET_MAKE@
 
-# $Id: Makefile.in,v 1.5 2008-09-24 20:01:01 bjoo Exp $
+# $Id: Makefile.in,v 1.6 2008-09-26 15:45:33 bjoo Exp $
 #
 # Path for all files used in building the library
 # This file was automatically generated
@@ -52,7 +52,7 @@ host_triplet = @host@
 @BUILD_QMT_TRUE@@SCALAR_TRUE@am__append_3 = dispatch_scalar_qmt.cc
 @BUILD_OMP_TRUE@@SCALAR_TRUE@am__append_4 = dispatch_scalar_openmp.cc
 @BUILD_QDP_PACKERS_TRUE@@SCALAR_TRUE@am__append_5 = qdp_packer_nopad.cc qdp_packer_3d.cc
-@PARSCALAR_TRUE@am__append_6 = cpp_dslash_parscalar_32bit.cc cpp_dslash_parscalar_64bit.cc cpp_dslash_parscalar_3d_32bit.cc cpp_dslash_parscalar_3d_64bit.cc
+@PARSCALAR_TRUE@am__append_6 = cpp_dslash_parscalar_32bit.cc cpp_clover_parscalar_32bit.cc cpp_dslash_parscalar_64bit.cc cpp_clover_parscalar_64bit.cc cpp_dslash_parscalar_3d_32bit.cc cpp_dslash_parscalar_3d_64bit.cc cpp_dslash_parscalar_utils_32bit.cc cpp_dslash_parscalar_utils_64bit.cc
 @BUILD_NOTHREADS_TRUE@@PARSCALAR_TRUE@am__append_7 = dispatch_parscalar.cc
 @BUILD_QMT_TRUE@@PARSCALAR_TRUE@am__append_8 = dispatch_parscalar_qmt.cc
 @BUILD_OMP_TRUE@@PARSCALAR_TRUE@am__append_9 = dispatch_parscalar_openmp.cc
@@ -88,9 +88,12 @@ am__libdslash_a_SOURCES_DIST = shift_table_scalar.cc \
 	cpp_clover_scalar_32bit.cc cpp_clover_scalar_64bit.cc \
 	dispatch_scalar.cc dispatch_scalar_qmt.cc \
 	dispatch_scalar_openmp.cc qdp_packer_nopad.cc qdp_packer_3d.cc \
-	cpp_dslash_parscalar_32bit.cc cpp_dslash_parscalar_64bit.cc \
+	cpp_dslash_parscalar_32bit.cc cpp_clover_parscalar_32bit.cc \
+	cpp_dslash_parscalar_64bit.cc cpp_clover_parscalar_64bit.cc \
 	cpp_dslash_parscalar_3d_32bit.cc \
-	cpp_dslash_parscalar_3d_64bit.cc dispatch_parscalar.cc \
+	cpp_dslash_parscalar_3d_64bit.cc \
+	cpp_dslash_parscalar_utils_32bit.cc \
+	cpp_dslash_parscalar_utils_64bit.cc dispatch_parscalar.cc \
 	dispatch_parscalar_qmt.cc dispatch_parscalar_openmp.cc
 @SCALAR_TRUE@am__objects_1 = shift_table_scalar.$(OBJEXT) \
 @SCALAR_TRUE@	cpp_dslash_scalar_32bit.$(OBJEXT) \
@@ -108,9 +111,13 @@ am__libdslash_a_SOURCES_DIST = shift_table_scalar.cc \
 @BUILD_QDP_PACKERS_TRUE@@SCALAR_TRUE@am__objects_5 = qdp_packer_nopad.$(OBJEXT) \
 @BUILD_QDP_PACKERS_TRUE@@SCALAR_TRUE@	qdp_packer_3d.$(OBJEXT)
 @PARSCALAR_TRUE@am__objects_6 = cpp_dslash_parscalar_32bit.$(OBJEXT) \
+@PARSCALAR_TRUE@	cpp_clover_parscalar_32bit.$(OBJEXT) \
 @PARSCALAR_TRUE@	cpp_dslash_parscalar_64bit.$(OBJEXT) \
+@PARSCALAR_TRUE@	cpp_clover_parscalar_64bit.$(OBJEXT) \
 @PARSCALAR_TRUE@	cpp_dslash_parscalar_3d_32bit.$(OBJEXT) \
-@PARSCALAR_TRUE@	cpp_dslash_parscalar_3d_64bit.$(OBJEXT)
+@PARSCALAR_TRUE@	cpp_dslash_parscalar_3d_64bit.$(OBJEXT) \
+@PARSCALAR_TRUE@	cpp_dslash_parscalar_utils_32bit.$(OBJEXT) \
+@PARSCALAR_TRUE@	cpp_dslash_parscalar_utils_64bit.$(OBJEXT)
 @BUILD_NOTHREADS_TRUE@@PARSCALAR_TRUE@am__objects_7 = dispatch_parscalar.$(OBJEXT)
 @BUILD_QMT_TRUE@@PARSCALAR_TRUE@am__objects_8 = dispatch_parscalar_qmt.$(OBJEXT)
 @BUILD_OMP_TRUE@@PARSCALAR_TRUE@am__objects_9 = dispatch_parscalar_openmp.$(OBJEXT)
@@ -328,6 +335,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp_clover_parscalar_32bit.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp_clover_parscalar_64bit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp_clover_scalar_32bit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp_clover_scalar_64bit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp_dslash_3d_scalar_32bit.Po@am__quote@
@@ -336,6 +345,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp_dslash_parscalar_3d_32bit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp_dslash_parscalar_3d_64bit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp_dslash_parscalar_64bit.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp_dslash_parscalar_utils_32bit.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp_dslash_parscalar_utils_64bit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp_dslash_scalar_32bit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp_dslash_scalar_64bit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dispatch_parscalar.Po@am__quote@

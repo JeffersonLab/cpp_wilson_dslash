@@ -99,7 +99,7 @@ namespace CPlusPlusClover {
   }
 
   using namespace DslashScalar32Bit;
-  using namespace CloverSiteApply32Bit;
+  using namespace CPlusPlusClover32Bit;
   namespace CloverScalar32Bit {
 
     

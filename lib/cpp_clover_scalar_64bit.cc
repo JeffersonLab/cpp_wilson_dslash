@@ -103,7 +103,7 @@ namespace CPlusPlusClover {
   }
 
   using namespace DslashScalar64Bit;
-  using namespace CloverSiteApply64Bit;
+  using namespace CPlusPlusClover64Bit;
   namespace CloverScalar64Bit {
 
     void ClovDPsiPlus(size_t lo, size_t hi, int id, const void *ptr)

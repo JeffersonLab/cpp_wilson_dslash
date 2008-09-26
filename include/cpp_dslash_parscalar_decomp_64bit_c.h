@@ -9,7 +9,7 @@ using namespace CPlusPlusWilsonDslash::Dslash64BitTypes;
 namespace CPlusPlusWilsonDslash { 
   namespace  DslashParscalar64Bit { 
 
-void decomp_gamma0_minus( FourSpinor src, HalfSpinor dst) 
+inline void decomp_gamma0_minus( FourSpinor src, HalfSpinor dst) 
 {
     /*                              ( 1  0  0 -i)  ( a0 )    ( a0 - i a3 )
      *  B  :=  ( 1 - Gamma  ) A  =  ( 0  1 -i  0)  ( a1 )  = ( a1 - i a2 )
@@ -39,7 +39,7 @@ void decomp_gamma0_minus( FourSpinor src, HalfSpinor dst)
 }
 
 
-void decomp_gamma1_minus( FourSpinor src, HalfSpinor dst)
+inline void decomp_gamma1_minus( FourSpinor src, HalfSpinor dst)
 {
   /*                              ( 1  0  0  1)  ( a0 )    ( a0 + a3 )
    *  B  :=  ( 1 - Gamma  ) A  =  ( 0  1 -1  0)  ( a1 )  = ( a1 - a2 )
@@ -68,7 +68,7 @@ void decomp_gamma1_minus( FourSpinor src, HalfSpinor dst)
      
 }
 
-void decomp_gamma2_minus( FourSpinor src, HalfSpinor dst) 
+inline void decomp_gamma2_minus( FourSpinor src, HalfSpinor dst) 
 {
 
     /*                              ( 1  0 -i  0)  ( a0 )    ( a0 - i a2 )
@@ -99,7 +99,7 @@ void decomp_gamma2_minus( FourSpinor src, HalfSpinor dst)
 
 }
 
-void decomp_gamma3_minus( FourSpinor src, HalfSpinor dst) 
+inline void decomp_gamma3_minus( FourSpinor src, HalfSpinor dst) 
 
 {
     /*                              ( 1  0 -1  0)  ( a0 )    ( a0 - a2 )
@@ -132,7 +132,7 @@ void decomp_gamma3_minus( FourSpinor src, HalfSpinor dst)
 
 
 
-void decomp_gamma0_plus( FourSpinor src, HalfSpinor dst) 
+inline void decomp_gamma0_plus( FourSpinor src, HalfSpinor dst) 
 {
   /*                              ( 1  0  0 +i)  ( a0 )    ( a0 + i a3 )
    *  B  :=  ( 1 + Gamma  ) A  =  ( 0  1 +i  0)  ( a1 )  = ( a1 + i a2 )
@@ -163,7 +163,7 @@ void decomp_gamma0_plus( FourSpinor src, HalfSpinor dst)
 
 }
 
-void decomp_gamma1_plus( FourSpinor src, HalfSpinor dst) 
+inline void decomp_gamma1_plus( FourSpinor src, HalfSpinor dst) 
 {
 
   
@@ -195,7 +195,7 @@ void decomp_gamma1_plus( FourSpinor src, HalfSpinor dst)
   
 }
 
-void decomp_gamma2_plus( FourSpinor src, HalfSpinor dst) 
+inline void decomp_gamma2_plus( FourSpinor src, HalfSpinor dst) 
 {
   /*                              ( 1  0  i  0)  ( a0 )    ( a0 + i a2 )
    *  B  :=  ( 1 + Gamma  ) A  =  ( 0  1  0 -i)  ( a1 )  = ( a1 - i a3 )
@@ -225,7 +225,7 @@ void decomp_gamma2_plus( FourSpinor src, HalfSpinor dst)
   
 }
 
-void decomp_gamma3_plus( FourSpinor src, HalfSpinor dst) 
+inline void decomp_gamma3_plus( FourSpinor src, HalfSpinor dst) 
 {
   /*                              ( 1  0  1  0)  ( a0 )    ( a0 + a2 )
    *  B  :=  ( 1 + Gamma  ) A  =  ( 0  1  0  1)  ( a1 )  = ( a1 + a3 )

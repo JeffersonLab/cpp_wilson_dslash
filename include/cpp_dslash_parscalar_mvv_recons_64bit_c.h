@@ -8,7 +8,7 @@ using namespace CPlusPlusWilsonDslash::Dslash64BitTypes;
 namespace CPlusPlusWilsonDslash { 
   namespace  DslashParscalar64Bit { 
   
-void mvv_recons_gamma0_plus( HalfSpinor src, 
+inline void mvv_recons_gamma0_plus( HalfSpinor src, 
 			     GaugeMatrix u,
 			     FourSpinor dst)
 {
@@ -40,7 +40,7 @@ void mvv_recons_gamma0_plus( HalfSpinor src,
 
 
 }
-void mvv_recons_gamma1_plus_add( HalfSpinor src, 
+inline void mvv_recons_gamma1_plus_add( HalfSpinor src, 
 				 GaugeMatrix u,
 				FourSpinor dst)
 {
@@ -97,7 +97,7 @@ void mvv_recons_gamma1_plus_add( HalfSpinor src,
 
 }
 
-void mvv_recons_gamma2_plus_add( HalfSpinor src, 
+inline void mvv_recons_gamma2_plus_add( HalfSpinor src, 
 				 GaugeMatrix u,
 				FourSpinor dst)
 {
@@ -168,7 +168,7 @@ void mvv_recons_gamma2_plus_add( HalfSpinor src,
   
 }
 
-void mvv_recons_gamma2_plus_add_store( HalfSpinor src, 
+inline void mvv_recons_gamma2_plus_add_store( HalfSpinor src, 
 				       GaugeMatrix u,
 				       FourSpinor sum,
 				       FourSpinor dst)
@@ -227,7 +227,7 @@ void mvv_recons_gamma2_plus_add_store( HalfSpinor src,
 
 
 
-void mvv_recons_gamma3_plus_add_store( HalfSpinor src, 
+inline void mvv_recons_gamma3_plus_add_store( HalfSpinor src, 
 			     GaugeMatrix u,
 			     FourSpinor sum,
 			    FourSpinor dst)
@@ -287,7 +287,7 @@ void mvv_recons_gamma3_plus_add_store( HalfSpinor src,
 
 
 
-void mvv_recons_gamma0_minus( HalfSpinor src, 
+inline void mvv_recons_gamma0_minus( HalfSpinor src, 
 			     GaugeMatrix u,
 			    FourSpinor dst)
 {
@@ -323,7 +323,7 @@ void mvv_recons_gamma0_minus( HalfSpinor src,
 
 }
 
-void mvv_recons_gamma1_minus_add( HalfSpinor src, 
+inline void mvv_recons_gamma1_minus_add( HalfSpinor src, 
 				 GaugeMatrix u,
 				FourSpinor dst)
 {
@@ -373,7 +373,7 @@ void mvv_recons_gamma1_minus_add( HalfSpinor src,
 }
 
 
-void mvv_recons_gamma2_minus_add( HalfSpinor src, 
+inline void mvv_recons_gamma2_minus_add( HalfSpinor src, 
 				 GaugeMatrix u,
 				FourSpinor dst)
 {
@@ -429,7 +429,7 @@ void mvv_recons_gamma2_minus_add( HalfSpinor src,
 }
 
 
-void mvv_recons_gamma2_minus_add_store( HalfSpinor src, 
+inline void mvv_recons_gamma2_minus_add_store( HalfSpinor src, 
 					GaugeMatrix u,
 					FourSpinor sum,
 					FourSpinor dst)
@@ -487,7 +487,7 @@ void mvv_recons_gamma2_minus_add_store( HalfSpinor src,
 
 
 
-void mvv_recons_gamma3_minus_add_store( HalfSpinor src, 
+inline void mvv_recons_gamma3_minus_add_store( HalfSpinor src, 
 			     GaugeMatrix u,
 			     FourSpinor sum,
 			    FourSpinor dst)
