@@ -48,9 +48,9 @@ CONFIG_HEADER = dslash_config_internal.h
 CONFIG_CLEAN_FILES =
 SOURCES =
 DIST_SOURCES =
-am__nobase_include_HEADERS_DIST = cpp_dslash.h cache.h dslash_config.h \
-	sse_sign_32bit.h sse_sign_64bit.h cpp_dslash_types.h \
-	cpp_clover_types.h cpp_dslash_parscalar.h \
+am__nobase_include_HEADERS_DIST = cpp_dslash.h cpp_clover.h cache.h \
+	dslash_config.h sse_sign_32bit.h sse_sign_64bit.h \
+	cpp_dslash_types.h cpp_clover_types.h cpp_dslash_parscalar.h \
 	cpp_dslash_qdp_packer.h
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -167,10 +167,10 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-nobase_include_HEADERS = cpp_dslash.h cache.h dslash_config.h \
-	sse_sign_32bit.h sse_sign_64bit.h cpp_dslash_types.h \
-	cpp_clover_types.h $(am__append_1) $(am__append_2) \
-	$(am__append_3)
+nobase_include_HEADERS = cpp_dslash.h cpp_clover.h cache.h \
+	dslash_config.h sse_sign_32bit.h sse_sign_64bit.h \
+	cpp_dslash_types.h cpp_clover_types.h $(am__append_1) \
+	$(am__append_2) $(am__append_3)
 nodist_include_HEADERS = dslash_config_internal.h
 all: dslash_config_internal.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
@@ -475,7 +475,9 @@ uninstall-am: uninstall-nobase_includeHEADERS \
 @PARSCALAR_TRUE@	cpp_dslash_parscalar_recons_64bit_sse2.h \
 @PARSCALAR_TRUE@	cpp_clover_parscalar.h \
 @PARSCALAR_TRUE@	cpp_clover_site_apply_32bit.h \
-@PARSCALAR_TRUE@	cpp_clover_site_apply_64bit.h
+@PARSCALAR_TRUE@	cpp_clover_site_apply_64bit.h \
+@PARSCALAR_TRUE@	cpp_clover_odd_odd_parscalar_32bit.h \
+@PARSCALAR_TRUE@	cpp_clover_odd_odd_parscalar_64bit.h
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

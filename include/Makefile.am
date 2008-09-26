@@ -1,4 +1,5 @@
 nobase_include_HEADERS= cpp_dslash.h \
+	cpp_clover.h \
 	cache.h \
 	dslash_config.h \
 	sse_sign_32bit.h \
@@ -53,7 +54,9 @@ nobase_include_HEADERS += cpp_dslash_parscalar.h
 	cpp_dslash_parscalar_recons_64bit_sse2.h \
 	cpp_clover_parscalar.h \
 	cpp_clover_site_apply_32bit.h \
-	cpp_clover_site_apply_64bit.h
+	cpp_clover_site_apply_64bit.h \
+	cpp_clover_odd_odd_parscalar_32bit.h \
+	cpp_clover_odd_odd_parscalar_64bit.h
 
 endif
 

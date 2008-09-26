@@ -14,7 +14,7 @@ using namespace QDP;
 
 #include "cpp_dslash.h"
 #include "cpp_dslash_qdp_packer.h"
-#include "cpp_clover_parscalar.h"
+#include "cpp_clover.h"
 #include "cpp_clover_site_apply_32bit.h"
 
 #include <cmath>

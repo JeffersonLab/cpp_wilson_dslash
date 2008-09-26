@@ -17,7 +17,7 @@ using namespace QDP;
 #include "reunit.h"
 #endif
 
-#include "cpp_clover_parscalar.h"
+#include "cpp_clover.h"
 #include "cpp_dslash_qdp_packer.h"
 
 using namespace Assertions;
