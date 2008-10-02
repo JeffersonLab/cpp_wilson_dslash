@@ -475,7 +475,11 @@ uninstall-am: uninstall-nobase_includeHEADERS \
 @PARSCALAR_TRUE@	cpp_dslash_parscalar_recons_64bit_sse2.h \
 @PARSCALAR_TRUE@	cpp_clover_parscalar.h \
 @PARSCALAR_TRUE@	cpp_clover_site_apply_32bit.h \
+@PARSCALAR_TRUE@	cpp_clover_site_apply_32bit_c.h \
+@PARSCALAR_TRUE@	cpp_clover_site_apply_32bit_sse.h \
 @PARSCALAR_TRUE@	cpp_clover_site_apply_64bit.h \
+@PARSCALAR_TRUE@	cpp_clover_site_apply_64bit_c.h \
+@PARSCALAR_TRUE@	cpp_clover_site_apply_64bit_sse.h \
 @PARSCALAR_TRUE@	cpp_clover_odd_odd_parscalar_32bit.h \
 @PARSCALAR_TRUE@	cpp_clover_odd_odd_parscalar_64bit.h
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
