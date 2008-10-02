@@ -1,6 +1,6 @@
 #include "unittest.h"
 #include "timeClover.h"
-
+#include "cache.h"
 #include "qdp.h"
 using namespace QDP;
 
@@ -153,10 +153,25 @@ timeClover::run(void)
     packed_gauged.resize( 4 * Layout::sitesOnNode() );
     qdp_pack_gauge(ud, packed_gauged);
     
-    multi1d<Clover64BitTypes::CloverTerm> clovd __attribute__((aligned(16)));
-    clovd.resize(Layout::sitesOnNode());
-    multi1d<Clover64BitTypes::CloverTerm> invclovd __attribute__((aligned(16)));
-    invclovd.resize(Layout::sitesOnNode());
+    
+    Clover64BitTypes::CloverTerm *xclovd, *clovd, *xinvclovd, *invclovd;
+
+    xclovd = (Clover64BitTypes::CloverTerm*)malloc(Layout::sitesOnNode()*sizeof(Clover64BitTypes::CloverTerm)+Cache::CacheLineSize);
+    
+    unsigned long pad=0;
+    
+    if( (unsigned long)xclovd % Cache::CacheLineSize != 0 ) { 
+      pad = Cache::CacheLineSize - (unsigned long) xclovd % Cache::CacheLineSize;
+    }
+    clovd =(Clover64BitTypes::CloverTerm*)( (unsigned char*)xclovd + pad );
+    
+    xinvclovd = (Clover64BitTypes::CloverTerm*)malloc(Layout::sitesOnNode()*sizeof(Clover64BitTypes::CloverTerm)+Cache::CacheLineSize);
+    
+    pad = 0;
+    if( (unsigned long)xinvclovd % Cache::CacheLineSize != 0 ) { 
+      pad = Cache::CacheLineSize - (unsigned long) xinvclovd % Cache::CacheLineSize;
+    }
+    invclovd =(Clover64BitTypes::CloverTerm*)( (unsigned char*)xinvclovd + pad );
     
     // Randomize dprec clover term....
     for(int site=0; site < Layout::sitesOnNode(); site++) { 
@@ -206,6 +221,10 @@ timeClover::run(void)
     QDPIO::cout << "\t Performance is: " << perf << " Mflops (sp) in Total" << endl;
     QDPIO::cout << "\t Performance is: " << perf / (double)Layout::numNodes() << " per MPI Process" << endl;
     QDPIO::cout << endl;
+
+    free(xclovd);
+    free(xinvclovd);
+
   }
 
 }

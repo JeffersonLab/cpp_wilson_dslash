@@ -85,13 +85,22 @@ AC_ARG_ENABLE(nocomms,
 	[ nocomms_enabled="no" ]
 )
 
-AC_ARG_ENABLE(sse,
+AC_ARG_ENABLE(sse2,
    AC_HELP_STRING(
      [--enable-sse],
      [Enables the SSE optimized code. This needs you to have a compiler which can cope with intel style xmmintrin intrinsics, and this option may not be suitable for non SSE Compatible platforms]
    ),
    [ sse_enabled=${enableval} ],
    [ sse_enabled="no"]
+)
+
+AC_ARG_ENABLE(sse3,
+   AC_HELP_STRING(
+     [--enable-sse],
+     [Enables the SSE optimized code. This needs you to have a compiler which can cope with intel style xmmintrin intrinsics, and this option may not be suitable for non SSE Compatible platforms]
+   ),
+   [ sse3_enabled=${enableval} ],
+   [ sse3_enabled="no"]
 )
 
 dnl with QDP -- QDP will override everything else
@@ -366,6 +375,15 @@ then
      AC_DEFINE([DSLASH_USE_SSE2],[1], [ Use SSE2 Code in kernels])
 else
      AC_MSG_NOTICE([Not Configuring SSE2 Code]);
+fi
+
+if test "X${sse3_enabled}X" == "XyesX";
+then 
+     AC_MSG_NOTICE([Configuring SSE2 and SSE3 Code]);
+     AC_DEFINE([DSLASH_USE_SSE2],[1], [ Use SSE2 Code in kernels])
+     AC_DEFINE([DSLASH_USE_SSE2],[1], [ Use SSE3 Code in kernels])
+else
+     AC_MSG_NOTICE([Not Configuring SSE3 Code]);
 fi
 
 AM_CONDITIONAL(BUILD_QMT, [test "x${qmt_enabled}x" = "xyesx" ])

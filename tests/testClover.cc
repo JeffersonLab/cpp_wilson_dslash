@@ -17,6 +17,7 @@ using namespace QDP;
 #include "cpp_clover.h"
 #include "cpp_clover_site_apply_32bit.h"
 
+#include "cache.h"
 #include <cmath>
 
 using namespace Assertions;
@@ -104,17 +105,32 @@ testClover::run(void)
   packed_gauged.resize( 4 * Layout::sitesOnNode() );
   qdp_pack_gauge(ud, packed_gauged);
 
+
   multi1d<Clover32BitTypes::CloverTerm> clov __attribute__((aligned(16)));
   clov.resize(Layout::sitesOnNode());
   multi1d<Clover32BitTypes::CloverTerm> invclov __attribute__((aligned(16)));
   invclov.resize(Layout::sitesOnNode());
 
 
-  multi1d<Clover64BitTypes::CloverTerm> clovd __attribute__((aligned(16)));
-  clovd.resize(Layout::sitesOnNode());
-  multi1d<Clover64BitTypes::CloverTerm> invclovd __attribute__((aligned(16)));
-  invclovd.resize(Layout::sitesOnNode());
+  Clover64BitTypes::CloverTerm *xclovd, *clovd, *xinvclovd, *invclovd;
+  
+  xclovd = (Clover64BitTypes::CloverTerm*)malloc(Layout::sitesOnNode()*sizeof(Clover64BitTypes::CloverTerm)+Cache::CacheLineSize);
+  
+  unsigned long pad=0;
 
+  if( (unsigned long)xclovd % Cache::CacheLineSize != 0 ) { 
+    pad = Cache::CacheLineSize - (unsigned long) xclovd % Cache::CacheLineSize;
+  }
+  clovd =(Clover64BitTypes::CloverTerm*)( (unsigned char*)xclovd + pad );
+  
+  xinvclovd = (Clover64BitTypes::CloverTerm*)malloc(Layout::sitesOnNode()*sizeof(Clover64BitTypes::CloverTerm)+Cache::CacheLineSize);
+
+  pad = 0;
+  if( (unsigned long)xinvclovd % Cache::CacheLineSize != 0 ) { 
+    pad = Cache::CacheLineSize - (unsigned long) xinvclovd % Cache::CacheLineSize;
+  }
+  invclovd =(Clover64BitTypes::CloverTerm*)( (unsigned char*)xinvclovd + pad );
+  
   // Randomize clover term....
   for(int site=0; site < Layout::sitesOnNode(); site++) { 
     for(int j=0; j < 2; j++) { 
@@ -205,9 +221,12 @@ testClover::run(void)
   }
   
 
+  XMLFileWriter xml_out("fdiff");
 
   //for(int isign=-1; isign < 2; isign+=2) {
   for(int isign=+1; isign > -2; isign-=2) {
+    chi=zero;
+    chid=zero;
 
     // Apply clover op to psi into chi
     Klov32((float *)&(chi.elem(0).elem(0).elem(0).real()),	  
@@ -229,11 +248,15 @@ testClover::run(void)
     // Downcast
     chi2 = chid;
 
+
     LatticeFermionF3 diff_float = chi2 - chi;
+
     QDPIO::cout << endl;
     QDPIO::cout << "\t isign = " << isign << "\t || diff || = "<< sqrt(norm2(diff_float, rb[1])) / ( Real(4*3*2*Layout::vol()) / Real(2))  << endl;
 
   }
+  free(xclovd);
+  free(xinvclovd);
 
 
 }
