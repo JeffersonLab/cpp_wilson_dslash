@@ -53,6 +53,8 @@ namespace CPlusPlusWilsonDslash {
 		    int isign,
 		    int cb);
 
+   int getPathSite(int site) const;
+
   private:
     ShiftTable* s;
 
@@ -92,6 +94,10 @@ namespace CPlusPlusWilsonDslash {
 		    int isign,
 		    int cb);
 
+
+    int getPathSite(int site) const;
+
+    
   private:
     ShiftTable* s;
 

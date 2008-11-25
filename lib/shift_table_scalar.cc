@@ -7,6 +7,175 @@ using namespace std;
 
 namespace CPlusPlusWilsonDslash { 
 
+  namespace { 
+
+    
+  }
+
+  void ShiftTable::setupPathTable(int (*getLinearSiteIndex)(const int coord[]),
+				  int* inv_table) 
+    {
+      // Blocking strategy: Block size in each dimension;
+      int blockMaxSize[4] = {1,1,1,1};
+      
+      int nBlocksPerDim[4];
+      int blockSizePerDim[4];
+      
+      
+      for(int mu=0; mu < 4; mu++) {
+	// Integer divide to get number of blocks in each dim
+	nBlocksPerDim[mu] = tot_size[mu]/blockMaxSize[mu];
+	if ( tot_size[mu] % blockMaxSize[mu] != 0 ) { 
+	  nBlocksPerDim[mu]++;
+	}
+      }
+      
+      for(int mu=0; mu < 4; mu++) { 
+	blockSizePerDim[mu] = blockMaxSize[mu] + tot_size[mu]%blockMaxSize[mu];
+      }
+      
+      // Count all the blocks...
+      int nBlocks = nBlocksPerDim[0];
+      for(int mu=1; mu < 4; mu++){ 
+	nBlocks *= nBlocksPerDim[mu];
+      }
+      
+#if 0      
+      cout << "There are " << nBlocks << " blocks" << endl;
+      cout << "(Bx, By, Bz, Bt) = (" << nBlocksPerDim[0] 
+	   << " , " << nBlocksPerDim[1]
+	   << " , " << nBlocksPerDim[2]
+	   << " , " << nBlocksPerDim[3] << ")" << endl;
+#endif
+      
+      typedef struct { 
+      int origin[4];
+	int size[4];
+      } Block;
+      
+      Block* blocklist = new Block[ nBlocks ];
+      int blockpos=0;
+      for(int t=0; t < nBlocksPerDim[3]; t++) {
+	for(int z=0; z < nBlocksPerDim[2];z++) { 
+	  for(int y=0; y < nBlocksPerDim[1]; y++){ 
+	    for(int x=0; x < nBlocksPerDim[0]; x++) { 
+	      
+	      blocklist[ blockpos ].origin[0] = x*blockMaxSize[0];
+	      blocklist[ blockpos ].origin[1] = y*blockMaxSize[1];
+	      blocklist[ blockpos ].origin[2] = z*blockMaxSize[2];
+	      blocklist[ blockpos ].origin[3] = t*blockMaxSize[3];
+	      
+	      blocklist[ blockpos ].size[0] = blockMaxSize[0];
+	      blocklist[ blockpos ].size[1] = blockMaxSize[1];
+	      blocklist[ blockpos ].size[2] = blockMaxSize[2];
+	      blocklist[ blockpos ].size[3] = blockMaxSize[3];
+	      
+	      // Last x block
+	      if( x == (nBlocksPerDim[0] - 1) ) {
+		blocklist[ blockpos ].size[0] = tot_size[0]
+		  -blocklist[blockpos].origin[0];
+	      }
+	      // Last y block
+	      if( y == (nBlocksPerDim[1] - 1) ) {
+		blocklist[ blockpos ].size[1] = tot_size[1]
+		  -blocklist[blockpos].origin[1];
+	      }
+	      // Last z block
+	      if( z == (nBlocksPerDim[2] - 1) ) {
+		blocklist[ blockpos ].size[2] = tot_size[2]
+		  -blocklist[blockpos].origin[2];
+	      }
+	      // Last t block
+	      if( t == (nBlocksPerDim[3] - 1) ) {
+		blocklist[ blockpos ].size[3] = tot_size[3]
+		  -blocklist[blockpos].origin[3];
+	      }
+	      
+	      blockpos++;
+	    }
+	  }
+	}
+      }
+      
+      
+#if 0
+      for(int i=0; i < nBlocks; i++){ 
+	cout << "Block " << i << " : origin = ( "
+	     << blocklist[i].origin[0] << " , "
+	     << blocklist[i].origin[1] << " , "
+	     << blocklist[i].origin[2] << " , " 
+	     << blocklist[i].origin[3] << " ) \t size = ( "
+	     << blocklist[i].size[0] << " , "
+	     << blocklist[i].size[1] << " , "
+	     << blocklist[i].size[2] << " , "
+	     << blocklist[i].size[3] << " ) "  << endl;
+      }
+#endif
+      
+      /* Consistency check: If I add up all the sites in all the blocks
+	 I should get the total number of sites on the lattice */
+      int blocksites = 0;
+      for(int i=0; i < nBlocks; i++) { 
+	int n = blocklist[ i ].size[0]
+	  * blocklist[i].size[1]
+	  * blocklist[i].size[2]
+	  * blocklist[i].size[3];
+	blocksites += n;
+      }
+      
+      if( blocksites != total_vol ) { 
+	cerr << "Failed test: No of sites in all blocks = " << blocksites 
+	     << " No of sites in lattice = " << total_vol << endl;
+      }
+      
+      // Create paths -- do a lexicographic walk in each block
+      // and bin the points into even-odd path arrays...
+      
+      // First I have to make the even-odd path arrays...
+      xpath_table =(int *)malloc(sizeof(int)*total_vol+Cache::CacheLineSize );
+      if( xpath_table == (int *)NULL ) { 
+	cerr << "Failed to allocate xpath_table" << endl;
+	exit(1);
+      }
+      ptrdiff_t pad = 0;
+      if ( (ptrdiff_t)xpath_table % Cache::CacheLineSize != 0 ) {
+	pad=(ptrdiff_t)Cache::CacheLineSize-((ptrdiff_t)xpath_table % Cache::CacheLineSize);
+      }
+      path_table = (int *)((char *)xpath_table + pad);
+      
+      // Go through blocklist
+      int index[2]; index[0]=0; index[1]=0;
+      
+      for(int i=0; i < nBlocks; i++) { 
+	for(int t=0; t < blocklist[i].size[3]; t++) { 
+	  for(int z=0; z < blocklist[i].size[2]; z++) { 
+	    for(int y=0; y < blocklist[i].size[1]; y++) { 
+	      for(int x=0; x < blocklist[i].size[0]; x++) { 
+		
+		int coord[4];
+		coord[0] = blocklist[i].origin[0]+x;
+		coord[1] = blocklist[i].origin[1]+y;
+		coord[2] = blocklist[i].origin[2]+z;
+		coord[3] = blocklist[i].origin[3]+t;
+		
+		int cb = parity(coord);
+		int my_index = cb*total_vol_cb + index[cb];
+
+		// path_table[my_index] works with QDP++ indices
+		path_table[ my_index ] = getLinearSiteIndex(coord);
+		index[cb]++;
+
+		// inv_table takes QDP indices to my index scheme
+		inv_table[ path_table[my_index] ] = my_index;
+	      }
+	    }
+	  }
+	}
+      }
+      
+      delete [] blocklist;
+    }
+
   ShiftTable::ShiftTable(const int latt_size[],  
 			 void (*getSiteCoords)(int coord[], int node, int linearsite),
 			 int (*getLinearSiteIndex)(const int coord[]),
@@ -31,6 +200,18 @@ namespace CPlusPlusWilsonDslash {
       total_vol *= tot_size[mu];
     }
     total_vol_cb = total_vol/2;
+
+
+    int* inv_table = (int *)malloc(total_vol*sizeof(int));
+    if( inv_table == (int *)NULL ) { 
+      cerr << "Could not allocate site table " << endl;
+      exit(1);
+    }
+       
+
+    /* Set up the path */
+    setupPathTable(getLinearSiteIndex, inv_table);
+
       
     xshift_table = (int *)malloc(4*total_vol*2*sizeof(int)+Cache::CacheLineSize);
       
@@ -46,7 +227,6 @@ namespace CPlusPlusWilsonDslash {
     shift_table = (int *)((char *)xshift_table + pad);
 
 
-    
     xsite_table = (int *)malloc(total_vol*sizeof(int)+Cache::CacheLineSize);
     
     if ( xsite_table == 0x0 ) {
@@ -54,12 +234,13 @@ namespace CPlusPlusWilsonDslash {
       exit(1);
     }
 
+
     pad = 0;
     if ( (ptrdiff_t)xsite_table % Cache::CacheLineSize != 0 ) {
       pad=(ptrdiff_t)Cache::CacheLineSize-((ptrdiff_t)xsite_table % Cache::CacheLineSize);
     }
     site_table = (int *)((char *)xsite_table + pad);    
-    
+
     for(int p=0; p < 2; p++) { 	    
       for(int t=0; t < tot_size[3]; t++) { 
 	for(int z=0; z < tot_size[2]; z++) {
@@ -85,7 +266,8 @@ namespace CPlusPlusWilsonDslash {
 	}
       }
     }
-    
+
+   
     /* Get the offsets needed for neighbour comm. */
     /* soffsets(position,direction,isign,cb)   */ 
     /*  where  isign    = +1 : plus direction */
@@ -103,19 +285,20 @@ namespace CPlusPlusWilsonDslash {
 	
 	int my_index = cb*total_vol_cb + site;
 	
-	int qdp_index = site_table[ my_index ];
-	
+	//	int qdp_index = site_table[ my_index ];
+	int qdp_index = getPathSite(my_index);
+
 	getSiteCoords(coord, 0, qdp_index); 
 	
 	for(int dir=0; dir < 4; dir++) {
 	  
 	  /* Backwards displacement*/
 	  offs(bcoord, coord, dir, -1);
-	  blinear = getLinearSiteIndex(bcoord);
+	  blinear = inv_table[ getLinearSiteIndex(bcoord) ];
 	  
 	  /* Forward displacement */
 	  offs(fcoord, coord, dir, +1);
-	  flinear = getLinearSiteIndex(fcoord);
+	  flinear = inv_table[ getLinearSiteIndex(fcoord) ];
 	  
 	  
 	  /* Gather */
@@ -124,7 +307,8 @@ namespace CPlusPlusWilsonDslash {
 	}
       }
     }
-    
+
+    free(inv_table);
   }
 
 

@@ -20,6 +20,7 @@ namespace CPlusPlusWilsonDslash {
     ~ShiftTable() {
       free(xshift_table);
       free(xsite_table);
+      free(xpath_table);
     }
 
     inline
@@ -40,15 +41,26 @@ namespace CPlusPlusWilsonDslash {
     inline int totalVolCB() {
       return total_vol_cb;
     }
+
+    /* my_index = cb*total_vol_cb + site */
+    inline int getPathSite(int my_index) const {
+      return path_table[my_index];
+    }
+
+
+
   private:
     /* Tables */
     int *xshift_table;        /* Unaligned */
     int *shift_table;         /* Aligned */
-    
+
     int *xsite_table;         /* Unaligned */
     int *site_table;          /* Aligned */
-    
-    
+
+    int *xpath_table;         /* Unaligned */
+    int *path_table;          /* Aligned */
+   
+
     int tot_size[4];          /* Class scope members */
     int total_vol;
     int total_vol_cb;         /* Useful numbers */
@@ -57,7 +69,9 @@ namespace CPlusPlusWilsonDslash {
     /* Functions for making the shift tables */
     void mySiteCoords4D(int gcoords[], int node, int linearsite);
     int myLinearSiteIndex4D(const int gcoords[]);
-    
+    void setupPathTable(int (*getLinearSiteIndex)(const int coord[]),
+			int* inv_table) ;    
+   
     
     inline
     int localSite4d(int coord[], int latt_size[])

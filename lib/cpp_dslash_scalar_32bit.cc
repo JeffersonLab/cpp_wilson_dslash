@@ -26,6 +26,11 @@ namespace CPlusPlusWilsonDslash {
       
   Dslash<float>::~Dslash() { delete s; }
 
+  int Dslash<float>::getPathSite(int site) const
+    { 
+      return s->getPathSite(site);
+    }
+ 
   // The operator 
   void Dslash<float>::operator() (float* res, 
 				  float* psi, 
@@ -103,10 +108,11 @@ namespace CPlusPlusWilsonDslash {
       const int low  =  cb*total_vol_cb+lo;                 /* First site for this thread */
       const int high  = cb*total_vol_cb+hi;                /* Last site for this thread */
     
-    
-      for (ix1 = low;ix1<high;ix1++)  {
 
-	int thissite = s->siteTable( ix1 );
+      for (int ix1 = low; ix1 < high; ix1++)  {
+	int thissite = s->getPathSite(ix1);
+
+	// int thissite = s->siteTable( ix1 );
 	int fsite = s->forwardNeighbor(ix1,0);
 	int bsite = s->backwardNeighbor(ix1,0);
 	
@@ -116,7 +122,7 @@ namespace CPlusPlusWilsonDslash {
 	
 	/* Prefetch the backward neighbours for the following 1 + isign gamma(0) case */
 	sp1 = &psi[ fsite  ];
-	up1 = &(gauge_field[thissite][0]);
+	up1 = &(gauge_field[ix1][0]);
 	dslash_plus_dir0_forward(*sp1, *up1, r12_1, r34_1);
       
 	/* Now prefetch for the  1 + \gamma_0 U^\dagger case */
@@ -128,7 +134,7 @@ namespace CPlusPlusWilsonDslash {
 	fsite = s->forwardNeighbor(ix1,1);
 	bsite = s->backwardNeighbor(ix1,1);
 	
-	up1 = &(gauge_field[thissite][1]);
+	up1 = &(gauge_field[ix1][1]);
 	sp1 = &psi[ fsite ];
 	dslash_plus_dir1_forward_add(*sp1, *up1, r12_1, r34_1);
 	
@@ -141,7 +147,7 @@ namespace CPlusPlusWilsonDslash {
 	fsite = s->forwardNeighbor(ix1,2);
 	bsite = s->backwardNeighbor(ix1,2);
 	
-	up1 = &(gauge_field[thissite][2]);
+	up1 = &(gauge_field[ix1][2]);
 	sp1 = &psi[fsite];
 	dslash_plus_dir2_forward_add(*sp1, *up1, r12_1, r34_1);
 	
@@ -156,13 +162,13 @@ namespace CPlusPlusWilsonDslash {
 	bsite = s->backwardNeighbor(ix1,3);
 	
 	sp1 = &psi[ fsite ];
-	up1 = &(gauge_field[thissite][3]);
+	up1 = &(gauge_field[ix1][3]);
 	dslash_plus_dir3_forward_add(*sp1, *up1, r12_1, r34_1);
 	
       
 	sm1 = &psi[bsite]; 
 	um1 = &(gauge_field[bsite][3]); 
-	sn1 = &res[thissite];  /*we always walk across the result lexicographically */
+	sn1 = &res[ix1];  /*we always walk across the result lexicographically */
 	dslash_plus_dir3_backward_add_store(*sm1, *um1, r12_1, r34_1, *sn1);
 	
       }
@@ -202,13 +208,14 @@ namespace CPlusPlusWilsonDslash {
       const int high  = cb*total_vol_cb+hi;                /* Last site for this thread */
       
       /************************ loop over all lattice sites *************************/
-      
-      for (ix1 = low;ix1<high;ix1++) {
-	int thissite = s->siteTable( ix1 );
+      for (int ix1 = low ; ix1 < high; ix1++) {
+	//	ix1 = s->getPathSite(cb, site_iter);
+
+	int thissite = s->getPathSite( ix1 );
 	int fsite = s->forwardNeighbor(ix1,0);
 	
 	sp1 = &psi[ fsite  ];
-	up1 = &(gauge_field[thissite][0]);
+	up1 = &(gauge_field[ix1][0]);
 	dslash_minus_dir0_forward(*sp1, *up1, r12_1, r34_1);
       
 	/* Now prefetch for the  1 + \gamma_0 U^\dagger case */
@@ -219,7 +226,7 @@ namespace CPlusPlusWilsonDslash {
       
 	/* Prefetch gauge field for next direction */
 	fsite = s->forwardNeighbor(ix1,1);
-	up1 = &(gauge_field[thissite][1]);
+	up1 = &(gauge_field[ix1][1]);
 	sp1 = &psi[ fsite ];
 	dslash_minus_dir1_forward_add(*sp1, *up1, r12_1, r34_1);
 	
@@ -231,7 +238,7 @@ namespace CPlusPlusWilsonDslash {
 	
 	/* Prefetch forward neighbour for direction 2+ */
 	fsite = s->forwardNeighbor(ix1,2);
-	up1 = &(gauge_field[thissite][2]);
+	up1 = &(gauge_field[ix1][2]);
 	sp1 = &psi[fsite];
 	dslash_minus_dir2_forward_add(*sp1, *up1, r12_1, r34_1);
 	
@@ -245,7 +252,7 @@ namespace CPlusPlusWilsonDslash {
 	/* Prefetch spinors for direction 3+ */
 	fsite = s->forwardNeighbor(ix1,3);
 	
-	up1 = &(gauge_field[thissite][3]);
+	up1 = &(gauge_field[ix1][3]);
 	sp1 = &psi[ fsite  ];
 	dslash_minus_dir3_forward_add(*sp1, *up1, r12_1, r34_1);
 	
@@ -253,7 +260,7 @@ namespace CPlusPlusWilsonDslash {
 	iy1 = s->backwardNeighbor(ix1,3);
 	sm1 = &psi[iy1]; 
 	um1 = &(gauge_field[iy1][3]); 
-	sn1 = &res[thissite];  /*we always walk across the result lexicographically */
+	sn1 = &res[ix1];  /*we always walk across the result lexicographically */
 	dslash_minus_dir3_backward_add_store(*sm1, *um1, r12_1, r34_1, *sn1);
 	
       }

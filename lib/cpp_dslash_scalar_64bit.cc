@@ -25,7 +25,12 @@ namespace CPlusPlusWilsonDslash {
   }
 
   Dslash<double>::~Dslash() { delete s; }
-
+  
+  int Dslash<double>::getPathSite(int site) const
+  { 
+    return s->getPathSite(site);
+  }
+ 
   // The operator 
   void Dslash<double>::operator() (double* res, 
 				   double* psi, 
@@ -84,7 +89,7 @@ namespace CPlusPlusWilsonDslash {
 	 FourSpinor temp;
 	 int thissite;
 	 
-	 thissite=shift->siteTable(low);
+	 thissite=shift->getPathSite(low);
 	 
 	 /* This is like a prefetch 
 	    - we peel it off the loop */
@@ -94,13 +99,13 @@ namespace CPlusPlusWilsonDslash {
 	 
 	 
 	 /* Get Gauge Field */
-	 up=&(gauge_field[thissite][0]);
+	 up=&(gauge_field[low][0]);
 	 
 	 /************************ loop over all lattice sites *************************/
 	 for (ix=low;ix<high;ix++) 
 	   {
 	     /******************************* direction +0 *********************************/
-	     rn=&res[thissite];
+	     rn=&res[ix];
 	     
 	     /******************************   Direction 0  ********************* */
 	     /* Prefetch back spinor for next dir: -0 */
@@ -120,7 +125,7 @@ namespace CPlusPlusWilsonDslash {
 	     /* And gauge field */
 	     sp=&psi[ shift->forwardNeighbor(ix,1) ];
 
-	     up =&(gauge_field[thissite][1]);
+	     up =&(gauge_field[ix][1]);
 	     
 	     dslash_plus_dir0_backward_add(*sm,*um,*rn);
 	     
@@ -144,7 +149,7 @@ namespace CPlusPlusWilsonDslash {
 	     iy=shift->forwardNeighbor(ix,2);
 	     sp=&psi[iy];
 
-	     up = &(gauge_field[thissite][2]);
+	     up = &(gauge_field[ix][2]);
 
 	     
 	     
@@ -169,7 +174,7 @@ namespace CPlusPlusWilsonDslash {
 	     iy=shift->forwardNeighbor(ix,3);
 	     sp=&psi[iy];
 
-	     up = &(gauge_field[thissite][3]);
+	     up = &(gauge_field[ix][3]);
 
 	     
 	     dslash_plus_dir2_backward_add(*sm,*um,*rn);
@@ -188,7 +193,7 @@ namespace CPlusPlusWilsonDslash {
 	     
 	     /* Next site */
 	     iz=ix+1;
-	     thissite = shift->siteTable(iz);
+	     thissite = shift->getPathSite(iz);
 	     if (iz == high) { /* If we're on the last site, prefetch first site to avoid */
 	       iz=0;           /* Running beyond array bounds */
 	     }
@@ -198,7 +203,7 @@ namespace CPlusPlusWilsonDslash {
 	     iy=shift->forwardNeighbor(iz,0);
 	     sp=&psi[iy];
 
-	     up=&(gauge_field[thissite][0]);
+	     up=&(gauge_field[iz][0]);
 
 	     
 	     
@@ -232,17 +237,17 @@ namespace CPlusPlusWilsonDslash {
       const int high  = cb*total_vol_cb+hi;                /* Last site for this thread */
       int thissite;
       
-      thissite=shift->siteTable(low);
+      thissite=shift->getPathSite(low);
       
       /* 'peel this off' to allow prefetching */
       iy=shift->forwardNeighbor(low,0);
       sp=&psi[iy];
-      up=&(gauge_field[thissite][0]);
+      up=&(gauge_field[low][0]);
       
       /************************ loop over all lattice sites *************************/
       
       for (ix=low;ix<high;ix++) {
-	rn=&res[thissite]; /* Pouinter to result */
+	rn=&res[ix]; /* Pouinter to result */
 	
 	
 	/* Prefetch back spinor and gauge field */
@@ -259,7 +264,7 @@ namespace CPlusPlusWilsonDslash {
 	iy=shift->forwardNeighbor(ix,1);
 	sp=&psi[iy];
 
-	up = &(gauge_field[thissite][1]);
+	up = &(gauge_field[ix][1]);
 
 	
 	dslash_minus_dir0_backward_add(*sm,*um,*rn);    
@@ -280,7 +285,7 @@ namespace CPlusPlusWilsonDslash {
 	iy=shift->forwardNeighbor(ix,2);
 	sp=&psi[iy];
 
-	up =&(gauge_field[thissite][2]);
+	up =&(gauge_field[ix][2]);
 
 	
 	dslash_minus_dir1_backward_add(*sm,*um,*rn);    
@@ -304,7 +309,7 @@ namespace CPlusPlusWilsonDslash {
 
 	
 	/* Prefetch gauge field for nex dir: 3+ */
-	up = &(gauge_field[thissite][3]);
+	up = &(gauge_field[ix][3]);
 
 	
 	dslash_minus_dir2_backward_add(*sm,*um,*rn);    
@@ -328,14 +333,14 @@ namespace CPlusPlusWilsonDslash {
 			   avoid running past the array bounds */
 	  iz=0;
 	}
-	thissite = shift->siteTable(iz);
+	thissite = shift->getPathSite(iz);
 	
 	/* Prefetch the spinor and gauge field for next site, dir 0+ */
 	iy=shift->forwardNeighbor(iz,0);
 	sp=&psi[iy];
 
 	/* Prefetch the gauge field for next site dir  0+ */
-	up=&(gauge_field[thissite][0]);
+	up=&(gauge_field[iz][0]);
 
 	
 	dslash_minus_dir3_backward_add_store(*sm,*um,*rn);    
