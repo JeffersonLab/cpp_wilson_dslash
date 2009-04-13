@@ -24,28 +24,9 @@ using namespace Assertions;
 using namespace std;
 using namespace CPlusPlusClover;
 
-#ifdef DSLASH_USE_OMP_THREADS
-#include <omp.h>
-#endif
-
 void
 timeClover::run(void) 
 {
-
-  // If we have openmp then do this
-#ifdef DSLASH_USE_OMP_THREADS
-  int threads_num;
-  int myId;
-
-#pragma omp parallel private(threads_num, myId) default(none)
-  {
-    threads_num = omp_get_num_threads();
-    myId = omp_get_thread_num();
-    if ( myId == 0 ) { 
-      printf("\nRunning with %d OpenMP threads\n", threads_num);
-    }
-  }
-#endif
 
   LatticeFermionF3 chi, psi;
   LatticeFermionD3 chid, psid;

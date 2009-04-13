@@ -127,12 +127,12 @@ void dslash_a(T& chi,
 
 }
 
-void dslash(LatticeFermionF& chi, 
-	    const multi1d<LatticeColorMatrixF>& u, 
-	    const LatticeFermionF& psi,
+void dslash(LatticeFermion& chi, 
+	    const multi1d<LatticeColorMatrix>& u, 
+	    const LatticeFermion& psi,
 	    int isign, int cb)
 {
-  dslash_a<LatticeFermionF, LatticeHalfFermionF, LatticeColorMatrixF>(chi, u, psi, isign, cb);
+  dslash_a<LatticeFermion, LatticeHalfFermion, LatticeColorMatrix>(chi, u, psi, isign, cb);
 }
 
 

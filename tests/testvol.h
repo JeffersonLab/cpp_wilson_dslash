@@ -1,2 +1,2 @@
-const int nrow_in[] = { 16,16,16,32 };
-const int iters = 1500;
+const int nrow_in[] = { 32,4,4,4 };
+const int iters = 16384;

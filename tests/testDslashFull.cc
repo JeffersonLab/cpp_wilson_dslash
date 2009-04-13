@@ -21,30 +21,15 @@ using namespace Assertions;
 using namespace std;
 using namespace CPlusPlusWilsonDslash;
 
-#ifdef DSLASH_USE_OMP_THREADS
-#include <omp.h>
-#endif
 void
 testDslashFull::run(void) 
 {
 
   // If we have openmp then do this
-#ifdef DSLASH_USE_OMP_THREADS
-  int threads_num;
-  int myId;
 
-#pragma omp parallel private(threads_num, myId) default(none)
-  {
-    threads_num = omp_get_num_threads();
-    myId = omp_get_thread_num();
-    if ( myId == 0 ) { 
-      printf("\nRunning with %d OpenMP threads\n", threads_num);
-    }
-  }
-#endif
-
-  LatticeFermionF3 chi, chi2, psi;
+  LatticeFermionF3 chi;
   LatticeFermionD3 chid, chi2d, psid;
+  LatticeFermion psi, chi2;
 
   // What we consider to be small enough...
   Double small32,small64;

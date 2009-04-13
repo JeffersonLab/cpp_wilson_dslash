@@ -26,27 +26,10 @@ using namespace CPlusPlusWilsonDslash;
 using namespace CPlusPlusClover;
 using namespace CPlusPlusClover::CPlusPlusClover32Bit;
 using namespace Dslash32BitTypes;
-#ifdef DSLASH_USE_OMP_THREADS
-#include <omp.h>
-#endif
+
 void
 testClover::run(void) 
 {
-
-  // If we have openmp then do this
-#ifdef DSLASH_USE_OMP_THREADS
-  int threads_num;
-  int myId;
-
-#pragma omp parallel private(threads_num, myId) default(none)
-  {
-    threads_num = omp_get_num_threads();
-    myId = omp_get_thread_num();
-    if ( myId == 0 ) { 
-      printf("\nRunning with %d OpenMP threads\n", threads_num);
-    }
-  }
-#endif
 
   LatticeFermionF3 chi, Dpsi, ADpsi;
   LatticeFermionF3 chi2,psi;
