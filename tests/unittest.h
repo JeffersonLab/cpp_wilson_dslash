@@ -98,9 +98,6 @@ private:
   {
     
     QDP_initialize(argc, argv);
-    QDPIO::cout << "Success" << endl;
-    QDPIO::cout << "Created: " << qdpNumThreads() << " threads" << endl;
-
     multi1d<int> nrow(Nd);
     nrow = latdims;
     Layout::setLattSize(nrow);

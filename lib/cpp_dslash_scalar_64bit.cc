@@ -26,10 +26,10 @@ namespace CPlusPlusWilsonDslash {
 
   Dslash<double>::~Dslash() { delete s; }
   
-  int Dslash<double>::getPathSite(int site) const
-  { 
-    return s->getPathSite(site);
-  }
+  //  int Dslash<double>::getPathSite(int site) const
+  // { 
+  //  return s->getPathSite(site);
+  // }
  
   // The operator 
   void Dslash<double>::operator() (double* res, 
@@ -89,8 +89,8 @@ namespace CPlusPlusWilsonDslash {
 	 FourSpinor temp;
 	 int thissite;
 	 
-	 thissite=shift->getPathSite(low);
-	 
+	 //thissite=shift->getPathSite(low);
+	 thissite=shift->siteTable(low);
 	 /* This is like a prefetch 
 	    - we peel it off the loop */
 	 
@@ -193,7 +193,8 @@ namespace CPlusPlusWilsonDslash {
 	     
 	     /* Next site */
 	     iz=ix+1;
-	     thissite = shift->getPathSite(iz);
+	     // thissite = shift->getPathSite(iz);
+	     thissite = shift->siteTable(iz);
 	     if (iz == high) { /* If we're on the last site, prefetch first site to avoid */
 	       iz=0;           /* Running beyond array bounds */
 	     }
@@ -237,8 +238,8 @@ namespace CPlusPlusWilsonDslash {
       const int high  = cb*total_vol_cb+hi;                /* Last site for this thread */
       int thissite;
       
-      thissite=shift->getPathSite(low);
-      
+      //      thissite=shift->getPathSite(low);
+      thissite = shift->siteTable(low);
       /* 'peel this off' to allow prefetching */
       iy=shift->forwardNeighbor(low,0);
       sp=&psi[iy];
@@ -333,8 +334,9 @@ namespace CPlusPlusWilsonDslash {
 			   avoid running past the array bounds */
 	  iz=0;
 	}
-	thissite = shift->getPathSite(iz);
-	
+	//	thissite = shift->getPathSite(iz);
+	thissite = shift->siteTable(iz);
+
 	/* Prefetch the spinor and gauge field for next site, dir 0+ */
 	iy=shift->forwardNeighbor(iz,0);
 	sp=&psi[iy];

@@ -9,7 +9,8 @@
 using namespace QDP;
 
 // Reunitarize a Lattice Color Matrix
-void reunit(LatticeColorMatrix& a);
+void reunit(LatticeColorMatrixF& a);
+void reunit(LatticeColorMatrixD& a);
 
 
 // End of Include guard

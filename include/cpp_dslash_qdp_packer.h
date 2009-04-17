@@ -1,9 +1,9 @@
 #ifndef CPP_DSLASH_QDP_PACKER_H
 #define CPP_DSLASH_QDP_PACKER_H
 
-#ifndef QDP_INCLUDE
+
 #include "qdp.h"
-#endif 
+using namespace QDP;
 
 namespace CPlusPlusWilsonDslash { 
 

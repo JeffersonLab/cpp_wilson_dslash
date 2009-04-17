@@ -26,10 +26,10 @@ namespace CPlusPlusWilsonDslash {
       
   Dslash<float>::~Dslash() { delete s; }
 
-  int Dslash<float>::getPathSite(int site) const
-    { 
-      return s->getPathSite(site);
-    }
+  //  int Dslash<float>::getPathSite(int site) const
+  //  { 
+  //    return s->getPathSite(site);
+  //  }
  
   // The operator 
   void Dslash<float>::operator() (float* res, 
@@ -110,9 +110,9 @@ namespace CPlusPlusWilsonDslash {
     
 
       for (int ix1 = low; ix1 < high; ix1++)  {
-	int thissite = s->getPathSite(ix1);
+	//int thissite = s->getPathSite(ix1);
 
-	// int thissite = s->siteTable( ix1 );
+	int thissite = s->siteTable( ix1 );
 	int fsite = s->forwardNeighbor(ix1,0);
 	int bsite = s->backwardNeighbor(ix1,0);
 	
@@ -211,7 +211,8 @@ namespace CPlusPlusWilsonDslash {
       for (int ix1 = low ; ix1 < high; ix1++) {
 	//	ix1 = s->getPathSite(cb, site_iter);
 
-	int thissite = s->getPathSite( ix1 );
+	//	int thissite = s->getPathSite( ix1 );
+	int thissite = s->siteTable(ix1);
 	int fsite = s->forwardNeighbor(ix1,0);
 	
 	sp1 = &psi[ fsite  ];

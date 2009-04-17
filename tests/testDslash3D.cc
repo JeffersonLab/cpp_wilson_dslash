@@ -81,7 +81,7 @@ testDslash3D::run(void)
       dslash_3d(chi2,u,psi, isign, target_cb);
       
       // Check the difference per number in chi vector
-      LatticeFermion diff = chi2 -chi;
+      LatticeFermionF diff = chi2 -chi;
 
       Double diff_norm = sqrt( norm2( diff ) ) 
 	/ ( Real(4*3*2*Layout::vol()) / Real(2));

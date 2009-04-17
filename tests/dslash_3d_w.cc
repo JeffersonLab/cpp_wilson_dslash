@@ -5,10 +5,10 @@
 using namespace QDP;
 
 
-
-void dslash_3d(LatticeFermion& chi, 
-	       const multi1d<LatticeColorMatrix>& u, 
-	       const LatticeFermion& psi,
+template<typename T, typename U>
+void dslash_3d_T(T& chi, 
+	       const multi1d<U>& u, 
+	       const T& psi,
 	       int isign, int cb3d)
 {
     /*     F 
@@ -109,4 +109,20 @@ void dslash_3d(LatticeFermion& chi,
       
       break;
     }
+}
+
+void dslash_3d(LatticeFermionF& chi, 
+	       const multi1d<LatticeColorMatrixF>& u,
+	       const LatticeFermionF& psi,
+	       int isign, int cb3d)
+{
+  dslash_3d_T(chi, u, psi, isign, cb3d);
+}
+
+void dslash_3d(LatticeFermionD& chi, 
+	       const multi1d<LatticeColorMatrixD>& u,
+	       const LatticeFermionD& psi,
+	       int isign, int cb3d)
+{
+ dslash_3d_T(chi, u, psi, isign, cb3d);
 }
