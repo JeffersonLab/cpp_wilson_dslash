@@ -9,7 +9,7 @@ nobase_include_HEADERS= cpp_dslash.h \
 
 
 if SCALAR
-nobase_include_HEADERS += 
+nobase_include_HEADERS += \
 	cpp_dslash_scalar.h \
 	dispatch_scalar.h \
 	shift_table_scalar.h \
@@ -26,7 +26,7 @@ nobase_include_HEADERS +=
 endif
 
 if PARSCALAR
-nobase_include_HEADERS += cpp_dslash_parscalar.h
+nobase_include_HEADERS += cpp_dslash_parscalar.h \
 	dispatch_parscalar.h \
 	shift_table_parscalar_types.h \
 	shift_table_parscalar.h \
