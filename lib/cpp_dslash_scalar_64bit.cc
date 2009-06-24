@@ -79,7 +79,7 @@ namespace CPlusPlusWilsonDslash {
 	 const int low = cb*total_vol_cb+lo;
 	 const int high = cb*total_vol_cb+hi;
 	 
-	 GaugeMatrix (*gauge_field)[4] ALIGN = (GaugeMatrix(*)[4])a->u;        /* My gauge field */
+	 GaugeMatrix ALIGN (*gauge_field)[4] = (GaugeMatrix(*)[4])a->u;        /* My gauge field */
 	 FourSpinor *psi = (FourSpinor *)a->psi;                        /* Source */
 	 FourSpinor *res = (FourSpinor *)a->res;                        /* Result */
 

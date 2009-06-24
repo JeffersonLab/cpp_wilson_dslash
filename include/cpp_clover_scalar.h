@@ -12,7 +12,6 @@ using namespace std;
 #include <cpp_dslash_scalar.h>
 
 using namespace CPlusPlusWilsonDslash;
-class CPlusPlusWilsonDslash::ShiftTable;
 
 namespace CPlusPlusClover {
 

@@ -1,8 +1,6 @@
 #ifndef CPP_DSLASH_SCALAR_32BIT_H
 #define CPP_DSLASH_SCALAR_32BIT_H
 
-#include <xmmintrin.h>
-
 #ifndef ALIGN
 #define ALIGN __attribute__ ((aligned(16)))
 #endif

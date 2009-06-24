@@ -1,7 +1,9 @@
 #ifndef CPP_DSLASH_TYPES_H
 #define CPP_DSLASH_TYPES_H
 
+
 namespace CPlusPlusWilsonDslash {
+
 
   namespace Dslash32BitTypes {
    typedef float FourSpinor[4][3][2];

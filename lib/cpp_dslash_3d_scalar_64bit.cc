@@ -145,7 +145,7 @@ namespace CPlusPlusWilsonDslash {
       const int cb = a->cb;
       
       
-      GaugeMatrix (*gauge_field)[4] ALIGN =(GaugeMatrix (*)[4])a->u; /* Gauge field */
+      GaugeMatrix ALIGN (*gauge_field)[4] =(GaugeMatrix (*)[4])a->u; /* Gauge field */
       FourSpinor *psi = (FourSpinor*)a->psi;                 /* Source spinor */
       FourSpinor *res = (FourSpinor*)a->res;                 /* Result spinor */
       GaugeMatrix *up,*um;                        /* us for multiply (PLUS/MINUS) */

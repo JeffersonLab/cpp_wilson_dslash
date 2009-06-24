@@ -393,7 +393,7 @@ namespace CPlusPlusClover {
       const CloverThreadWorkerArgs *a = (const CloverThreadWorkerArgs*)ptr;    /* Cast the void args pointer */
       ShiftTable *shift = (ShiftTable *)a->s;
       int total_vol_cb = shift->totalVolCB();
-      GaugeMatrix (*gauge_field)[4] ALIGN = (GaugeMatrix (*)[4])a->u; /* Gauge field */
+      GaugeMatrix ALIGN (*gauge_field)[4] = (GaugeMatrix (*)[4])a->u; /* Gauge field */
       FourSpinor *psi = (FourSpinor *)a->psi;                 /* Source spinor */
       FourSpinor *res = (FourSpinor *)a->res;                 /* Result spinor */
       FourSpinor *t_spinor = (FourSpinor *)a->t_spinor;
