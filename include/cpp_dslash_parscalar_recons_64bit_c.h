@@ -1,9 +1,7 @@
 #ifndef CPP_DSLASH_PARSCALAR_RECONS_64BIT_C_H
 #define CPP_DSLASH_PARSCALAR_RECONS_64BIT_C_H
 
-#include <xmmintrin.h>
 #include <cpp_dslash_types.h>
-#include <sse_sign_64bit.h>
 
 using namespace CPlusPlusWilsonDslash::Dslash64BitTypes;
 

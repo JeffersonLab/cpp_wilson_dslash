@@ -16,7 +16,24 @@
 #include "cpp_dslash_parscalar_decomp_hvv_32bit_c.h"
 #include "cpp_dslash_parscalar_mvv_recons_32bit_c.h"
 #include "cpp_dslash_parscalar_recons_32bit_c.h"
+
+#define ALIGN __attribute__ ((aligned(16)))
 #endif
+
+#ifdef DSLASH_PREFETCH
+
+#define PREFETCH(addr,hint)  _mm_prefetch((addr),(hint))
+
+#else
+
+#define PREFETCH(addr,hint)  
+
+#endif
+
+
+
+#include <cstring>
+using namespace std;
 
 namespace CPlusPlusWilsonDslash { 
   using namespace Dslash32BitTypes;

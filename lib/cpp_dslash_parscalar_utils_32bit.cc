@@ -3,6 +3,7 @@
 #include "dispatch_parscalar.h"
 #include "cpp_dslash_types.h"
 
+
 namespace CPlusPlusWilsonDslash { 
   using namespace Dslash32BitTypes;
 
@@ -38,45 +39,45 @@ namespace CPlusPlusWilsonDslash {
     /************************ loop over all lattice sites *************************/
     thissite = s->siteTable(low);
     sp1=&spinor_field[thissite]; 
-    _mm_prefetch(sp1, _MM_HINT_T0);
+    PREFETCH(sp1, _MM_HINT_T0);
     
  
     s3 =  s->halfspinorBufferOffset(DECOMP_SCATTER,low,0);
-    _mm_prefetch(s3, _MM_HINT_T0);
+    PREFETCH(s3, _MM_HINT_T0);
 
     s4 =  s->halfspinorBufferOffset(DECOMP_SCATTER,low,1);
-    _mm_prefetch(s4, _MM_HINT_T0);
+    PREFETCH(s4, _MM_HINT_T0);
 
     s5 =  s->halfspinorBufferOffset(DECOMP_SCATTER,low,2);
-    _mm_prefetch(s5, _MM_HINT_T0);
+    PREFETCH(s5, _MM_HINT_T0);
 
 
     s6 =  s->halfspinorBufferOffset(DECOMP_SCATTER,low,3);
-    _mm_prefetch(s6, _MM_HINT_T0);
+    PREFETCH(s6, _MM_HINT_T0);
 
     for (ix1=low+1; ix1<high;ix1++) {
       thissite=s->siteTable(ix1); // Next site  
       sp2=&spinor_field[thissite]; // For prefetching
-      _mm_prefetch(sp2, _MM_HINT_T0);
+      PREFETCH(sp2, _MM_HINT_T0);
   
       decomp_gamma0_minus(sp1[0], *s3);
       s3 =  s->halfspinorBufferOffset(DECOMP_SCATTER,ix1,0);
-      _mm_prefetch(s3, _MM_HINT_T0);
+      PREFETCH(s3, _MM_HINT_T0);
 
       decomp_gamma1_minus(sp1[0], *s4);
       s4 =  s->halfspinorBufferOffset(DECOMP_SCATTER,ix1,1);
-      _mm_prefetch(s4, _MM_HINT_T0);
+      PREFETCH(s4, _MM_HINT_T0);
 
       decomp_gamma2_minus(sp1[0], *s5);
       s5 =  s->halfspinorBufferOffset(DECOMP_SCATTER,ix1,2);
-      _mm_prefetch(s5, _MM_HINT_T0);
+      PREFETCH(s5, _MM_HINT_T0);
 
 
 
 
       decomp_gamma3_minus(sp1[0], *s6);
       s6 =  s->halfspinorBufferOffset(DECOMP_SCATTER,ix1,3);
-      _mm_prefetch(s6, _MM_HINT_T0);
+      PREFETCH(s6, _MM_HINT_T0);
       
       sp1=sp2; // For prefetching
     }
@@ -140,17 +141,17 @@ void decomp_hvv_plus(size_t lo,size_t hi, int id, const void *ptr)
   um3=&gauge_field[thissite][2];
   um4=&gauge_field[thissite][3];
 
-  _mm_prefetch(s3, _MM_HINT_T0);
-  _mm_prefetch(um1,_MM_HINT_T0);
+  PREFETCH(s3, _MM_HINT_T0);
+  PREFETCH(um1,_MM_HINT_T0);
 
-  _mm_prefetch(s4, _MM_HINT_T0);
-  _mm_prefetch(um2,_MM_HINT_T0);
+  PREFETCH(s4, _MM_HINT_T0);
+  PREFETCH(um2,_MM_HINT_T0);
 
-  _mm_prefetch(s5, _MM_HINT_T0);
-  _mm_prefetch(um3, _MM_HINT_T0);
+  PREFETCH(s5, _MM_HINT_T0);
+  PREFETCH(um3, _MM_HINT_T0);
 
-  _mm_prefetch(s6, _MM_HINT_T0);
-  _mm_prefetch(um4, _MM_HINT_T0);
+  PREFETCH(s6, _MM_HINT_T0);
+  PREFETCH(um4, _MM_HINT_T0);
 
   sm1=&spinor_field[thissite];
 
@@ -163,36 +164,36 @@ void decomp_hvv_plus(size_t lo,size_t hi, int id, const void *ptr)
     decomp_hvv_gamma0_plus(*sm1,*um1,*s3);
     s3 =  s->halfspinorBufferOffset(DECOMP_HVV_SCATTER,ix1,0);
     um1=&gauge_field[thissite][0];
-    _mm_prefetch(s3, _MM_HINT_T0);
-    _mm_prefetch(um1,_MM_HINT_T0);
+    PREFETCH(s3, _MM_HINT_T0);
+    PREFETCH(um1,_MM_HINT_T0);
 
     decomp_hvv_gamma1_plus(*sm1,*um2,*s4);
     s4 =  s->halfspinorBufferOffset(DECOMP_HVV_SCATTER,ix1,1);
     um2=&gauge_field[thissite][1];
-    _mm_prefetch(s4, _MM_HINT_T0);
-    _mm_prefetch(um2, _MM_HINT_T0);
+    PREFETCH(s4, _MM_HINT_T0);
+    PREFETCH(um2, _MM_HINT_T0);
 
-    _mm_prefetch(sm1,_MM_HINT_T0);
+    PREFETCH(sm1,_MM_HINT_T0);
 
     decomp_hvv_gamma2_plus(*sm1,*um3,*s5);
     s5 =  s->halfspinorBufferOffset(DECOMP_HVV_SCATTER,ix1,2);
     um3=&gauge_field[thissite][2];
-    _mm_prefetch(s5, _MM_HINT_T0);
-    _mm_prefetch(um3, _MM_HINT_T0);
+    PREFETCH(s5, _MM_HINT_T0);
+    PREFETCH(um3, _MM_HINT_T0);
 
 
     decomp_hvv_gamma3_plus(*sm1,*um4,*s6);
     s6 =  s->halfspinorBufferOffset(DECOMP_HVV_SCATTER,ix1,3);
     um4=&gauge_field[thissite][3];
-    _mm_prefetch(s6, _MM_HINT_T0);
-    _mm_prefetch(um4, _MM_HINT_T0);
+    PREFETCH(s6, _MM_HINT_T0);
+    PREFETCH(um4, _MM_HINT_T0);
     
     sm1=sm2;
   }
   decomp_hvv_gamma0_plus(*sm1,*um1,*s3);
   decomp_hvv_gamma1_plus(*sm1,*um2,*s4);
 
-  _mm_prefetch(sm1,_MM_HINT_T0);
+  PREFETCH(sm1,_MM_HINT_T0);
 
   decomp_hvv_gamma2_plus(*sm1,*um3,*s5);
   decomp_hvv_gamma3_plus(*sm1,*um4,*s6);
@@ -252,17 +253,17 @@ void mvv_recons_plus(size_t lo,size_t hi, int id, const void *ptr)
   up3=&gauge_field[thissite][2];
   up4=&gauge_field[thissite][3];
 
-  _mm_prefetch(s3, _MM_HINT_T0);
-  _mm_prefetch(up1,_MM_HINT_T0);
+  PREFETCH(s3, _MM_HINT_T0);
+  PREFETCH(up1,_MM_HINT_T0);
 
-  _mm_prefetch(s4, _MM_HINT_T0);
-  _mm_prefetch(up2,_MM_HINT_T0);
+  PREFETCH(s4, _MM_HINT_T0);
+  PREFETCH(up2,_MM_HINT_T0);
 
-  _mm_prefetch(s5, _MM_HINT_T0);
-  _mm_prefetch(up3, _MM_HINT_T0);
+  PREFETCH(s5, _MM_HINT_T0);
+  PREFETCH(up3, _MM_HINT_T0);
 
-  _mm_prefetch(s6, _MM_HINT_T0);
-  _mm_prefetch(up4, _MM_HINT_T0);
+  PREFETCH(s6, _MM_HINT_T0);
+  PREFETCH(up4, _MM_HINT_T0);
 
   sn1=&spinor_field[thissite];    
 
@@ -275,29 +276,29 @@ void mvv_recons_plus(size_t lo,size_t hi, int id, const void *ptr)
     mvv_recons_gamma0_plus(*s3, *up1, r12_1, r34_1);
     s3 =  s->halfspinorBufferOffset(RECONS_MVV_GATHER,ix1,0);
     up1=&gauge_field[thissite][0]; 
-    _mm_prefetch(s3, _MM_HINT_T0);
-    _mm_prefetch(up1,_MM_HINT_T0);
+    PREFETCH(s3, _MM_HINT_T0);
+    PREFETCH(up1,_MM_HINT_T0);
 
     mvv_recons_gamma1_plus_add(*s4, *up2, r12_1, r34_1);
     s4 =  s->halfspinorBufferOffset(RECONS_MVV_GATHER,ix1,1);
     up2=&gauge_field[thissite][1]; 
-    _mm_prefetch(s4, _MM_HINT_T0);
-    _mm_prefetch(up2, _MM_HINT_T0);
+    PREFETCH(s4, _MM_HINT_T0);
+    PREFETCH(up2, _MM_HINT_T0);
 
     
-    _mm_prefetch(sn1,_MM_HINT_T0);
+    PREFETCH(sn1,_MM_HINT_T0);
 
     mvv_recons_gamma2_plus_add(*s5, *up3, r12_1, r34_1);
     s5 =  s->halfspinorBufferOffset(RECONS_MVV_GATHER,ix1,2);
     up3=&gauge_field[thissite][2];
-    _mm_prefetch(s5, _MM_HINT_T0);
-    _mm_prefetch(up3, _MM_HINT_T0);
+    PREFETCH(s5, _MM_HINT_T0);
+    PREFETCH(up3, _MM_HINT_T0);
 
     mvv_recons_gamma3_plus_add_store(*s6, *up4, r12_1, r34_1,*sn1);
     s6 =  s->halfspinorBufferOffset(RECONS_MVV_GATHER,ix1,3);
     up4=&gauge_field[thissite][3];
-    _mm_prefetch(s6, _MM_HINT_T0);
-    _mm_prefetch(up4, _MM_HINT_T0);
+    PREFETCH(s6, _MM_HINT_T0);
+    PREFETCH(up4, _MM_HINT_T0);
   
     sn1=sn2;
   }
@@ -305,7 +306,7 @@ void mvv_recons_plus(size_t lo,size_t hi, int id, const void *ptr)
   mvv_recons_gamma0_plus(*s3, *up1, r12_1, r34_1);
   mvv_recons_gamma1_plus_add(*s4, *up2, r12_1, r34_1);
 
-  _mm_prefetch(sn1,_MM_HINT_T0);
+  PREFETCH(sn1,_MM_HINT_T0);
 
   mvv_recons_gamma2_plus_add(*s5, *up3, r12_1, r34_1);
   mvv_recons_gamma3_plus_add_store(*s6, *up4, r12_1, r34_1,*sn1);
@@ -350,38 +351,38 @@ void recons_plus(size_t lo,size_t hi, int id, const void *ptr )
 
 
   hs0 =  s->halfspinorBufferOffset(RECONS_GATHER,low,0); 
-  _mm_prefetch(hs0, _MM_HINT_NTA);
+  PREFETCH(hs0, _MM_HINT_NTA);
 
   hs1 =  s->halfspinorBufferOffset(RECONS_GATHER,low,1); 
-  _mm_prefetch(hs1, _MM_HINT_NTA);
+  PREFETCH(hs1, _MM_HINT_NTA);
 
   hs2 =  s->halfspinorBufferOffset(RECONS_GATHER,low,2); 
-  _mm_prefetch(hs2, _MM_HINT_NTA);
+  PREFETCH(hs2, _MM_HINT_NTA);
 
   hs3 =  s->halfspinorBufferOffset(RECONS_GATHER,low,3);
-  _mm_prefetch(hs3, _MM_HINT_NTA);
+  PREFETCH(hs3, _MM_HINT_NTA);
 
   sn1=&spinor_field[thissite];   
-  _mm_prefetch(sn1, _MM_HINT_NTA);
+  PREFETCH(sn1, _MM_HINT_NTA);
 
   for (ix1=low+1;ix1<high;ix1++) {
     thissite = s->siteTable(ix1);
     sn2 = &spinor_field[thissite];   
-    _mm_prefetch(sn2, _MM_HINT_NTA);
+    PREFETCH(sn2, _MM_HINT_NTA);
    
     recons_4dir_plus(*hs0, *hs1, *hs2, *hs3, *sn1);
 
     hs0 =  s->halfspinorBufferOffset(RECONS_GATHER,ix1,0); 
-    _mm_prefetch(hs0, _MM_HINT_NTA);
+    PREFETCH(hs0, _MM_HINT_NTA);
 
     hs1 =  s->halfspinorBufferOffset(RECONS_GATHER,ix1,1); 
-    _mm_prefetch(hs1, _MM_HINT_NTA);
+    PREFETCH(hs1, _MM_HINT_NTA);
 
     hs2 =  s->halfspinorBufferOffset(RECONS_GATHER,ix1,2); 
-    _mm_prefetch(hs2, _MM_HINT_NTA);
+    PREFETCH(hs2, _MM_HINT_NTA);
 
     hs3 =  s->halfspinorBufferOffset(RECONS_GATHER,ix1,3); 
-    _mm_prefetch(hs3, _MM_HINT_NTA);
+    PREFETCH(hs3, _MM_HINT_NTA);
 
     sn1=sn2;
     /*************************end of loop ****************************/
@@ -426,42 +427,42 @@ void decomp_minus(size_t lo,size_t hi, int id, const void *ptr ) /*need to fix d
 
   thissite = s->siteTable(low);
   sp1=&spinor_field[thissite]; 
-  _mm_prefetch(sp1, _MM_HINT_T0);
+  PREFETCH(sp1, _MM_HINT_T0);
   
   s3 =  s->halfspinorBufferOffset(DECOMP_SCATTER,low,0);
-  _mm_prefetch(s3, _MM_HINT_T0);
+  PREFETCH(s3, _MM_HINT_T0);
   
   s4 =  s->halfspinorBufferOffset(DECOMP_SCATTER,low,1);
-  _mm_prefetch(s4, _MM_HINT_T0);
+  PREFETCH(s4, _MM_HINT_T0);
   
   s5 =  s->halfspinorBufferOffset(DECOMP_SCATTER,low,2);
-  _mm_prefetch(s5, _MM_HINT_T0);
+  PREFETCH(s5, _MM_HINT_T0);
   
   s6 =  s->halfspinorBufferOffset(DECOMP_SCATTER,low,3);
-  _mm_prefetch(s6, _MM_HINT_T0);
+  PREFETCH(s6, _MM_HINT_T0);
 
   
   for (ix1=low+1;ix1<high;ix1++) {
     thissite=s->siteTable(ix1); // Next site  
     sp2=&spinor_field[thissite]; // For prefetching
-    _mm_prefetch(sp2, _MM_HINT_T0);
+    PREFETCH(sp2, _MM_HINT_T0);
   
     
     decomp_gamma0_plus(sp1[0], *s3);
     s3 =  s->halfspinorBufferOffset(DECOMP_SCATTER,ix1,0);
-    _mm_prefetch(s3, _MM_HINT_T0);
+    PREFETCH(s3, _MM_HINT_T0);
 
     decomp_gamma1_plus(sp1[0], *s4);
     s4 =  s->halfspinorBufferOffset(DECOMP_SCATTER,ix1,1);
-    _mm_prefetch(s4, _MM_HINT_T0);
+    PREFETCH(s4, _MM_HINT_T0);
       
     decomp_gamma2_plus(sp1[0], *s5);
     s5 =  s->halfspinorBufferOffset(DECOMP_SCATTER,ix1,2);
-    _mm_prefetch(s5, _MM_HINT_T0);
+    PREFETCH(s5, _MM_HINT_T0);
 
     decomp_gamma3_plus(sp1[0], *s6);    
     s6 =  s->halfspinorBufferOffset(DECOMP_SCATTER,ix1,3);
-    _mm_prefetch(s6, _MM_HINT_T0);
+    PREFETCH(s6, _MM_HINT_T0);
       
     sp1=sp2; // For prefetching
   }
@@ -518,17 +519,17 @@ void decomp_hvv_minus(size_t lo,size_t hi, int id, const void *ptr )
   um3=&gauge_field[thissite][2];
   um4=&gauge_field[thissite][3];
 
-  _mm_prefetch(s3, _MM_HINT_T0);
-  _mm_prefetch(um1,_MM_HINT_T0);
+  PREFETCH(s3, _MM_HINT_T0);
+  PREFETCH(um1,_MM_HINT_T0);
 
-  _mm_prefetch(s4, _MM_HINT_T0);
-  _mm_prefetch(um2,_MM_HINT_T0);
+  PREFETCH(s4, _MM_HINT_T0);
+  PREFETCH(um2,_MM_HINT_T0);
 
-  _mm_prefetch(s5, _MM_HINT_T0);
-  _mm_prefetch(um3, _MM_HINT_T0);
+  PREFETCH(s5, _MM_HINT_T0);
+  PREFETCH(um3, _MM_HINT_T0);
 
-  _mm_prefetch(s6, _MM_HINT_T0);
-  _mm_prefetch(um4, _MM_HINT_T0);
+  PREFETCH(s6, _MM_HINT_T0);
+  PREFETCH(um4, _MM_HINT_T0);
 
 
   sm1 = &spinor_field[thissite];
@@ -541,30 +542,30 @@ void decomp_hvv_minus(size_t lo,size_t hi, int id, const void *ptr )
     decomp_hvv_gamma0_minus(*sm1, *um1, *s3);
     s3 =  s->halfspinorBufferOffset(DECOMP_HVV_SCATTER,ix1,0);
     um1=&gauge_field[thissite][0];
-    _mm_prefetch(s3, _MM_HINT_T0);
-    _mm_prefetch(um1,_MM_HINT_T0);
+    PREFETCH(s3, _MM_HINT_T0);
+    PREFETCH(um1,_MM_HINT_T0);
 
     decomp_hvv_gamma1_minus(*sm1, *um2, *s4);
     s4 =  s->halfspinorBufferOffset(DECOMP_HVV_SCATTER,ix1,1);
     um2=&gauge_field[thissite][1];
-    _mm_prefetch(s4, _MM_HINT_T0);
-    _mm_prefetch(um2, _MM_HINT_T0);
+    PREFETCH(s4, _MM_HINT_T0);
+    PREFETCH(um2, _MM_HINT_T0);
 
 
     decomp_hvv_gamma2_minus(*sm1, *um3, *s5);
     s5 =  s->halfspinorBufferOffset(DECOMP_HVV_SCATTER,ix1,2);
     um3=&gauge_field[thissite][2];
-    _mm_prefetch(s5, _MM_HINT_T0);
-    _mm_prefetch(um3, _MM_HINT_T0);
+    PREFETCH(s5, _MM_HINT_T0);
+    PREFETCH(um3, _MM_HINT_T0);
 
-    _mm_prefetch(sm1,_MM_HINT_T0);
+    PREFETCH(sm1,_MM_HINT_T0);
     
     decomp_hvv_gamma3_minus(*sm1, *um4, *s6);
     s6 =  s->halfspinorBufferOffset(DECOMP_HVV_SCATTER,ix1,3);
     um4=&gauge_field[thissite][3];
 
-    _mm_prefetch(s6, _MM_HINT_T0);
-    _mm_prefetch(um4, _MM_HINT_T0);
+    PREFETCH(s6, _MM_HINT_T0);
+    PREFETCH(um4, _MM_HINT_T0);
   
     sm1=sm2;
 
@@ -572,7 +573,7 @@ void decomp_hvv_minus(size_t lo,size_t hi, int id, const void *ptr )
   decomp_hvv_gamma0_minus(*sm1, *um1, *s3);
   decomp_hvv_gamma1_minus(*sm1, *um2, *s4);
 
-  _mm_prefetch(sm1,_MM_HINT_T0);
+  PREFETCH(sm1,_MM_HINT_T0);
 
   decomp_hvv_gamma2_minus(*sm1, *um3, *s5);
   decomp_hvv_gamma3_minus(*sm1, *um4, *s6);
@@ -624,17 +625,17 @@ void mvv_recons_minus(size_t lo,size_t hi, int id, const void *ptr )
   um3=&gauge_field[thissite][2];
   um4=&gauge_field[thissite][3];
 
-  _mm_prefetch(s3, _MM_HINT_T0);
-  _mm_prefetch(um1,_MM_HINT_T0);
+  PREFETCH(s3, _MM_HINT_T0);
+  PREFETCH(um1,_MM_HINT_T0);
 
-  _mm_prefetch(s4, _MM_HINT_T0);
-  _mm_prefetch(um2,_MM_HINT_T0);
+  PREFETCH(s4, _MM_HINT_T0);
+  PREFETCH(um2,_MM_HINT_T0);
 
-  _mm_prefetch(s5, _MM_HINT_T0);
-  _mm_prefetch(um3, _MM_HINT_T0);
+  PREFETCH(s5, _MM_HINT_T0);
+  PREFETCH(um3, _MM_HINT_T0);
 
-  _mm_prefetch(s6, _MM_HINT_T0);
-  _mm_prefetch(um4, _MM_HINT_T0);
+  PREFETCH(s6, _MM_HINT_T0);
+  PREFETCH(um4, _MM_HINT_T0);
 
   sn1=&spinor_field[thissite];    
 /************************ loop over all lattice sites *************************/
@@ -645,30 +646,30 @@ void mvv_recons_minus(size_t lo,size_t hi, int id, const void *ptr )
     mvv_recons_gamma0_minus(*s3, *um1, r12_1, r34_1);
     s3 =  s->halfspinorBufferOffset(RECONS_MVV_GATHER,ix1,0);
     um1=&gauge_field[thissite][0];  
-    _mm_prefetch(s3, _MM_HINT_T0);
-    _mm_prefetch(um1,_MM_HINT_T0);
+    PREFETCH(s3, _MM_HINT_T0);
+    PREFETCH(um1,_MM_HINT_T0);
 
     mvv_recons_gamma1_minus_add(*s4, *um2, r12_1, r34_1);
     s4 =  s->halfspinorBufferOffset(RECONS_MVV_GATHER,ix1,1); 
     um2= &gauge_field[thissite][1];
-    _mm_prefetch(s4, _MM_HINT_T0);
-    _mm_prefetch(um2, _MM_HINT_T0);
+    PREFETCH(s4, _MM_HINT_T0);
+    PREFETCH(um2, _MM_HINT_T0);
 
 
     mvv_recons_gamma2_minus_add(*s5, *um3, r12_1, r34_1);
     s5 =  s->halfspinorBufferOffset(RECONS_MVV_GATHER,ix1,2);
     um3=&gauge_field[thissite][2];  
-    _mm_prefetch(s5, _MM_HINT_T0);
-    _mm_prefetch(um3, _MM_HINT_T0);
+    PREFETCH(s5, _MM_HINT_T0);
+    PREFETCH(um3, _MM_HINT_T0);
 
-    _mm_prefetch(sn1,_MM_HINT_T0);
+    PREFETCH(sn1,_MM_HINT_T0);
 
     mvv_recons_gamma3_minus_add_store(*s6, *um4, r12_1, r34_1,*sn1);
 
     s6 =  s->halfspinorBufferOffset(RECONS_MVV_GATHER,ix1,3);
     um4=&gauge_field[thissite][3];  
-    _mm_prefetch(s6, _MM_HINT_T0);
-    _mm_prefetch(um4, _MM_HINT_T0);
+    PREFETCH(s6, _MM_HINT_T0);
+    PREFETCH(um4, _MM_HINT_T0);
   
     sn1=sn2;
     /******************************** end of loop *********************************/
@@ -676,7 +677,7 @@ void mvv_recons_minus(size_t lo,size_t hi, int id, const void *ptr )
   mvv_recons_gamma0_minus(*s3, *um1, r12_1, r34_1);
   mvv_recons_gamma1_minus_add(*s4, *um2, r12_1, r34_1);
   mvv_recons_gamma2_minus_add(*s5, *um3, r12_1, r34_1);
-  _mm_prefetch(sn1,_MM_HINT_T0);
+  PREFETCH(sn1,_MM_HINT_T0);
   mvv_recons_gamma3_minus_add_store(*s6, *um4, r12_1, r34_1,*sn1);
 }
 /******************end of mvv_recons*************************/
@@ -706,38 +707,38 @@ void recons_minus(size_t lo,size_t hi, int id, const void *ptr )
   int high = cb*subgrid_vol_cb + hi;
   int thissite = s->siteTable(low);  
   hs0 =  s->halfspinorBufferOffset(RECONS_GATHER,low,0); 
-  _mm_prefetch(hs0, _MM_HINT_NTA);
+  PREFETCH(hs0, _MM_HINT_NTA);
 
   hs1 =  s->halfspinorBufferOffset(RECONS_GATHER,low,1); 
-  _mm_prefetch(hs1, _MM_HINT_NTA);
+  PREFETCH(hs1, _MM_HINT_NTA);
 
   hs2 =  s->halfspinorBufferOffset(RECONS_GATHER,low,2); 
-  _mm_prefetch(hs2, _MM_HINT_NTA);
+  PREFETCH(hs2, _MM_HINT_NTA);
 
   hs3 =  s->halfspinorBufferOffset(RECONS_GATHER,low,3);
-  _mm_prefetch(hs3, _MM_HINT_NTA);
+  PREFETCH(hs3, _MM_HINT_NTA);
 
   sn1=&spinor_field[thissite];   
-  _mm_prefetch(sn1, _MM_HINT_NTA);
+  PREFETCH(sn1, _MM_HINT_NTA);
 
   for (ix1=low+1;ix1<high;ix1++) {
     thissite = s->siteTable(ix1);
      sn2 = &spinor_field[thissite];   
-    _mm_prefetch(sn2, _MM_HINT_NTA);
+    PREFETCH(sn2, _MM_HINT_NTA);
 
     recons_4dir_minus(*hs0, *hs1, *hs2, *hs3, *sn1);
 
     hs0 =  s->halfspinorBufferOffset(RECONS_GATHER,ix1,0); 
-    _mm_prefetch(hs0, _MM_HINT_NTA);
+    PREFETCH(hs0, _MM_HINT_NTA);
     
     hs1 =  s->halfspinorBufferOffset(RECONS_GATHER,ix1,1); 
-    _mm_prefetch(hs1, _MM_HINT_NTA);
+    PREFETCH(hs1, _MM_HINT_NTA);
     
     hs2 =  s->halfspinorBufferOffset(RECONS_GATHER,ix1,2); 
-    _mm_prefetch(hs2, _MM_HINT_NTA);
+    PREFETCH(hs2, _MM_HINT_NTA);
     
     hs3 =  s->halfspinorBufferOffset(RECONS_GATHER,ix1,3); 
-    _mm_prefetch(hs3, _MM_HINT_NTA);
+    PREFETCH(hs3, _MM_HINT_NTA);
    
     sn1=sn2;
 

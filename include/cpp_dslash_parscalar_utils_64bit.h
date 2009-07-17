@@ -18,6 +18,7 @@
 #include "cpp_dslash_parscalar_decomp_hvv_64bit_c.h"
 #include "cpp_dslash_parscalar_mvv_recons_64bit_c.h"
 #include  "cpp_dslash_parscalar_recons_64bit_c.h"
+#define ALIGN __attribute__ ((aligned(16)))
 #endif
 
 

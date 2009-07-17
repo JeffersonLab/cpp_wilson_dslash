@@ -1,11 +1,9 @@
 #ifndef CPP_DSLASH_PARSCALAR_RECONS_32BIT_C_H
 #define CPP_DSLASH_PARSCALAR_RECONS_32BIT_C_H
 
-#include <xmmintrin.h>
 #include <cpp_dslash_types.h>
 using namespace CPlusPlusWilsonDslash::Dslash32BitTypes;
 
-#include <sse_sign_32bit.h>
 
 namespace CPlusPlusWilsonDslash { 
 
