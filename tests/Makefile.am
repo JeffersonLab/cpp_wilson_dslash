@@ -4,13 +4,15 @@ AM_CXXFLAGS=$(INCFLAGS) @SSEXX_AUX_CFLAGS@ @QMT_CFLAGS@
 AM_LDFLAGS=-L@top_builddir@/lib @LDFLAGS@ @SSEXX_AUX_LDFLAGS@ @QMT_LDFLAGS@
 LDADD = -ldslash @SSEXX_AUX_LIBS@ @LIBS@ @QMT_LIBS@
 
-check_PROGRAMS = t_dslash t_dslash_3d t_clover
+check_PROGRAMS = t_dslash t_dslash_3d
+# t_clover
 
 #if BUILD_SITE_TESTS
 #check_PROGRAMS += t_site_ops
 #endif
 
-check_PROGRAMS += time_dslash time_dslash_3d time_clover
+check_PROGRAMS += time_dslash time_dslash_3d
+# time_clover
 TESTS=
 if RUN_TESTS
 TESTS += $(check_PROGRAMS)
@@ -36,10 +38,10 @@ t_dslash_SOURCES = $(FRAMEWORK_SRCS) \
 	testDslashFull.cc \
 	t_dslash.cc
 
-t_clover_SOURCES = $(FRAMEWORK_SRCS) \
-	testClover.h \
-	testClover.cc \
-	t_clover.cc
+#t_clover_SOURCES = $(FRAMEWORK_SRCS) \
+#	testClover.h \
+#	testClover.cc \
+#	t_clover.cc
 
 t_dslash_3d_SOURCES = $(FRAMEWORK_3D_SRCS) \
 	testDslash3D.h \
@@ -57,10 +59,10 @@ time_dslash_3d_SOURCES = $(FRAMEWORK_3D_SRCS) \
 	timeDslash3D.cc \
 	time_dslash_3d.cc
 
-time_clover_SOURCES = $(FRAMEWORK_SRCS) \
-	timeClover.h \
-	timeClover.cc \
-	time_clover.cc
+#time_clover_SOURCES = $(FRAMEWORK_SRCS) \
+#	timeClover.h \
+#	timeClover.cc \
+#	time_clover.cc
 
 
 #if SCALAR_SINGLE
@@ -118,7 +120,7 @@ time_clover_SOURCES = $(FRAMEWORK_SRCS) \
 
 
 t_dslash_DEPENDENCIES = build_lib
-t_clover_DEPENDENCIES = build_lib
+# t_clover_DEPENDENCIES = build_lib
 #t_dslash_3d_DEPENDENCIES = build_lib
 #t_site_ops_DEPENDENCIES = build_lib
 #time_dslash_DEPENDENCIES = build_lib
