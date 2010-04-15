@@ -76,7 +76,6 @@ void dispatchToThreads(void (*func)(size_t, size_t, int, const void *),
       high = chucksize * (myId+1);
       (*func)(low, high, myId, &a);
     }
-  }
 }
 
  
