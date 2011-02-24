@@ -76,7 +76,8 @@ namespace CPlusPlusWilsonDslash {
       for(mu=0; mu < 4; mu++) { 
 	gcoords[mu] = log_coords[mu]*subgrid_size[mu];
       }
-      
+      free(log_coords);
+ 
       cb=linearsite/subgrid_vol_cb;
       
       crtesn4d(linearsite % subgrid_vol_cb, subgrid_cb_size, tmp_coord);
