@@ -63,7 +63,7 @@ void dispatchToThreads(void (*func)(size_t, size_t, int, const void *),
   int high;
   
  #pragma omp parallel shared(func, n_sites, a)				\
-  private(threads_num, chucksize, myId, low, high) default(none)
+  private(threads_num, myId, low, high) default(none)
     {
       
       threads_num = omp_get_num_threads();
