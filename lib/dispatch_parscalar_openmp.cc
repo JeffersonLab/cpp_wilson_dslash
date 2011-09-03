@@ -29,7 +29,7 @@ namespace CPlusPlusWilsonDslash {
       threads_num = omp_get_num_threads();
       myId = omp_get_thread_num();
       low = n_sites * myId/threads_num;
-      high = n_site * (myId+1)/threads_num;
+      high = n_sites * (myId+1)/threads_num;
       (*func)(low, high, myId, &a);
     }
   }
