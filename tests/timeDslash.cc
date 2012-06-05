@@ -102,7 +102,7 @@ timeDslash::run(void)
   time=swatch.getTimeInSeconds();
 
   // Average time over nodes
-  Internal::globalSum(time);
+  QDPInternal::globalSum(time);
   time /= (double)Layout::numNodes();
 
   QDPIO::cout << "\t " << iters << " iterations in " << time << " seconds " << endl;
@@ -130,7 +130,7 @@ timeDslash::run(void)
   time=swatch.getTimeInSeconds();
 
   // Average time over nodes
-  Internal::globalSum(time);
+  QDPInternal::globalSum(time);
   time /= (double)Layout::numNodes();
 
   QDPIO::cout << "\t " << iters << " iterations in " << time << " seconds " << endl;
