@@ -112,7 +112,7 @@ namespace CPlusPlusWilsonDslash {
     }
   private:
 
-    QMP_mem_t* xchi; 
+    static QMP_mem_t* xchi;
     
     HalfSpinor *chi1;
     HalfSpinor *chi2;
@@ -137,6 +137,8 @@ namespace CPlusPlusWilsonDslash {
    
   };
 
+  template<typename HalfSpinor, int Nd>
+    QMP_mem_t* DslashTables<HalfSpinor, Nd>::xchi = 0;
 
   template<typename HalfSpinor, int Nd>
     DslashTables<HalfSpinor,Nd>::~DslashTables() 
@@ -160,7 +162,9 @@ namespace CPlusPlusWilsonDslash {
       }
       
       /* Free all space - 4 spinors and actual comms buffers  */
-      QMP_free_memory(xchi);
+      /* Simon: we have no mechanism to check if there are still other
+       * instances using our static xchi, so we do not free it. Typically
+       * it is used till the end of the program anyways */
       
       /* Free the shift table itself */
     }
@@ -256,9 +260,11 @@ namespace CPlusPlusWilsonDslash {
 	 comms bufs and chi1, and chi1 and chi2 */
       int total_allocate = 2*chisize+2*offset+10*Cache::CacheLineSize;
       
-      if ((xchi = QMP_allocate_aligned_memory(total_allocate,Cache::CacheSetSize,0)) == 0) { 
-	QMP_error("init_wnxtsu3dslash: could not initialize xchi1");
-	QMP_abort(1);
+      if(xchi == 0) {
+        if ((xchi = QMP_allocate_aligned_memory(total_allocate,Cache::CacheSetSize,0)) == 0) {
+          QMP_error("init_wnxtsu3dslash: could not initialize xchi1");
+          QMP_abort(1);
+        }
       }
       
       /* Get the aligned pointer out. This is the start of our memory */
