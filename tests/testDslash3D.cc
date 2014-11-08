@@ -17,7 +17,6 @@ using namespace QDP;
 
 
 using namespace Assertions;
-using namespace std;
 using namespace CPlusPlusWilsonDslash;
 
 void
@@ -54,13 +53,13 @@ testDslash3D::run(void)
 		    Layout::QDPXX_nodeNumber);
   
 
-  //  QDPIO::cout << "Need to allocate the packed gauge: "<< 4*Layout::sitesOnNode()*sizeof(PrimitiveSU3MatrixF) << endl << flush;
+  //  QDPIO::cout << "Need to allocate the packed gauge: "<< 4*Layout::sitesOnNode()*sizeof(PrimitiveSU3MatrixF) << std::endl << std::flush;
   
   multi1d<PrimitiveSU3MatrixF> packed_gauge;
   packed_gauge.resize(4*Layout::sitesOnNode());
   qdp_pack_gauge_3d(u, packed_gauge);
 
-  cout << endl;
+  std::cout << std::endl;
 
   // Go through the test cases -- apply SSE dslash versus, QDP Dslash 
   for(int isign=1; isign >= -1; isign -=2) {
@@ -80,13 +79,13 @@ testDslash3D::run(void)
       // Apply QDP Dslash
       dslash_3d(chi2,u,psi, isign, target_cb);
       
-      // Check the difference per number in chi vector
+      // Check the difference per number in chi std::vector
       LatticeFermionF diff = chi2 -chi;
 
       Double diff_norm = sqrt( norm2( diff ) ) 
 	/ ( Real(4*3*2*Layout::vol()) / Real(2));
 	
-      QDPIO::cout << "\t cb = " << source_cb << "  isign = " << isign << "  diff_norm = " << diff_norm << endl;      
+      QDPIO::cout << "\t cb = " << source_cb << "  isign = " << isign << "  diff_norm = " << diff_norm << std::endl;      
       // Assert things are OK...
       assertion( toBool( diff_norm < small32 ) );
 
@@ -106,7 +105,7 @@ testDslash3D::run(void)
    qdp_pack_gauge_3d(ud, packed_gauged);
    psi = psid;  // Downcasts 
 
-   QDPIO::cout << endl;
+   QDPIO::cout << std::endl;
 
    // Go through the test cases -- apply SSE dslash versus, QDP Dslash 
    for(int isign=1; isign >= -1; isign -=2) {
@@ -133,13 +132,13 @@ testDslash3D::run(void)
 	  source_cb);
 
       
-      // Check the difference per number in chi vector
+      // Check the difference per number in chi std::vector
       LatticeFermionF diff = chi2 -chi;
 
       Double diff_norm = sqrt( norm2( diff ) ) 
 	/ ( Real(4*3*2*Layout::vol()) / Real(2));
 	
-      QDPIO::cout << "\t cb = " << source_cb << "  isign = " << isign << "  diff_norm = " << diff_norm << endl;      
+      QDPIO::cout << "\t cb = " << source_cb << "  isign = " << isign << "  diff_norm = " << diff_norm << std::endl;      
       // Assert things are OK...
       assertion( toBool( diff_norm < small32 ) );
 

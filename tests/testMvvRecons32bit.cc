@@ -6,7 +6,6 @@
 
 using namespace QDP;
 using namespace Assertions;
-using namespace std;
 
 #define _sse_24_gamma0_minus_set() _sse_vector_xch_i_mul_up()
 #define _sse_24_gamma0_plus_set()  _sse_vector_xch_i_mul_neg_up()
@@ -73,7 +72,7 @@ void testMvvRecons0Plus::run(void)
 		    << " sp=" << spin2
 		    << " re=" << reim 
 		    << " diff upper = " << diff 
-		    << endl;
+		    << std::endl;
 #endif
 
 	assertion( fabs(diff) < 1.0e-9 );
@@ -85,7 +84,7 @@ void testMvvRecons0Plus::run(void)
 		    << " sp=" << spin2
 		    << " re=" << reim 
 		    << " diff lower = " << diff2 
-		    << endl;
+		    << std::endl;
 #endif 
 	assertion( fabs(diff2) < 1.0e-9 );
 
@@ -157,7 +156,7 @@ void testMvvRecons1PlusAdd::run(void)
 		    << " sp=" << spin2
 		    << " re=" << reim 
 		    << " diff upper = " << diff 
-		    << endl;
+		    << std::endl;
 #endif
 
 	assertion( fabs(diff) < 1.0e-9 );
@@ -170,7 +169,7 @@ void testMvvRecons1PlusAdd::run(void)
 		    << " sp=" << spin2
 		    << " re=" << reim 
 		    << " diff lower = " << diff2 
-		    << endl;
+		    << std::endl;
 #endif
 	assertion( fabs(diff2) < 1.0e-9 );
 
@@ -242,7 +241,7 @@ void testMvvRecons2PlusAdd::run(void)
 		    << " sp=" << spin2
 		    << " re=" << reim 
 		    << " diff upper = " << diff 
-		    << endl;
+		    << std::endl;
 #endif
 
 	assertion( fabs(diff) < 1.0e-9 );
@@ -255,7 +254,7 @@ void testMvvRecons2PlusAdd::run(void)
 		    << " sp=" << spin2
 		    << " re=" << reim 
 		    << " diff lower = " << diff2 
-		    << endl;
+		    << std::endl;
 #endif
 	assertion( fabs(diff2) < 1.0e-9 );
 
@@ -324,13 +323,13 @@ void testMvvRecons2PlusAddStore::run(void)
   for(int j=0; j < 3*2*2; j++) { 
     float diff = *((float *)hs1+j) - *((float *)spinor2[0]+j);
 #if 0
-    QDPIO::cout << " diff lower = " << diff << endl;
+    QDPIO::cout << " diff lower = " << diff << std::endl;
 #endif
     assertion( fabs(diff) < 1.0e-9 );
 
     float diff2 = *((float *)hs2+j) - *((float *)spinor2[2]+j);
 #if 0
-    QDPIO::cout << " diff upper = " << diff2 << endl;
+    QDPIO::cout << " diff upper = " << diff2 << std::endl;
 #endif
     assertion( fabs(diff2) < 1.0e-9 );
 
@@ -396,13 +395,13 @@ void testMvvRecons3PlusAddStore::run(void)
   for(int j=0; j < 3*2*2; j++) { 
     float diff = *((float *)hs1+j) - *((float *)spinor2[0]+j);
 #if 0
-    QDPIO::cout << " diff lower = " << diff << endl;
+    QDPIO::cout << " diff lower = " << diff << std::endl;
 #endif
     assertion( fabs(diff) < 1.0e-9 );
 
     float diff2 = *((float *)hs2+j) - *((float *)spinor2[2]+j);
 #if 0
-    QDPIO::cout << " diff upper = " << diff2 << endl;
+    QDPIO::cout << " diff upper = " << diff2 << std::endl;
 #endif
     assertion( fabs(diff2) < 1.0e-9 );
 
@@ -456,7 +455,7 @@ void testMvvRecons0Minus::run(void)
 		    << " sp=" << spin2
 		    << " re=" << reim 
 		    << " diff upper = " << diff 
-		    << endl;
+		    << std::endl;
 #endif
 	assertion( fabs(diff) < 1.0e-9 );
 
@@ -468,7 +467,7 @@ void testMvvRecons0Minus::run(void)
 		    << " sp=" << spin2
 		    << " re=" << reim 
 		    << " diff lower = " << diff2 
-		    << endl;
+		    << std::endl;
 #endif 
 	assertion( fabs(diff2) < 1.0e-9 );
 
@@ -540,7 +539,7 @@ void testMvvRecons1MinusAdd::run(void)
 		    << " sp=" << spin2
 		    << " re=" << reim 
 		    << " diff upper = " << diff 
-		    << endl;
+		    << std::endl;
 #endif
 
 	assertion( fabs(diff) < 1.0e-9 );
@@ -553,7 +552,7 @@ void testMvvRecons1MinusAdd::run(void)
 		    << " sp=" << spin2
 		    << " re=" << reim 
 		    << " diff lower = " << diff2 
-		    << endl;
+		    << std::endl;
 #endif
 	assertion( fabs(diff2) < 1.0e-9 );
 
@@ -625,7 +624,7 @@ void testMvvRecons2MinusAdd::run(void)
 		    << " sp=" << spin2
 		    << " re=" << reim 
 		    << " diff upper = " << diff 
-		    << endl;
+		    << std::endl;
 #endif
 
 	assertion( fabs(diff) < 1.0e-9 );
@@ -638,7 +637,7 @@ void testMvvRecons2MinusAdd::run(void)
 		    << " sp=" << spin2
 		    << " re=" << reim 
 		    << " diff lower = " << diff2 
-		    << endl;
+		    << std::endl;
 #endif
 	assertion( fabs(diff2) < 1.0e-9 );
 
@@ -706,13 +705,13 @@ void testMvvRecons2MinusAddStore::run(void)
   for(int j=0; j < 3*2*2; j++) { 
     float diff = *((float *)hs1+j) - *((float *)spinor2[0]+j);
 #if 0
-    QDPIO::cout << " diff lower = " << diff << endl;
+    QDPIO::cout << " diff lower = " << diff << std::endl;
 #endif
     assertion( fabs(diff) < 1.0e-9 );
 
     float diff2 = *((float *)hs2+j) - *((float *)spinor2[2]+j);
 #if 0
-    QDPIO::cout << " diff upper = " << diff2 << endl;
+    QDPIO::cout << " diff upper = " << diff2 << std::endl;
 #endif
     assertion( fabs(diff2) < 1.0e-9 );
 
@@ -777,13 +776,13 @@ void testMvvRecons3MinusAddStore::run(void)
   for(int j=0; j < 3*2*2; j++) { 
     float diff = *((float *)hs1+j) - *((float *)spinor2[0]+j);
 #if 0
-    QDPIO::cout << " diff lower = " << diff << endl;
+    QDPIO::cout << " diff lower = " << diff << std::endl;
 #endif
     assertion( fabs(diff) < 1.0e-9 );
 
     float diff2 = *((float *)hs2+j) - *((float *)spinor2[2]+j);
 #if 0
-    QDPIO::cout << " diff upper = " << diff2 << endl;
+    QDPIO::cout << " diff upper = " << diff2 << std::endl;
 #endif
     assertion( fabs(diff2) < 1.0e-9 );
 

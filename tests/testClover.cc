@@ -21,7 +21,6 @@ using namespace QDP;
 #include <cmath>
 
 using namespace Assertions;
-using namespace std;
 using namespace CPlusPlusWilsonDslash;
 using namespace CPlusPlusClover;
 using namespace CPlusPlusClover::CPlusPlusClover32Bit;
@@ -199,8 +198,8 @@ testClover::run(void)
     }
     chi2[rb[1]] -= Dpsi;
     LatticeFermionF3 diff_float = chi2 - chi;
-    QDPIO::cout << endl;
-    QDPIO::cout << "\t isign = " << isign << "\t norm2(chi2,rb[1])=" << norm2(chi2, rb[1]) << "\t || diff || = "<< sqrt(norm2(diff_float, rb[1])) / ( Real(4*3*2*Layout::vol()) / Real(2))  << endl;
+    QDPIO::cout << std::endl;
+    QDPIO::cout << "\t isign = " << isign << "\t norm2(chi2,rb[1])=" << norm2(chi2, rb[1]) << "\t || diff || = "<< sqrt(norm2(diff_float, rb[1])) / ( Real(4*3*2*Layout::vol()) / Real(2))  << std::endl;
   }
   
 
@@ -234,8 +233,8 @@ testClover::run(void)
 
     LatticeFermionF3 diff_float = chi2 - chi;
 
-    QDPIO::cout << endl;
-    QDPIO::cout << "\t isign = " << isign << "\t || diff || = "<< sqrt(norm2(diff_float, rb[1])) / ( Real(4*3*2*Layout::vol()) / Real(2))  << endl;
+    QDPIO::cout << std::endl;
+    QDPIO::cout << "\t isign = " << isign << "\t || diff || = "<< sqrt(norm2(diff_float, rb[1])) / ( Real(4*3*2*Layout::vol()) / Real(2))  << std::endl;
 
   }
   free(xclovd);

@@ -2,7 +2,6 @@
 #define CPP_DSLASH_SCALAR_32BIT_SSE_H
 
 #include <iostream>
-using namespace std;
 #include <xmmintrin.h>
 
 #ifndef ALIGN

@@ -30,7 +30,6 @@ extern  void decomp_plus(size_t lo,size_t hi, int id, const void *ptr);
 /* This is to call the dispatcher */
 
 using namespace Assertions;
-using namespace std;
 
 void
 timeDecomp::run(void) 
@@ -63,13 +62,13 @@ timeDecomp::run(void)
   packed_gauge.resize( 4 * Layout::sitesOnNode() );
   SSEDslash::qdp_pack_gauge(u, packed_gauge);
  
-  QDPIO::cout << endl;
+  QDPIO::cout << std::endl;
 
   StopWatch swatch;
   double n_secs = 10;
   int iters=1;
   double time=0;
-  QDPIO::cout << endl << "\t Calibrating for " << n_secs << " seconds " << endl;
+  QDPIO::cout << std::endl << "\t Calibrating for " << n_secs << " seconds " << std::endl;
   do {
     swatch.reset();
     swatch.start();
@@ -94,13 +93,13 @@ timeDecomp::run(void)
 
     if (time < n_secs) {
       iters *=2;
-      QDPIO::cout << "." << flush;
+      QDPIO::cout << "." << std::flush;
     }
   }
   while ( time < (double)n_secs );
       
-  QDPIO::cout << endl;
-  QDPIO::cout << "\t Timing with " << iters << " counts" << endl;
+  QDPIO::cout << std::endl;
+  QDPIO::cout << "\t Timing with " << iters << " counts" << std::endl;
 
   swatch.reset();
   swatch.start();
@@ -121,8 +120,8 @@ timeDecomp::run(void)
   QDPInternal::globalSum(time);
   time /= (double)Layout::numNodes();
 
-  QDPIO::cout << "\t " << iters << " iterations in " << time << " seconds " << endl;
-  QDPIO::cout << "\t " << 1.0e6*time/(double)iters << " u sec/iteration" << endl;    
+  QDPIO::cout << "\t " << iters << " iterations in " << time << " seconds " << std::endl;
+  QDPIO::cout << "\t " << 1.0e6*time/(double)iters << " u sec/iteration" << std::endl;    
 
   // Finalize the Dslash
   free_sse_su3dslash();

@@ -1,7 +1,6 @@
 #include <cpp_clover_parscalar.h>
 
 #include <cstdlib>
-using namespace std;
 
 #include <cache.h>
 
@@ -264,7 +263,7 @@ void recons_minus_clov_inv(size_t lo,size_t hi, int id, const void *ptr )
 
   CloverTerm* invclov = (CloverTerm *)a->clov;
 
-  HalfSpinor* chi = (HalfSpinor*)a->half_spinor; /* a 1-d map of a 2-d array */
+  HalfSpinor* chi = (HalfSpinor*)a->half_spinor; /* a 1-d std::map of a 2-d array */
 
   // cb = 0 always here
 
@@ -336,7 +335,7 @@ void recons_minus_final(size_t lo,size_t hi, int id, const void *ptr )
 
   FourSpinor* spinor_field = (FourSpinor*)a->spinor;
   FourSpinor* clov_oo_psi = (FourSpinor*)a->spinor2;
-  HalfSpinor* chi = (HalfSpinor*)a->half_spinor; /* a 1-d map of a 2-d array */
+  HalfSpinor* chi = (HalfSpinor*)a->half_spinor; /* a 1-d std::map of a 2-d array */
 
   // cb = 0 always here
   HalfSpinor *hs0 ALIGN;

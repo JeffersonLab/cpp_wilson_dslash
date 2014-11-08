@@ -6,7 +6,6 @@
 
 using namespace QDP;
 using namespace Assertions;
-using namespace std;
 /* gamma 0 */
 
 #define _sse_42_1_gamma0_minus(sp) \
@@ -404,7 +403,7 @@ void testMvvRecons0Plus::run(void)
 		    << " sp=" << spin4
 		    << " re=" << reim 
 		    << " diff upper = " << diff 
-		    << endl;
+		    << std::endl;
 #endif
 	  assertion( fabs(diff) < 1.0e-17 );
 	}
@@ -476,7 +475,7 @@ void testMvvRecons1PlusAdd::run(void)
 		    << " sp=" << spin4
 		    << " re=" << reim 
 		    << " diff upper = " << diff 
-		    << endl;
+		    << std::endl;
 #endif
 	  assertion( fabs(diff) < 1.0e-17 );
 	}
@@ -548,7 +547,7 @@ void testMvvRecons2PlusAdd::run(void)
 		    << " sp=" << spin4
 		    << " re=" << reim 
 		    << " diff upper = " << diff 
-		    << endl;
+		    << std::endl;
 #endif
 	  assertion( fabs(diff) < 1.0e-17 );
 	}
@@ -622,7 +621,7 @@ void testMvvRecons2PlusAddStore::run(void)
 		    << " sp=" << spin4
 		    << " re=" << reim 
 		    << " diff upper = " << diff 
-		    << endl;
+		    << std::endl;
 #endif
 	  assertion( fabs(diff) < 1.0e-17 );
 	}
@@ -695,7 +694,7 @@ void testMvvRecons3PlusAddStore::run(void)
 		    << " sp=" << spin4
 		    << " re=" << reim 
 		    << " diff upper = " << diff 
-		    << endl;
+		    << std::endl;
 #endif
 	  assertion( fabs(diff) < 1.0e-17 );
 	}
@@ -769,7 +768,7 @@ void testMvvRecons0Minus::run(void)
 		    << " sp=" << spin4
 		    << " re=" << reim 
 		    << " diff upper = " << diff 
-		    << endl;
+		    << std::endl;
 #endif
 	  assertion( fabs(diff) < 1.0e-17 );
 	}
@@ -841,7 +840,7 @@ void testMvvRecons1MinusAdd::run(void)
 		    << " sp=" << spin4
 		    << " re=" << reim 
 		    << " diff upper = " << diff 
-		    << endl;
+		    << std::endl;
 #endif
 	  assertion( fabs(diff) < 1.0e-17 );
 	}
@@ -913,7 +912,7 @@ void testMvvRecons2MinusAdd::run(void)
 		    << " sp=" << spin4
 		    << " re=" << reim 
 		    << " diff upper = " << diff 
-		    << endl;
+		    << std::endl;
 #endif
 	  assertion( fabs(diff) < 1.0e-17 );
 	}
@@ -987,7 +986,7 @@ void testMvvRecons2MinusAddStore::run(void)
 		    << " sp=" << spin4
 		    << " re=" << reim 
 		    << " diff upper = " << diff 
-		    << endl;
+		    << std::endl;
 #endif
 	  assertion( fabs(diff) < 1.0e-17 );
 	}
@@ -1061,7 +1060,7 @@ void testMvvRecons3MinusAddStore::run(void)
 		    << " sp=" << spin4
 		    << " re=" << reim 
 		    << " diff upper = " << diff 
-		    << endl;
+		    << std::endl;
 #endif
 	  assertion( fabs(diff) < 1.0e-17 );
 	}

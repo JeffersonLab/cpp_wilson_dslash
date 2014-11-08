@@ -1,7 +1,6 @@
 #include <cpp_dslash_parscalar.h>
 
 #include <cstdlib>
-using namespace std;
 
 #include <cache.h>
 
@@ -98,7 +97,7 @@ namespace CPlusPlusWilsonDslash {
       int subgrid_vol_cb = s->subgridVolCB();
 
       FourSpinor* spinor_field =(FourSpinor*)a->spinor;
-      HalfSpinor* chi = (HalfSpinor*)a->half_spinor; /* a 1-d map of a 2-d array */
+      HalfSpinor* chi = (HalfSpinor*)a->half_spinor; /* a 1-d std::map of a 2-d array */
       GaugeMatrix (*gauge_field)[4] =(GaugeMatrix (*)[4]) a->u;
       
       int cb = a->cb;
@@ -169,7 +168,7 @@ namespace CPlusPlusWilsonDslash {
       int subgrid_vol_cb = s->subgridVolCB();
 
       FourSpinor* spinor_field = (FourSpinor *)a->spinor;
-      HalfSpinor* chi = (HalfSpinor*)a->half_spinor; /* a 1-d map of a 2-d array */
+      HalfSpinor* chi = (HalfSpinor*)a->half_spinor; /* a 1-d std::map of a 2-d array */
       
       GaugeMatrix (*gauge_field)[4] = (GaugeMatrix (*)[4])a->u;
       int cb = a->cb;
@@ -335,7 +334,7 @@ namespace CPlusPlusWilsonDslash {
       
       FourSpinor* spinor_field = (FourSpinor *)a->spinor;
       
-      HalfSpinor* chi = (HalfSpinor*)a->half_spinor; /* a 1-d map of a 2-d array */
+      HalfSpinor* chi = (HalfSpinor*)a->half_spinor; /* a 1-d std::map of a 2-d array */
       
       GaugeMatrix (*gauge_field)[4] = (GaugeMatrix (*)[4])a->u;
       
@@ -398,7 +397,7 @@ namespace CPlusPlusWilsonDslash {
       int subgrid_vol_cb = s->subgridVolCB();
 
       FourSpinor* spinor_field = (FourSpinor *)a->spinor;
-      HalfSpinor* chi = (HalfSpinor*)a->half_spinor; /* a 1-d map of a 2-d array */
+      HalfSpinor* chi = (HalfSpinor*)a->half_spinor; /* a 1-d std::map of a 2-d array */
       GaugeMatrix (*gauge_field)[4] = (GaugeMatrix (*)[4])a->u;
       int cb = a->cb;
       
@@ -453,7 +452,7 @@ namespace CPlusPlusWilsonDslash {
       int subgrid_vol_cb = s->subgridVolCB();
 
       FourSpinor* spinor_field = (FourSpinor *)a->spinor;
-      HalfSpinor* chi = (HalfSpinor*)a->half_spinor; /* a 1-d map of a 2-d array */
+      HalfSpinor* chi = (HalfSpinor*)a->half_spinor; /* a 1-d std::map of a 2-d array */
       int cb = a->cb;
       HalfSpinor* hs0, *hs1, *hs2;
       

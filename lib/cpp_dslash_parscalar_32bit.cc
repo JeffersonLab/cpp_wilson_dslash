@@ -1,7 +1,6 @@
 #include <cpp_dslash_parscalar.h>
 
 #include <cstdlib>
-using namespace std;
 
 #include <cache.h>
 #include <cpp_dslash_parscalar_utils_32bit.h>

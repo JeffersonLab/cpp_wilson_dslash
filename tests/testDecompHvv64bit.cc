@@ -6,7 +6,6 @@
 
 using namespace QDP;
 using namespace Assertions;
-using namespace std;
 
 /* gamma 0 */
 
@@ -362,7 +361,7 @@ void testDecompHvv0Plus::run(void)
 #if 0
 	QDPIO::cout << " col=" << col << " spin= " << spin2 
 		    << " rei=" << reim << " diff = " << diff
-		    <<endl;
+		    <<std::endl;
 #endif
 	diff /= (double)(3*2*2);
 	assertion( fabs(diff) < 1.0e-17 );

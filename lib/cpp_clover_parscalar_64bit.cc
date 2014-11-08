@@ -1,7 +1,6 @@
 #include <cpp_clover_parscalar.h>
 
 #include <cstdlib>
-using namespace std;
 
 #include <cache.h>
 

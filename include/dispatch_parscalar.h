@@ -2,7 +2,6 @@
 #define DISPATCH_PARSCALAR_H
 
 #include <cstdlib>         /* for size_t */
-using namespace std;
 
 namespace CPlusPlusWilsonDslash {
   /* Thread worker argument structure */

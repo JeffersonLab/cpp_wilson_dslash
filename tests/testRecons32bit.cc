@@ -6,7 +6,6 @@
 #include "sse_align.h"
 
 using namespace QDP;
-using namespace std;
 using namespace Assertions;
 
 #define _sse_24_gamma0_minus_add() _sse_vector_xch_i_add()
@@ -87,7 +86,7 @@ testRecons4DirPlus::run(void)
 		     << " sp=" << spin
 		     << " re=" << reim 
 		     << " diff upper = " << diff 
-		     << endl;
+		     << std::endl;
 #endif
 	 assertion( diff < 1.0e-9 );
 	 
@@ -158,7 +157,7 @@ testRecons4DirMinus::run(void)
 		     << " sp=" << spin
 		     << " re=" << reim 
 		     << " diff upper = " << diff 
-		     << endl;
+		     << std::endl;
 #endif
 	 assertion( diff < 1.0e-9 );
 	 

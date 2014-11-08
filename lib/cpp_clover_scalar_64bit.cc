@@ -1,6 +1,5 @@
 #include <cstdlib>
 #include <iostream>
-using namespace std;
 
 #include <cpp_dslash_scalar.h>
 #include <shift_table_scalar.h>
@@ -32,7 +31,7 @@ namespace CPlusPlusClover {
     xt_spinor = (FourSpinor *)malloc(2*s->totalVolCB()*sizeof(Dslash64BitTypes::FourSpinor)
 				    +Cache::CacheLineSize);
     if( xt_spinor == (FourSpinor *)NULL ) { 
-      cerr << "Unable to allocate temporary" << endl;
+      std::cerr << "Unable to allocate temporary" << std::endl;
       exit(1);
     }
     unsigned long pad = 0;
@@ -42,12 +41,12 @@ namespace CPlusPlusClover {
 
     t_spinor = (FourSpinor*)((unsigned char *)xt_spinor + pad);
 #if 0
-    cerr << "Sizeof FourSpinor=" << sizeof(FourSpinor) << endl;
-    cerr << "t_spinor = " << t_spinor << endl;
-    cerr << "xt_spinor = " << xt_spinor << endl;
-    cerr << "Cache::CacheLineSize = " << Cache::CacheLineSize << endl;
-    cerr << " xt_spinor % Cache::CacheLineSize " << (unsigned long)xt_spinor % (unsigned long)Cache::CacheLineSize << endl;
-    cerr << "pad=" << pad << endl;
+    std::cerr << "Sizeof FourSpinor=" << sizeof(FourSpinor) << std::endl;
+    std::cerr << "t_spinor = " << t_spinor << std::endl;
+    std::cerr << "xt_spinor = " << xt_spinor << std::endl;
+    std::cerr << "Cache::CacheLineSize = " << Cache::CacheLineSize << std::endl;
+    std::cerr << " xt_spinor % Cache::CacheLineSize " << (unsigned long)xt_spinor % (unsigned long)Cache::CacheLineSize << std::endl;
+    std::cerr << "pad=" << pad << std::endl;
 #endif
   }
 

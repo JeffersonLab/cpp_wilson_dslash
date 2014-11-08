@@ -18,7 +18,6 @@ using namespace QDP;
 
 
 using namespace Assertions;
-using namespace std;
 using namespace CPlusPlusWilsonDslash;
 
 void
@@ -58,7 +57,7 @@ testDslashFull::run(void)
 		    Layout::QDPXX_nodeNumber);
   
 
-  //  QDPIO::cout << "Need to allocate the packed gauge: "<< 4*Layout::sitesOnNode()*sizeof(PrimitiveSU3MatrixF) << endl << flush;
+  //  QDPIO::cout << "Need to allocate the packed gauge: "<< 4*Layout::sitesOnNode()*sizeof(PrimitiveSU3MatrixF) << std::endl << std::flush;
   
   multi1d<PrimitiveSU3MatrixF> packed_gauge __attribute__((aligned(16)));
   packed_gauge.resize(4*Layout::sitesOnNode());
@@ -84,13 +83,13 @@ testDslashFull::run(void)
       // Apply QDP Dslash
       dslash(chi2,u,psi, isign, target_cb);
 
-      // Check the difference per number in chi vector
+      // Check the difference per number in chi std::vector
       LatticeFermionF diff = chi2 -chi;
 
       Double diff_norm = sqrt( norm2( diff ) ) 
 	/ ( Real(4*3*2*Layout::vol()) / Real(2));
 	
-      QDPIO::cout << "\t cb = " << source_cb << "  isign = " << isign << "  diff_norm = " << diff_norm << endl;      
+      QDPIO::cout << "\t cb = " << source_cb << "  isign = " << isign << "  diff_norm = " << diff_norm << std::endl;      
       // Assert things are OK...
       assertion( toBool( diff_norm < small32 ) );
 
@@ -129,13 +128,13 @@ testDslashFull::run(void)
 
       dslash(chi2d,ud,psid, isign, target_cb);
 
-      // Check the difference per number in chi vector
+      // Check the difference per number in chi std::vector
       LatticeFermionD diff = chi2d - chid;
 
       Double diff_norm = sqrt( norm2( diff ) ) 
 	/ ( Real(4*3*2*Layout::vol()) / Real(2));
 	
-      QDPIO::cout << "\t cb = " << source_cb << "  isign = " << isign << "  diff_norm = " << diff_norm << endl;      
+      QDPIO::cout << "\t cb = " << source_cb << "  isign = " << isign << "  diff_norm = " << diff_norm << std::endl;      
       // Assert things are OK...
       assertion( toBool( diff_norm < small32 ) );
 

@@ -4,7 +4,6 @@
 #include <cstdlib>
 #include <cache.h>
 
-using namespace std;
 
 namespace CPlusPlusWilsonDslash {
 

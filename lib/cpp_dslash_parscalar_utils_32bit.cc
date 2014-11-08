@@ -116,7 +116,7 @@ void decomp_hvv_plus(size_t lo,size_t hi, int id, const void *ptr)
   ShiftTable<HalfSpinor>* s=(ShiftTable<HalfSpinor>*)a->s;
   int subgrid_vol_cb=s->subgridVolCB();
   FourSpinor* spinor_field = (FourSpinor*)a->spinor;
-  HalfSpinor* chi = (HalfSpinor *)a->half_spinor; /* a 1-d map of a 2-d array */
+  HalfSpinor* chi = (HalfSpinor *)a->half_spinor; /* a 1-d std::map of a 2-d array */
   GaugeMatrix  (*gauge_field)[4] = (GaugeMatrix (*)[4])a->u;
 
   HalfSpinor* s3 ALIGN;
@@ -228,7 +228,7 @@ void mvv_recons_plus(size_t lo,size_t hi, int id, const void *ptr)
   int subgrid_vol_cb=s->subgridVolCB();
 
   FourSpinor* spinor_field = (FourSpinor *)a->spinor;
-  HalfSpinor* chi =(HalfSpinor *)a->half_spinor; /* a 1-d map of a 2-d array */
+  HalfSpinor* chi =(HalfSpinor *)a->half_spinor; /* a 1-d std::map of a 2-d array */
   GaugeMatrix (*gauge_field)[4] = (GaugeMatrix (*)[4])a->u;
 
   int cb = a->cb;
@@ -495,7 +495,7 @@ void decomp_hvv_minus(size_t lo,size_t hi, int id, const void *ptr )
   int subgrid_vol_cb=s->subgridVolCB();
 
   FourSpinor* spinor_field = (FourSpinor *)a->spinor;
-  HalfSpinor* chi = (HalfSpinor *)a->half_spinor; /* a 1-d map of a 2-d array */
+  HalfSpinor* chi = (HalfSpinor *)a->half_spinor; /* a 1-d std::map of a 2-d array */
   GaugeMatrix (*gauge_field)[4] = (GaugeMatrix(*)[4])a->u;
 
   int cb = a->cb;
@@ -602,7 +602,7 @@ void mvv_recons_minus(size_t lo,size_t hi, int id, const void *ptr )
   int subgrid_vol_cb=s->subgridVolCB();
 
   FourSpinor* spinor_field = (FourSpinor *)a->spinor;
-  HalfSpinor* chi = (HalfSpinor *)a->half_spinor; /* a 1-d map of a 2-d array */
+  HalfSpinor* chi = (HalfSpinor *)a->half_spinor; /* a 1-d std::map of a 2-d array */
   GaugeMatrix (*gauge_field)[4] =(GaugeMatrix(*)[4]) a->u;
   int cb = a->cb;
 
@@ -695,7 +695,7 @@ void recons_minus(size_t lo,size_t hi, int id, const void *ptr )
   int subgrid_vol_cb= s->subgridVolCB();
 
   FourSpinor* spinor_field = (FourSpinor*)a->spinor;
-  HalfSpinor* chi = (HalfSpinor*)a->half_spinor; /* a 1-d map of a 2-d array */
+  HalfSpinor* chi = (HalfSpinor*)a->half_spinor; /* a 1-d std::map of a 2-d array */
   int cb = a->cb;
 
   HalfSpinor *hs0 ALIGN;

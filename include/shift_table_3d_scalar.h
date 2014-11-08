@@ -5,7 +5,6 @@
 #include <iostream>
 #include <cache.h>
 #include <cstdlib>
-using namespace std;
 
 namespace CPlusPlusWilsonDslash {
 
@@ -217,7 +216,7 @@ namespace CPlusPlusWilsonDslash {
       */
       xshift_table = (int *)malloc(3*total_vol*2*sizeof(int) + Cache::CacheLineSize);
       if ( xshift_table == 0x0 ) { 
-	std::cerr << "Couldnt allocate xshift table " << endl;
+	std::cerr << "Couldnt allocate xshift table " << std::endl;
 	exit(1);
       }
       
