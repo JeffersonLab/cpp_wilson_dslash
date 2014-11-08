@@ -3,7 +3,6 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstddef>
-using namespace std;
 
 namespace CPlusPlusWilsonDslash { 
 
@@ -24,7 +23,7 @@ namespace CPlusPlusWilsonDslash {
     for(int mu=0; mu < 4; mu++)  {
       if ( latt_size[mu] % 2 != 0 ) {
 	cerr << "This is a Dslash with checkerboarding in 4 dimensions. Each GLOBAL dimension must be even,  Your lattice is not like this: latt_size[" <<
-	  mu <<"]="<<latt_size[mu]<< endl; 
+	  mu <<"]="<<latt_size[mu]<< std::endl; 
 	exit(1);
       }
 
@@ -42,7 +41,7 @@ namespace CPlusPlusWilsonDslash {
 
     //    int* inv_table = (int *)malloc(total_vol*sizeof(int));
     // if( inv_table == (int *)NULL ) { 
-    //   cerr << "Could not allocate site table " << endl;
+    //   std::cerr << "Could not allocate site table " << std::endl;
     //   exit(1);
     // }
        
@@ -55,7 +54,7 @@ namespace CPlusPlusWilsonDslash {
     xshift_table = (int *)malloc(4*total_vol*2*sizeof(int)+Cache::CacheLineSize);
       
     if ( xshift_table == 0x0 ) {
-      cerr << "Could not allocate xshift table" << endl;
+      std::cerr << "Could not allocate xshift table" << std::endl;
       exit(1);
     }
 
@@ -69,7 +68,7 @@ namespace CPlusPlusWilsonDslash {
     xsite_table = (int *)malloc(total_vol*sizeof(int)+Cache::CacheLineSize);
     
     if ( xsite_table == 0x0 ) {
-      cerr << "Could not allocate site table " << endl;
+      std::cerr << "Could not allocate site table " << std::endl;
       exit(1);
     }
 
@@ -249,11 +248,11 @@ namespace CPlusPlusWilsonDslash {
       }
       
 #if 0      
-      cout << "There are " << nBlocks << " blocks" << endl;
-      cout << "(Bx, By, Bz, Bt) = (" << nBlocksPerDim[0] 
+      std::cout << "There are " << nBlocks << " blocks" << std::endl;
+      std::cout << "(Bx, By, Bz, Bt) = (" << nBlocksPerDim[0] 
 	   << " , " << nBlocksPerDim[1]
 	   << " , " << nBlocksPerDim[2]
-	   << " , " << nBlocksPerDim[3] << ")" << endl;
+	   << " , " << nBlocksPerDim[3] << ")" << std::endl;
 #endif
       
       typedef struct { 
@@ -316,7 +315,7 @@ namespace CPlusPlusWilsonDslash {
 	     << blocklist[i].size[0] << " , "
 	     << blocklist[i].size[1] << " , "
 	     << blocklist[i].size[2] << " , "
-	     << blocklist[i].size[3] << " ) "  << endl;
+	     << blocklist[i].size[3] << " ) "  << std::endl;
       }
 #endif
       
@@ -333,7 +332,7 @@ namespace CPlusPlusWilsonDslash {
       
       if( blocksites != total_vol ) { 
 	cerr << "Failed test: No of sites in all blocks = " << blocksites 
-	     << " No of sites in lattice = " << total_vol << endl;
+	     << " No of sites in lattice = " << total_vol << std::endl;
       }
       
       // Create paths -- do a lexicographic walk in each block
@@ -342,7 +341,7 @@ namespace CPlusPlusWilsonDslash {
       // First I have to make the even-odd path arrays...
       xpath_table =(int *)malloc(sizeof(int)*total_vol+Cache::CacheLineSize );
       if( xpath_table == (int *)NULL ) { 
-	cerr << "Failed to allocate xpath_table" << endl;
+	cerr << "Failed to allocate xpath_table" << std::endl;
 	exit(1);
       }
       ptrdiff_t pad = 0;

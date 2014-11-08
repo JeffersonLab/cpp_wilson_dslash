@@ -8,7 +8,6 @@
 #include "site_dslash_64bit_scalar.h"
 
 using namespace QDP;
-using namespace std;
 using namespace Assertions;
 
   /* gamma 0 */
@@ -374,7 +373,7 @@ testSiteDslash0PlusForward::run()
 	QDPIO::cout << "\t sp=" << spin
 		    << " co=" << col 
 		    << " re=" << reim 
-		    << " diff= " << diff << endl;
+		    << " diff= " << diff << std::endl;
 #endif
 	assertion( fabs(diff) < 1.0e-17 );
 
@@ -445,7 +444,7 @@ testSiteDslash0PlusBackwardAdd::run()
 	QDPIO::cout << "\t sp=" << spin
 		    << " co=" << col 
 		    << " re=" << reim 
-		    << " diff= " << diff << endl;
+		    << " diff= " << diff << std::endl;
 #endif
 	assertion( fabs(diff) < 1.0e-17 );
 
@@ -517,7 +516,7 @@ testSiteDslash1PlusForwardAdd::run()
 	QDPIO::cout << "\t sp=" << spin
 		    << " co=" << col 
 		    << " re=" << reim 
-		    << " diff= " << diff << endl;
+		    << " diff= " << diff << std::endl;
 #endif
 	assertion( fabs(diff) < 1.0e-17 );
 
@@ -589,7 +588,7 @@ testSiteDslash1PlusBackwardAdd::run()
 	QDPIO::cout << "\t sp=" << spin
 		    << " co=" << col 
 		    << " re=" << reim 
-		    << " diff= " << diff << endl;
+		    << " diff= " << diff << std::endl;
 #endif
 	assertion( fabs(diff) < 1.0e-17 );
 
@@ -662,7 +661,7 @@ testSiteDslash2PlusForwardAdd::run()
 	QDPIO::cout << "\t sp=" << spin
 		    << " co=" << col 
 		    << " re=" << reim 
-		    << " diff= " << diff << endl;
+		    << " diff= " << diff << std::endl;
 #endif
 	assertion( fabs(diff) < 1.0e-17 );
 
@@ -734,7 +733,7 @@ testSiteDslash2PlusBackwardAdd::run()
 	QDPIO::cout << "\t sp=" << spin
 		    << " co=" << col 
 		    << " re=" << reim 
-		    << " diff= " << diff << endl;
+		    << " diff= " << diff << std::endl;
 #endif
 	assertion( fabs(diff) < 1.0e-17 );
 
@@ -807,7 +806,7 @@ testSiteDslash3PlusForwardAdd::run()
 	QDPIO::cout << "\t sp=" << spin
 		    << " co=" << col 
 		    << " re=" << reim 
-		    << " diff= " << diff << endl;
+		    << " diff= " << diff << std::endl;
 #endif
 	assertion( fabs(diff) < 1.0e-17 );
 
@@ -882,7 +881,7 @@ testSiteDslash3PlusBackwardAddStore::run()
 	QDPIO::cout << "\t sp=" << spin
 		    << " co=" << col 
 		    << " re=" << reim 
-		    << " diff= " << diff << endl;
+		    << " diff= " << diff << std::endl;
 #endif
 	assertion( fabs(diff) < 1.0e-17 );
 
@@ -954,7 +953,7 @@ testSiteDslash0MinusForward::run()
 	QDPIO::cout << "\t sp=" << spin
 		    << " co=" << col 
 		    << " re=" << reim 
-		    << " diff= " << diff << endl;
+		    << " diff= " << diff << std::endl;
 #endif
 	assertion( fabs(diff) < 1.0e-17 );
 
@@ -1024,7 +1023,7 @@ testSiteDslash0MinusBackwardAdd::run()
 	QDPIO::cout << "\t sp=" << spin
 		    << " co=" << col 
 		    << " re=" << reim 
-		    << " diff= " << diff << endl;
+		    << " diff= " << diff << std::endl;
 #endif
 	assertion( fabs(diff) < 1.0e-17 );
 
@@ -1098,7 +1097,7 @@ testSiteDslash1MinusForwardAdd::run()
 	QDPIO::cout << "\t sp=" << spin
 		    << " co=" << col 
 		    << " re=" << reim 
-		    << " diff= " << diff << endl;
+		    << " diff= " << diff << std::endl;
 #endif
 	assertion( fabs(diff) < 1.0e-17 );
 
@@ -1171,7 +1170,7 @@ testSiteDslash1MinusBackwardAdd::run()
 	QDPIO::cout << "\t sp=" << spin
 		    << " co=" << col 
 		    << " re=" << reim 
-		    << " diff= " << diff << endl;
+		    << " diff= " << diff << std::endl;
 #endif
 	assertion( fabs(diff) < 1.0e-17 );
 
@@ -1245,7 +1244,7 @@ testSiteDslash2MinusForwardAdd::run()
 	QDPIO::cout << "\t sp=" << spin
 		    << " co=" << col 
 		    << " re=" << reim 
-		    << " diff= " << diff << endl;
+		    << " diff= " << diff << std::endl;
 #endif
 	assertion( fabs(diff) < 1.0e-17 );
 
@@ -1317,7 +1316,7 @@ testSiteDslash2MinusBackwardAdd::run()
 	QDPIO::cout << "\t sp=" << spin
 		    << " co=" << col 
 		    << " re=" << reim 
-		    << " diff= " << diff << endl;
+		    << " diff= " << diff << std::endl;
 #endif
 	assertion( fabs(diff) < 1.0e-17 );
 
@@ -1391,7 +1390,7 @@ testSiteDslash3MinusForwardAdd::run()
 	QDPIO::cout << "\t sp=" << spin
 		    << " co=" << col 
 		    << " re=" << reim 
-		    << " diff= " << diff << endl;
+		    << " diff= " << diff << std::endl;
 #endif
 	assertion( fabs(diff) < 1.0e-17 );
 
@@ -1466,7 +1465,7 @@ testSiteDslash3MinusBackwardAddStore::run()
 	QDPIO::cout << "\t sp=" << spin
 		    << " co=" << col 
 		    << " re=" << reim 
-		    << " diff= " << diff << endl;
+		    << " diff= " << diff << std::endl;
 #endif
 	assertion( fabs(diff) < 1.0e-17 );
 

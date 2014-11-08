@@ -2,7 +2,6 @@
 #define DISPATCH_SCALAR_H
 
 #include <cstdlib>         /* for size_t */
-using namespace std;
 
 #include <shift_table_scalar.h>
 namespace CPlusPlusWilsonDslash {

@@ -100,7 +100,7 @@ static sse_double _conj      __attribute__ ((unused)) = {1.0, -1.0};
 *******************************************************************************/
 
 /*
-* Loads an su3 vector s to xmm0,xmm1,xmm2
+* Loads an su3 std::vector s to xmm0,xmm1,xmm2
 */
 
 #define _sse_load(s) \
@@ -114,7 +114,7 @@ __asm__ __volatile__ ("movapd %0, %%xmm0 \n\t" \
                       "m" ((s)[2][0]))
 
      /*
-      * Loads an su3 vector s to xmm3,xmm4,xmm5
+      * Loads an su3 std::vector s to xmm3,xmm4,xmm5
       */
 
 #define _sse_load_up(s) \
@@ -130,7 +130,7 @@ __asm__ __volatile__ ("movapd %0, %%xmm3 \n\t" \
 
 
 /*
-* Stores xmm0,xmm1,xmm2 to the components r.c1,r.c2,r.c3 of an su3 vector
+* Stores xmm0,xmm1,xmm2 to the components r.c1,r.c2,r.c3 of an su3 std::vector
 */
 
 
@@ -144,7 +144,7 @@ __asm__ __volatile__ ("movapd %%xmm0, %0 \n\t" \
                       "=m" ((r)[2]))
 
 /*
-* Stores xmm3,xmm4,xmm5 to the components r.c1,r.c2,r.c3 of an su3 vector
+* Stores xmm3,xmm4,xmm5 to the components r.c1,r.c2,r.c3 of an su3 std::vector
 */
 
 #define _sse_store_up(r) \
@@ -243,7 +243,7 @@ __asm__ __volatile__ ("shufpd $0x1, %%xmm3, %%xmm3 \n\t" \
 
 
 /*
-* Multiplies an su3 vector s with an su3 matrix u, assuming s is
+* Multiplies an su3 std::vector s with an su3 matrix u, assuming s is
 * stored in  xmm0,xmm1,xmm2
 *
 * On output the result is in xmm3,xmm4,xmm5 and the registers 
@@ -394,7 +394,7 @@ __asm__ __volatile__ ("movsd %0, %%xmm6 \n\t" \
                       "m" (_sse_sgn))
 
 /*
-* Multiplies an su3 vector s with an su3 matrix u^dagger, assuming s is
+* Multiplies an su3 std::vector s with an su3 matrix u^dagger, assuming s is
 * stored in  xmm0,xmm1,xmm2
 *
 * On output the result is in xmm3,xmm4,xmm5 and the registers 

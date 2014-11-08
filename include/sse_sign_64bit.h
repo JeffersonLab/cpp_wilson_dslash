@@ -7,12 +7,12 @@ namespace CPlusPlusWilsonDslash {
   namespace  DslashParscalar64Bit { 
     union SSEMask { 
       unsigned int a[4];
-      __m128d vector;
+      __m128d std::vector;
     };
 
     union SSEMask2 {
       double a[2];
-      __m128d vector;
+      __m128d std::vector;
     };
 
   }

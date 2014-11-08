@@ -21,7 +21,6 @@ using namespace QDP;
 #include "cpp_dslash_qdp_packer.h"
 
 using namespace Assertions;
-using namespace std;
 using namespace CPlusPlusClover;
 
 void
@@ -83,10 +82,10 @@ timeClover::run(void)
       }
     }
     
-    QDPIO::cout << endl;
+    QDPIO::cout << std::endl;
     
     StopWatch swatch;
-    QDPIO::cout << "\t Timing with " << iters << " counts" << endl;
+    QDPIO::cout << "\t Timing with " << iters << " counts" << std::endl;
 
 
     swatch.reset();
@@ -109,14 +108,14 @@ timeClover::run(void)
     QDPInternal::globalSum(time);
     time /= (double)Layout::numNodes();
     
-    QDPIO::cout << "\t " << iters << " iterations in " << time << " seconds " << endl;
-    QDPIO::cout << "\t " << 1.0e6*time/(double)iters << " u sec/iteration" << endl;    
+    QDPIO::cout << "\t " << iters << " iterations in " << time << " seconds " << std::endl;
+    QDPIO::cout << "\t " << 1.0e6*time/(double)iters << " u sec/iteration" << std::endl;    
     // Mflops=2Dslash + 2Clover Terms + 24 flops for subtractig them
     double Mflops =(2.0f*(552.0f + 1320.0f)+24.0f)*(double)(iters)*(double)(Layout::vol()/2)/1.0e6;
     double perf = Mflops/time;
-    QDPIO::cout << "\t Performance is: " << perf << " Mflops (sp) in Total" << endl;
-    QDPIO::cout << "\t Performance is: " << perf / (double)Layout::numNodes() << " per MPI Process" << endl;
-    QDPIO::cout << endl;
+    QDPIO::cout << "\t Performance is: " << perf << " Mflops (sp) in Total" << std::endl;
+    QDPIO::cout << "\t Performance is: " << perf / (double)Layout::numNodes() << " per MPI Process" << std::endl;
+    QDPIO::cout << std::endl;
   }
 
 
@@ -170,7 +169,7 @@ timeClover::run(void)
       }
     }
     
-    QDPIO::cout << "\t Timing with " << iters << " counts" << endl;
+    QDPIO::cout << "\t Timing with " << iters << " counts" << std::endl;
     
     StopWatch swatch;
     swatch.reset();
@@ -194,14 +193,14 @@ timeClover::run(void)
     QDPInternal::globalSum(time);
     time /= (double)Layout::numNodes();
   
-    QDPIO::cout << "\t " << iters << " iterations in " << time << " seconds " << endl;
-    QDPIO::cout << "\t " << 1.0e6*time/(double)iters << " u sec/iteration" << endl;    
+    QDPIO::cout << "\t " << iters << " iterations in " << time << " seconds " << std::endl;
+    QDPIO::cout << "\t " << 1.0e6*time/(double)iters << " u sec/iteration" << std::endl;    
     // Mflops=2Dslash + 2Clover Terms + 24 flops for subtractig them
     double Mflops =(2.0f*(552.0f + 1320.0f)+24.0f)*(double)(iters)*(double)(Layout::vol()/2)/1.0e6;
     double perf = Mflops/time;
-    QDPIO::cout << "\t Performance is: " << perf << " Mflops (sp) in Total" << endl;
-    QDPIO::cout << "\t Performance is: " << perf / (double)Layout::numNodes() << " per MPI Process" << endl;
-    QDPIO::cout << endl;
+    QDPIO::cout << "\t Performance is: " << perf << " Mflops (sp) in Total" << std::endl;
+    QDPIO::cout << "\t Performance is: " << perf / (double)Layout::numNodes() << " per MPI Process" << std::endl;
+    QDPIO::cout << std::endl;
 
     free(xclovd);
     free(xinvclovd);

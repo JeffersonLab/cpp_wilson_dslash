@@ -33,7 +33,6 @@
 
 
 #include <cstring>
-using namespace std;
 
 namespace CPlusPlusWilsonDslash { 
   using namespace Dslash32BitTypes;

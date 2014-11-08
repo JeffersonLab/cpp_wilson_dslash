@@ -1,6 +1,5 @@
 #include <cstdlib>
 #include <iostream>
-using namespace std;
 
 #include <cpp_dslash_scalar.h>
 #include <shift_table_scalar.h>
@@ -32,7 +31,7 @@ namespace CPlusPlusClover {
     xt_spinor = (FourSpinor *)malloc(2*s->totalVolCB()*sizeof(FourSpinor)
 				    +Cache::CacheLineSize);
     if( xt_spinor == (FourSpinor *)NULL ) { 
-      cerr << "Unable to allocate temporary" << endl;
+      std::cerr << "Unable to allocate temporary" << std::endl;
       exit(1);
     }
     unsigned long pad = 0;

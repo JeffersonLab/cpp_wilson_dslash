@@ -2,7 +2,6 @@
 #define CPP_DSLASH_SCALAR_32BIT_SSE_H
 
 #include <iostream>
-using namespace std;
 #include <xmmintrin.h>
 
 #ifndef ALIGN
@@ -30,7 +29,7 @@ namespace CPlusPlusWilsonDslash {
 
     typedef union { 
       unsigned int a[4];
-      __m128 vector;
+      __m128 std::vector;
     } SSESign;
 
     using namespace Dslash32BitTypes;

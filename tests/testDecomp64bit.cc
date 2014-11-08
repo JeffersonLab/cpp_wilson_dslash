@@ -3,7 +3,6 @@
 #include "unittest.h"
 
 using namespace QDP;
-using namespace std;
 using namespace Assertions;
 #include <sse64.h>
 #include <sse_align.h>
@@ -207,7 +206,7 @@ testDecomp1Minus::run()
       for(int reim=0; reim < 2; reim++) { 
 	double diff = hspinor1[spin2][col][reim] - hspinor2[spin2][col][reim];
 	diff /= (double)(3*2*2);
-	//	QDPIO::cout << "   col="<<col<<" s="<<spin2<<" reim=" <<reim<< "  diff = " << diff << endl;
+	//	QDPIO::cout << "   col="<<col<<" s="<<spin2<<" reim=" <<reim<< "  diff = " << diff << std::endl;
 	assertion( fabs(diff)< 1.0e-17 );
       }
     }
@@ -256,7 +255,7 @@ testDecomp2Minus::run()
       for(int reim=0; reim < 2; reim++) { 
 	double diff = hspinor1[spin2][col][reim] - hspinor2[spin2][col][reim];
 	diff /= (double)(3*2*2);
-	//QDPIO::cout << "   col="<<col<<" s="<<spin2<<" reim=" <<reim<< "  diff = " << diff << endl;
+	//QDPIO::cout << "   col="<<col<<" s="<<spin2<<" reim=" <<reim<< "  diff = " << diff << std::endl;
 	assertion( fabs(diff)< 1.0e-17 );
       }
     }
@@ -306,7 +305,7 @@ testDecomp3Minus::run()
       for(int reim=0; reim < 2; reim++) { 
 	double diff = hspinor1[spin2][col][reim] - hspinor2[spin2][col][reim];
 	diff /= (double)(3*2*2);
-	//	QDPIO::cout << "   col="<<col<<" s="<<spin2<<" reim=" <<reim<< "  diff = " << diff << endl;
+	//	QDPIO::cout << "   col="<<col<<" s="<<spin2<<" reim=" <<reim<< "  diff = " << diff << std::endl;
 	assertion( fabs(diff)< 1.0e-17 );
       }
     }
@@ -357,7 +356,7 @@ testDecomp0Plus::run()
       for(int reim=0; reim < 2; reim++) { 
 	double diff = hspinor1[spin2][col][reim] - hspinor2[spin2][col][reim];
 	diff /= (double)(3*2*2);
-	//	QDPIO::cout << "   col="<<col<<" s="<<spin2<<" reim=" <<reim<< "  diff = " << diff << endl;
+	//	QDPIO::cout << "   col="<<col<<" s="<<spin2<<" reim=" <<reim<< "  diff = " << diff << std::endl;
 	assertion( fabs(diff)< 1.0e-17 );
       }
     }
@@ -408,7 +407,7 @@ testDecomp1Plus::run()
       for(int reim=0; reim < 2; reim++) { 
 	double diff = hspinor1[spin2][col][reim] - hspinor2[spin2][col][reim];
 	diff /= (double)(3*2*2);
-	//	QDPIO::cout << "   col="<<col<<" s="<<spin2<<" reim=" <<reim<< "  diff = " << diff << endl;
+	//	QDPIO::cout << "   col="<<col<<" s="<<spin2<<" reim=" <<reim<< "  diff = " << diff << std::endl;
 	assertion( fabs(diff)< 1.0e-17 );
       }
     }
@@ -460,7 +459,7 @@ testDecomp2Plus::run()
       for(int reim=0; reim < 2; reim++) { 
 	double diff = hspinor1[spin2][col][reim] - hspinor2[spin2][col][reim];
 	diff /= (double)(3*2*2);
-	//	QDPIO::cout << "   col="<<col<<" s="<<spin2<<" reim=" <<reim<< "  diff = " << diff << endl;
+	//	QDPIO::cout << "   col="<<col<<" s="<<spin2<<" reim=" <<reim<< "  diff = " << diff << std::endl;
 	assertion( fabs(diff)< 1.0e-17 );
       }
     }
@@ -509,7 +508,7 @@ testDecomp3Plus::run()
       for(int reim=0; reim < 2; reim++) { 
 	double diff = hspinor1[spin2][col][reim] - hspinor2[spin2][col][reim];
 	diff /= (double)(3*2*2);
-	//	QDPIO::cout << "   col="<<col<<" s="<<spin2<<" reim=" <<reim<< "  diff = " << diff << endl;
+	//	QDPIO::cout << "   col="<<col<<" s="<<spin2<<" reim=" <<reim<< "  diff = " << diff << std::endl;
 	assertion( fabs(diff)< 1.0e-17 );
       }
     }

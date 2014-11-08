@@ -2,7 +2,6 @@
 #define CPP_DSLASH_PARSCALAR_H
 
 #include <cstddef>
-using namespace std;
 
 
 /* This is the scalar dslash */ 

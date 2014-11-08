@@ -6,7 +6,6 @@
 
 using namespace QDP;
 using namespace Assertions;
-using namespace std;
 
 #define _sse_42_gamma0_minus()     _sse_vector_xch_i_sub()
 #define _sse_42_gamma0_plus()      _sse_vector_xch_i_add()

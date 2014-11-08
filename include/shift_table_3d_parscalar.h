@@ -5,7 +5,6 @@
 #include <cstdlib>
 #include <cache.h>
 #include <qmp.h>
-using namespace std;
 
 #include "shift_table_parscalar_types.h"
 
@@ -37,7 +36,7 @@ namespace CPlusPlusWilsonDslash {
     }
 
     HalfSpinor* halfspinorBufferOffset(HalfSpinorOffsetType type, int site, int mu) {
-      //      cout << "type="<<type<<" site="<<site<<" mu="<<mu<<" index=" << (mu + 4*( site + subgrid_vol*(int)type)) << endl << flush;
+      //      std::cout << "type="<<type<<" site="<<site<<" mu="<<mu<<" index=" << (mu + 4*( site + subgrid_vol*(int)type)) << std::endl << std::flush;
 	return offset_table[mu + 3*( site + subgrid_vol*(int)type) ];
     }
 
@@ -201,7 +200,6 @@ namespace CPlusPlusWilsonDslash {
   // STUPID TEMPLATING MEANS I HAVE TO INLINE THIS...
 
 #include  <cstddef>
-using namespace std;
 
 
 

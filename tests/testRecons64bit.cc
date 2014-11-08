@@ -7,7 +7,6 @@
 #include "sse_align.h"
 
 using namespace QDP;
-using namespace std;
 using namespace Assertions;
 
 
@@ -99,7 +98,7 @@ testRecons4DirPlus::run(void)
 		     << " sp=" << spin
 		     << " re=" << reim 
 		     << " diff upper = " << diff 
-		     << endl;
+		     << std::endl;
 #endif
 	 assertion( fabs(diff) < 1.0e-18 );
 	 
@@ -196,7 +195,7 @@ testRecons4DirMinus::run(void)
 		     << " sp=" << spin
 		     << " re=" << reim 
 		     << " diff upper = " << diff 
-		     << endl;
+		     << std::endl;
 #endif
 	 assertion( fabs(diff) < 1.0e-18 );
 	 
