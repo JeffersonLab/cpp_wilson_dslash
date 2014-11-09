@@ -35,12 +35,12 @@ void mvv_recons_gamma0_plus(HalfSpinor src,
 
   SSESign signs13 __attribute__((unused)) ALIGN = {{ 0x80000000, 0x00000000, 0x80000000, 0x00000000 }};
 
-  /* Load Halfvector xmm0-xmm2 */
+  /* Load Halfstd::vector xmm0-xmm2 */
   xmm0 = _mm_load_ps( &src[0][0][0] );
   xmm1 = _mm_load_ps( &src[1][0][0] );
   xmm2 = _mm_load_ps( &src[2][0][0] );
 
-  /* SU3 * 3 vector */
+  /* SU3 * 3 std::vector */
 
   xmm3 = _mm_load_ss(&u[0][0][0]);
   xmm4 = _mm_load_ss(&u[0][1][0]);
@@ -184,12 +184,12 @@ void mvv_recons_gamma1_plus_add(HalfSpinor src,
   SSESign signs13 __attribute__((unused)) ALIGN = {{ 0x80000000, 0x00000000, 0x80000000, 0x00000000 }};
   SSESign signs12 __attribute__((unused)) ALIGN = {{ 0x80000000, 0x80000000, 0x00000000, 0x00000000 }};
 
-  /* Load Halfvector xmm0-xmm2 */
+  /* Load Halfstd::vector xmm0-xmm2 */
   xmm0 = _mm_load_ps( &src[0][0][0] );
   xmm1 = _mm_load_ps( &src[1][0][0] );
   xmm2 = _mm_load_ps( &src[2][0][0] );
 
-  /* SU3 * 3 vector */
+  /* SU3 * 3 std::vector */
 
   xmm3 = _mm_load_ss(&u[0][0][0]);
   xmm4 = _mm_load_ss(&u[0][1][0]);
@@ -349,12 +349,12 @@ void mvv_recons_gamma2_plus_add(  HalfSpinor src,
   SSESign signs13 __attribute__((unused)) ALIGN = {{ 0x80000000, 0x00000000, 0x80000000, 0x00000000 }};
   SSESign signs14 __attribute__((unused)) ALIGN = {{ 0x80000000, 0x00000000, 0x00000000, 0x80000000 }};
 
-  /* Load Halfvector xmm0-xmm2 */
+  /* Load Halfstd::vector xmm0-xmm2 */
   xmm0 = _mm_load_ps( &src[0][0][0] );
   xmm1 = _mm_load_ps( &src[1][0][0] );
   xmm2 = _mm_load_ps( &src[2][0][0] );
 
-  /* SU3 * 3 vector */
+  /* SU3 * 3 std::vector */
 
 
   xmm3 = _mm_load_ss(&u[0][0][0]);
@@ -518,12 +518,12 @@ void mvv_recons_gamma2_plus_add_store(  HalfSpinor src,
   SSESign signs13 __attribute__((unused)) ALIGN = {{ 0x80000000, 0x00000000, 0x80000000, 0x00000000 }};
   SSESign signs14 __attribute__((unused)) ALIGN = {{ 0x80000000, 0x00000000, 0x00000000, 0x80000000 }};
 
-  /* Load Halfvector xmm0-xmm2 */
+  /* Load Halfstd::vector xmm0-xmm2 */
   xmm0 = _mm_load_ps( &src[0][0][0] );
   xmm1 = _mm_load_ps( &src[1][0][0] );
   xmm2 = _mm_load_ps( &src[2][0][0] );
 
-  /* SU3 * 3 vector */
+  /* SU3 * 3 std::vector */
 
 
   xmm3 = _mm_load_ss(&u[0][0][0]);
@@ -686,12 +686,12 @@ void mvv_recons_gamma3_plus_add_store(  HalfSpinor src,
 
   SSESign signs13 __attribute__((unused)) ALIGN = {{ 0x80000000, 0x00000000, 0x80000000, 0x00000000 }};
 
-  /* Load Halfvector xmm0-xmm2 */
+  /* Load Halfstd::vector xmm0-xmm2 */
   xmm0 = _mm_load_ps( &src[0][0][0] );
   xmm1 = _mm_load_ps( &src[1][0][0] );
   xmm2 = _mm_load_ps( &src[2][0][0] );
 
-  /* SU3 * 3 vector */
+  /* SU3 * 3 std::vector */
 
 
   xmm3 = _mm_load_ss(&u[0][0][0]);
@@ -853,12 +853,12 @@ void mvv_recons_gamma0_minus(  HalfSpinor src,
   SSESign signs13 __attribute__((unused)) ALIGN = {{ 0x80000000, 0x00000000, 0x80000000, 0x00000000 }}
 ; SSESign signs24 __attribute__((unused)) ALIGN = {{ 0x00000000, 0x80000000, 0x00000000, 0x80000000 }};
 
-  /* Load Halfvector xmm0-xmm2 */
+  /* Load Halfstd::vector xmm0-xmm2 */
   xmm0 = _mm_load_ps( &src[0][0][0] );
   xmm1 = _mm_load_ps( &src[1][0][0] );
   xmm2 = _mm_load_ps( &src[2][0][0] );
 
-  /* SU3 * 3 vector */
+  /* SU3 * 3 std::vector */
 
 
   xmm3 = _mm_load_ss(&u[0][0][0]);
@@ -1002,12 +1002,12 @@ void mvv_recons_gamma1_minus_add(  HalfSpinor src,
   SSESign signs13 __attribute__((unused)) ALIGN = {{ 0x80000000, 0x00000000, 0x80000000, 0x00000000 }};
   SSESign signs34 __attribute__((unused)) ALIGN = {{ 0x00000000, 0x00000000, 0x80000000, 0x80000000 }};
 
-  /* Load Halfvector xmm0-xmm2 */
+  /* Load Halfstd::vector xmm0-xmm2 */
   xmm0 = _mm_load_ps( &src[0][0][0] );
   xmm1 = _mm_load_ps( &src[1][0][0] );
   xmm2 = _mm_load_ps( &src[2][0][0] );
 
-  /* SU3 * 3 vector */
+  /* SU3 * 3 std::vector */
 
 
   xmm3 = _mm_load_ss(&u[0][0][0]);
@@ -1169,12 +1169,12 @@ void mvv_recons_gamma2_minus_add(  HalfSpinor src,
   SSESign signs13 __attribute__((unused)) ALIGN = {{ 0x80000000, 0x00000000, 0x80000000, 0x00000000 }};
   SSESign signs23 __attribute__((unused)) ALIGN = {{ 0x00000000, 0x80000000, 0x80000000, 0x00000000 }};
 
-   /* Load Halfvector xmm0-xmm2 */
+   /* Load Halfstd::vector xmm0-xmm2 */
   xmm0 = _mm_load_ps( &src[0][0][0] );
   xmm1 = _mm_load_ps( &src[1][0][0] );
   xmm2 = _mm_load_ps( &src[2][0][0] );
 
-  /* SU3 * 3 vector */
+  /* SU3 * 3 std::vector */
 
   xmm3 = _mm_load_ss(&u[0][0][0]);
   xmm4 = _mm_load_ss(&u[0][1][0]);
@@ -1336,7 +1336,7 @@ void mvv_recons_gamma2_minus_add_store(  HalfSpinor src,
   SSESign signs13 __attribute__((unused)) ALIGN = {{ 0x80000000, 0x00000000, 0x80000000, 0x00000000 }};
   SSESign signs23 __attribute__((unused)) ALIGN = {{ 0x00000000, 0x80000000, 0x80000000, 0x00000000 }};
 
-   /* Load Halfvector xmm0-xmm2 */
+   /* Load Halfstd::vector xmm0-xmm2 */
   xmm0 = _mm_load_ps( &src[0][0][0] );
   xmm1 = _mm_load_ps( &src[1][0][0] );
   xmm2 = _mm_load_ps( &src[2][0][0] );
@@ -1503,12 +1503,12 @@ void mvv_recons_gamma3_minus_add_store(  HalfSpinor src,
 
   SSESign signs13 __attribute__((unused)) ALIGN = {{ 0x80000000, 0x00000000, 0x80000000, 0x00000000 }};
 
-  /* Load Halfvector xmm0-xmm2 */
+  /* Load Halfstd::vector xmm0-xmm2 */
   xmm0 = _mm_load_ps( &src[0][0][0] );
   xmm1 = _mm_load_ps( &src[1][0][0] );
   xmm2 = _mm_load_ps( &src[2][0][0] );
 
-  /* SU3 * 3 vector */
+  /* SU3 * 3 std::vector */
 
 
   xmm3 = _mm_load_ss(&u[0][0][0]);

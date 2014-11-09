@@ -30,12 +30,12 @@ namespace CPlusPlusWilsonDslash {
     
     typedef union { 
       unsigned int c[4];
-      __m128d vector;
+      __m128d std::vector;
     } SSESgn;
     
     typedef union { 
       double c[2];
-      __m128d vector;
+      __m128d std::vector;
     } SSESgn2;
     
 
