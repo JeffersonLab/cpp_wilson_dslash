@@ -8,7 +8,7 @@ namespace CPlusPlusWilsonDslash {
 
     union SSESign { 
       unsigned int a[4];
-      __m128 std::vector;
+      __m128 vector;
     } ;
   }
 }
