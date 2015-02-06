@@ -3,6 +3,7 @@
 
 #include "qdp.h"
 using namespace QDP;
+using namespace std;
 
 #ifndef DSLASH_3D_W_H
 #include "dslash_3d_w.h"

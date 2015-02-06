@@ -191,7 +191,7 @@ namespace CPlusPlusWilsonDslash {
 
 
   // STUPID TEMPLATING MEANS I HAVE TO INLINE THIS...
-
+  
 #include  <cstddef>
 
 
@@ -210,37 +210,39 @@ namespace CPlusPlusWilsonDslash {
 				     int (*getNodeNumber)(const int coord[])) : Nd(4)
   {
 
-
     /* Setup subgrid */
     const int* mach_size = QMP_get_logical_dimensions();
     int my_node = QMP_get_node_number();
     int bound[2][4][4];
 
-    for(int mu=0; mu < Nd; mu++) { 
-      subgrid_size[mu] = _subgrid_size[mu];
-      subgrid_cb_size[mu] = _subgrid_size[mu];
-      tot_size[mu] = mach_size[mu]*_subgrid_size[mu];
+    for(int mu=0; mu < Nd; mu++) 
+    { 
+		subgrid_size[mu] = _subgrid_size[mu];
+		subgrid_cb_size[mu] = _subgrid_size[mu];
+		tot_size[mu] = mach_size[mu]*_subgrid_size[mu];
     }
     subgrid_cb_size[0] /= 2;
 
     subgrid_vol = subgrid_size[0];
-    for(int mu=1; mu < 4; mu++) { 
-      subgrid_vol *= subgrid_size[mu];
+    for(int mu=1; mu < 4; mu++) 
+    { 
+		subgrid_vol *= subgrid_size[mu];
     }
     subgrid_vol_cb = subgrid_vol/2;
-
 
     /* Now I want to build the site table */
     /* I want it cache line aligned? */
     xsite_table = (int *)malloc(sizeof(int)*subgrid_vol+Cache::CacheLineSize);
-    if(xsite_table == 0x0 ) { 
-      QMP_error("Couldnt allocate site table");
-      QMP_abort(1);
+    if(xsite_table == 0x0 ) 
+    { 
+		QMP_error("Couldnt allocate site table");
+		QMP_abort(1);
     }
 
     int pad = 0; 
-    if( ((ptrdiff_t)xsite_table % Cache::CacheLineSize) != 0 ) { 
-      pad = Cache::CacheLineSize - ((ptrdiff_t)xsite_table % Cache::CacheLineSize);
+    if( ((ptrdiff_t)xsite_table % Cache::CacheLineSize) != 0 ) 
+    { 
+		pad = Cache::CacheLineSize - ((ptrdiff_t)xsite_table % Cache::CacheLineSize);
     }
     site_table = (int *)((unsigned char*)xsite_table+pad);
 
@@ -248,126 +250,146 @@ namespace CPlusPlusWilsonDslash {
        this is a one off, so I don't care so much about alignment 
      */
     InvTab *invtab = (InvTab *)malloc(sizeof(InvTab)*subgrid_vol);
-    if(invtab == 0x0 ) { 
-      QMP_error("Couldnt allocate inv site table");
-      QMP_abort(1);
+    if(invtab == 0x0 ) 
+    { 
+		QMP_error("Couldnt allocate inv site table");
+		QMP_abort(1);
     }
 
     /* Sanity Check the passed in Geometry Functions */
-    for(int p=0; p < 2; p++) {
-      for(int site=0; site < subgrid_vol_cb; site++) { 
-	int gcoord[4];
-	/* Linear site index */
-	int my_index = site + subgrid_vol_cb*p;
-	getSiteCoords(gcoord, my_node, my_index);
-	int linear=getLinearSiteIndex(gcoord);
+#pragma omp parallel for collapse(2)	// loop1: OK
+	for(int p=0; p < 2; p++) 
+	{
+		for(int site=0; site < subgrid_vol_cb; site++) 
+		{ 
+			int gcoord[4];
+			/* Linear site index */
+			int my_index = site + subgrid_vol_cb*p;
+			getSiteCoords(gcoord, my_node, my_index);
+			int linear=getLinearSiteIndex(gcoord);
 
-	if( linear != my_index ) { 
-	  printf("P%d cb=%d site=%d : getSiteCoords not inverse of getLinearSiteIndex(): my_index=%d linear=%d\n", my_node, p,site, my_index,linear);
+			if( linear != my_index ) 
+			{ 
+				printf("P%d cb=%d site=%d : getSiteCoords not inverse of getLinearSiteIndex(): my_index=%d linear=%d\n", my_node, p,site, my_index,linear);
+			}
+
+			mySiteCoords4D(gcoord, my_node, my_index);
+			linear=myLinearSiteIndex4D(gcoord);
+
+			if( linear != my_index ) 
+			{ 
+				printf("P%d cb=%d site=%d : mySiteCoords3D not inverse of myLinearSiteIndex3D(): my_index=%d linear=%d\n", my_node, p,site, my_index,linear);
+			}
+		}
 	}
-	
-	mySiteCoords4D(gcoord, my_node, my_index);
-	linear=myLinearSiteIndex4D(gcoord);
-	
-	if( linear != my_index ) { 
-	  printf("P%d cb=%d site=%d : mySiteCoords3D not inverse of myLinearSiteIndex3D(): my_index=%d linear=%d\n", my_node, p,site, my_index,linear);
-	}
-      }
-    }
 
     /* Loop through sites - you can choose your path below */
     /* This is a checkerboarded order which is identical hopefully
        to QDP++'s rb2 subset when QDP++ is in a CB2 layout */
     const int *node_coord  = QMP_get_logical_coordinates();
 
-    for(int p=0; p < 2; p++) { 
-      for(int t=0; t < subgrid_size[3]; t++) { 	   
-	for(int z=0; z < subgrid_size[2]; z++) {
-	  for(int y=0; y < subgrid_size[1]; y++) { 
-	    for(int x=0; x < subgrid_size[0]/2; x++) {
-
-	      int coord[4];
-	      coord[0] = 2*x + p;
-	      coord[1] = y;
-	      coord[2] = z; 
-	      coord[3] = t;
+#pragma omp parallel for collapse(5)	// loop2: OK	
+	for(int p=0; p < 2; p++) 
+	{
+		for(int t=0; t < subgrid_size[3]; t++) 
+		{ 	   
+			for(int z=0; z < subgrid_size[2]; z++) 
+			{
+				for(int y=0; y < subgrid_size[1]; y++) 
+				{ 
+					for(int x=0; x < subgrid_size[0]/2; x++) 
+					{
+						int coord[4];
+						coord[0] = 2*x + p;
+						coord[1] = y;
+						coord[2] = z; 
+						coord[3] = t;
 	  
-	      /* Make global */
-	      for(int i=0; i < 4; i++) { 
-		coord[i] += subgrid_size[i]*node_coord[i];
-	      }
-	    
-	      /* Index of coordinate -- NB this is not lexicographic
-		 but takes into account checkerboarding in QDP++ */
-	      int qdp_index = getLinearSiteIndex(coord);
+						/* Make global */
+						for(int i=0; i < 4; i++) 
+						{ 
+							coord[i] += subgrid_size[i]*node_coord[i];
+						}
+
+						/* Index of coordinate -- NB this is not lexicographic
+		 					but takes into account checkerboarding in QDP++ */
+						int qdp_index = getLinearSiteIndex(coord);
 	      
-	    /* Index of coordinate in my layout. -- NB this is not lexicographic
-	       but takes into account my 3D checkerbaording */
-	      int  my_index = myLinearSiteIndex4D(coord);
-	      site_table[my_index] = qdp_index;
+	    				/* Index of coordinate in my layout. -- NB this is not lexicographic
+	       					but takes into account my 3D checkerbaording */
+						int  my_index = myLinearSiteIndex4D(coord);
+						site_table[my_index] = qdp_index;
 	      
-	      int cb=parity(coord);
-	      int linear = my_index%subgrid_vol_cb;
+						int cb=parity(coord);
+						int linear = my_index%subgrid_vol_cb;
 	    
-	      invtab[qdp_index].cb=cb;
-	      invtab[qdp_index].linearcb=linear;
-	    }
-	  }
-	}
-      }
+						invtab[qdp_index].cb=cb;
+						invtab[qdp_index].linearcb=linear;
+					}
+				}
+			}
+		}
+//		}
     }
 
-    
     /* Site table transitivity check: 
        for each site, convert to index in cb3d, convert to qdp index
        convert qdp_index to coordinate
        convert coordinate to back index in cb3d
        Check that your cb3d at the end is the same as you 
        started with */
-    for(int p=0; p < 2; p++) { 
-      for(int site=0; site < subgrid_vol_cb; site++) {
-	int gcoord[4];
+#pragma omp parallel for collapse(2)		// loop3: OK
+	for(int p=0; p < 2; p++) 
+	{ 
+		for(int site=0; site < subgrid_vol_cb; site++) 
+		{
+			int gcoord[4];
 
-	/* My local index */
-	int my_index = site + subgrid_vol_cb*p;
+			/* My local index */
+			int my_index = site + subgrid_vol_cb*p;
 	
-	/* Convert to QDP index */
-	int qdp_index = site_table[ my_index ];
+			/* Convert to QDP index */
+			int qdp_index = site_table[ my_index ];
       
-	/* Switch QDP index to coordinates */
-	getSiteCoords(gcoord, my_node,qdp_index);
+			/* Switch QDP index to coordinates */
+			getSiteCoords(gcoord, my_node,qdp_index);
 	
-	/* Convert back to cb3d index */
-	int linear = myLinearSiteIndex4D(gcoord);
+			/* Convert back to cb3d index */
+			int linear = myLinearSiteIndex4D(gcoord);
 	
-	/* Check new cb,cbsite index matches the old cb index */
-	if (linear != my_index) { 
-	  printf("P%d The Circle is broken. My index=%d qdp_index=%d coords=%d,%d,%d,%d linear(=my_index?)=%d\n", my_node, my_index, qdp_index, gcoord[0],gcoord[1],gcoord[2],gcoord[3],linear);
+			/* Check new cb,cbsite index matches the old cb index */
+			if (linear != my_index) 
+			{ 
+				printf("P%d The Circle is broken. My index=%d qdp_index=%d coords=%d,%d,%d,%d linear(=my_index?)=%d\n", my_node, my_index, qdp_index, gcoord[0],gcoord[1],gcoord[2],gcoord[3],linear);
+			}
+		}
 	}
-      }
-    }
 
-
-    for(int p=0; p < 2; p++) { 
-      for(int site=0; site < subgrid_vol_cb; site++) {
+#pragma omp parallel for collapse(2)		// loop4: OK
+    for(int p=0; p < 2; p++) 
+    { 
+    	for(int site=0; site < subgrid_vol_cb; site++) 
+    	{
       
-	int gcoord[4];
-	int gcoord2[4];
+			int gcoord[4];
+			int gcoord2[4];
 
-	/* My local index */
-	int my_index = site + subgrid_vol_cb*p;
-	mySiteCoords4D(gcoord, my_node, my_index);
+			/* My local index */
+			int my_index = site + subgrid_vol_cb*p;
+			mySiteCoords4D(gcoord, my_node, my_index);
 
-	int qdp_index = site_table[ my_index ];
-	getSiteCoords(gcoord2, my_node,qdp_index);
-      
-	for(int mu=0 ; mu < 4; mu++) { 
-	  if( gcoord2[mu] != gcoord[mu] ) {
-	    printf("P%d: my_index=%d qdp_index=%d mySiteCoords=(%d,%d,%d,%d) siteCoords=(%d,%d,%d,%d)\n", my_node, my_index, qdp_index, gcoord[0], gcoord[1], gcoord[2], gcoord[3], gcoord2[0], gcoord2[1], gcoord2[2], gcoord2[3]);
-	    continue;
-	  }
-	}
-      }
+			int qdp_index = site_table[ my_index ];
+			getSiteCoords(gcoord2, my_node,qdp_index);
+  
+			for(int mu=0 ; mu < 4; mu++) 
+			{ 
+				if( gcoord2[mu] != gcoord[mu] ) 
+				{
+					printf("P%d: my_index=%d qdp_index=%d mySiteCoords=(%d,%d,%d,%d) siteCoords=(%d,%d,%d,%d)\n", my_node, my_index, qdp_index, gcoord[0], gcoord[1], gcoord[2], gcoord[3], gcoord2[0], gcoord2[1], gcoord2[2], gcoord2[3]);
+					continue;
+				}
+			}
+		}
     }
 
     /* Allocate the shift table */
@@ -383,163 +405,253 @@ namespace CPlusPlusWilsonDslash {
     int **shift_table;
 
     /* This 4 is for the 4 tables: Table 1-4*/
-    if ((shift_table = (int **)malloc(4*sizeof(int*))) == 0 ) {
-      QMP_error("init_wnxtsu3dslash: could not initialize shift_table");
-    QMP_abort(1);
-    
+    if ((shift_table = (int **)malloc(4*sizeof(int*))) == 0 ) 
+    {
+		QMP_error("init_wnxtsu3dslash: could not initialize shift_table");
+		QMP_abort(1);
     }
   
-    for(int i=0; i < 4; i++) { 
-      /* This 4 is for the 4 comms dierctions: */
-      if ((shift_table[i] = (int *)malloc(4*subgrid_vol*sizeof(int))) == 0) {
-	QMP_error("init_wnxtsu3dslash: could not initialize shift_table");
-	QMP_abort(1);
-      }
+    for(int i=0; i < 4; i++) 
+    { 
+		/* This 4 is for the 4 comms dierctions: */
+		if ((shift_table[i] = (int *)malloc(4*subgrid_vol*sizeof(int))) == 0) 
+		{
+			QMP_error("init_wnxtsu3dslash: could not initialize shift_table");
+			QMP_abort(1);
+		}
     }
 
     /* Initialize the boundary counters */
-    for(int cb=0; cb < 2; cb++) {
-      for(int dir=0; dir < 4; dir++) {
-	bound[cb][0][dir] = 0;	
-	bound[cb][1][dir] = 0;	
-	bound[cb][2][dir] = 0;	
-	bound[cb][3][dir] = 0;	
-      }
+    for(int cb=0; cb < 2; cb++) 
+    {
+		for(int dir=0; dir < 4; dir++) 
+		{
+			bound[cb][0][dir] = 0;	
+			bound[cb][1][dir] = 0;	
+			bound[cb][2][dir] = 0;	
+			bound[cb][3][dir] = 0;	
+		}
+    }
+
+/*
+  JB: to implementation of threading requires us to make two passes, one of which is costly, but fully threaded, and the
+	other with only two threads but cheap. In the first pass we will the offnode shift tables with -1, so that these sites can be 
+	recognized and filled up properly in the second pass.
+*/	
+#pragma omp parallel for collapse(2)		// loop5-pass1: OK
+    for(int cb=0; cb < 2; cb++) 
+    { 
+		for(int site=0; site < subgrid_vol_cb; ++site) 
+		{
+			int index = cb*subgrid_vol_cb + site;
+  
+			/* Fetch site from site table */
+			int qdp_index = site_table[index];
+  
+			int coord[4];
+
+			/* Get its coords */
+			getSiteCoords(coord, my_node, qdp_index);
+  
+			/* Loop over directions building up shift tables */
+			for(int dir=0; dir < 4; dir++) 
+			{
+				int fcoord[4], bcoord[4];
+				int fnode, bnode;
+				int blinear, flinear;
+
+				/* Backwards displacement*/
+				offs(bcoord, coord, dir, -1);
+				bnode   = getNodeNumber(bcoord);
+				blinear = getLinearSiteIndex(bcoord);
+
+				/* Forward displacement */
+				offs(fcoord, coord, dir, +1);
+				fnode   = getNodeNumber(fcoord);
+				flinear = getLinearSiteIndex(fcoord);
+
+				/* Scatter:  decomp_{plus,minus} */
+				/* Operation: a^F(shift(x,type=0),dir) <- decomp(psi(x),dir) */ 
+				/* Send backwards - also called a receive from forward */
+				if (bnode != my_node) 
+				{      
+					/* Offnode */
+					/* Append to Tail 1, increase boundary count */
+					/* This is the correct code */
+					shift_table[DECOMP_SCATTER][dir+4*index] = -1;
+// #pragma omp critical(decomp_scatter)
+// {
+// 					shift_table[DECOMP_SCATTER][dir+4*index] 
+// 						= subgrid_vol_cb + bound[1-cb][DECOMP_SCATTER][dir];
+// 
+// 					bound[1-cb][DECOMP_SCATTER][dir]++;
+// }
+				}
+				else 
+				{
+					/* On node. Note the linear part of its (cb3, linear) bit,
+					   using a reverse lookup */
+					shift_table[DECOMP_SCATTER][dir+4*index] = invtab[blinear].linearcb;
+				}
+	
+				/* Scatter:  decomp_hvv_{plus,minus} */
+				/* Operation:  a^B(shift(x,type=1),dir) <- U^dag(x,dir)*decomp(psi(x),dir) */
+				/* Send forwards - also called a receive from backward */
+				if (fnode != my_node) 
+				{
+					/* Offnode */
+					/* Append to Tail 1, increase boundary count */
+					shift_table[DECOMP_HVV_SCATTER][dir+4*index] = -1;
+// #pragma omp critical(decomp_hvv_scatter)
+// {
+// 					shift_table[DECOMP_HVV_SCATTER][dir+4*index]           
+// 						= subgrid_vol_cb + bound[1-cb][DECOMP_HVV_SCATTER][dir];
+// 
+// 					bound[1-cb][DECOMP_HVV_SCATTER][dir]++;
+// }
+				}
+				else 
+				{
+					/* On node. Note the linear part of its (cb3, linear) bit,
+					   using a reverse lookup */
+					shift_table[DECOMP_HVV_SCATTER][dir+4*index]           /* Onnode */
+						= invtab[flinear].linearcb ;
+				}
+	  
+				/* Gather:  mvv_recons_{plus,minus} */
+				/* Operation:  chi(x) <-  \sum_dir U(x,dir)*a^F(shift(x,type=2),dir) */
+				/* Receive from forward */
+				if (fnode != my_node) 
+				{
+					/* Offnode */
+					/* Append to Tail 2, increase boundary count */
+
+					shift_table[RECONS_MVV_GATHER][dir+4*index] = -1;
+// #pragma omp critical(recons_mvv_gather)
+// {
+// 					shift_table[RECONS_MVV_GATHER][dir+4*index] =
+// 						2*subgrid_vol_cb + (bound[cb][RECONS_MVV_GATHER][dir]);
+// 
+// 					bound[cb][RECONS_MVV_GATHER][dir]++;
+// }
+				}
+				else 
+				{
+					/* On node. Note the linear part of its (cb3, linear) bit,
+					   using a reverse lookup. Note this is a recons post shift,
+					   so the linear coordinate to invert is mine rather than the neighbours */
+					shift_table[RECONS_MVV_GATHER][dir+4*index] = invtab[qdp_index].linearcb ;
+				}
+      
+				/* Gather:  recons_{plus,minus} */
+				/* Operation:  chi(x) +=  \sum_dir recons(a^B(shift(x,type=3),dir),dir) */
+				/* Receive from backward */
+				if (bnode != my_node) 
+				{
+					shift_table[RECONS_GATHER][dir+4*index] = -1;
+// #pragma omp critical(recons_gather)
+// {
+// 					shift_table[RECONS_GATHER][dir+4*index] = 
+// 						2*subgrid_vol_cb + bound[cb][RECONS_GATHER][dir];
+// 
+// 					bound[cb][RECONS_GATHER][dir]++;
+// }
+				}
+				else 
+				{
+					/* On node. Note the linear part of its (cb3, linear) bit,
+					   using a reverse lookup. Note this is a recons post shift,
+					   so the linear coordinate to invert is mine rather than the neighbours */
+
+					shift_table[RECONS_GATHER][dir+4*index] = invtab[qdp_index].linearcb ;
+				}
+			} 
+		}
     }
     
-    for(int cb=0; cb < 2; cb++) { 
-      for(int site=0; site < subgrid_vol_cb; ++site) {
-      
-	int index = cb*subgrid_vol_cb + site;
-      
-	/* Fetch site from site table */
-	int qdp_index = site_table[index];
-      
-	int coord[4];
+//======================start JB=============================
 
-	/* Get its coords */
-	getSiteCoords(coord, my_node, qdp_index);
-      
-	/* Loop over directions building up shift tables */
-	for(int dir=0; dir < 4; dir++) {
-	
-	  int fcoord[4], bcoord[4];
-	  int fnode, bnode;
-	  int blinear, flinear;
-	
-	  /* Backwards displacement*/
-	  offs(bcoord, coord, dir, -1);
-	  bnode   = getNodeNumber(bcoord);
-	  blinear = getLinearSiteIndex(bcoord);
+#pragma omp parallel for		// loop5-pass2: OK -- only thread cb!!!
+    for(int cb=0; cb < 2; cb++) 
+    { 
+			for(int site=0; site < subgrid_vol_cb; ++site) 
+			{
+				int index = cb*subgrid_vol_cb + site;
+		
+				/* Loop over directions building up shift tables */
+				for(int dir=0; dir < 4; dir++) 
+				{
+					if (shift_table[DECOMP_SCATTER][dir+4*index] == -1) 
+					{      
+						/* Offnode */
+						/* Append to Tail 1, increase boundary count */
+						/* This is the correct code */
+						shift_table[DECOMP_SCATTER][dir+4*index] 
+							= subgrid_vol_cb + bound[1-cb][DECOMP_SCATTER][dir];
 
-	  /* Forward displacement */
-	  offs(fcoord, coord, dir, +1);
-	  fnode   = getNodeNumber(fcoord);
-	  flinear = getLinearSiteIndex(fcoord);
-	  
-	  /* Scatter:  decomp_{plus,minus} */
-	  /* Operation: a^F(shift(x,type=0),dir) <- decomp(psi(x),dir) */ 
-	  /* Send backwards - also called a receive from forward */
-	  if (bnode != my_node) {      
-	    /* Offnode */
-	    /* Append to Tail 1, increase boundary count */
-	    /* This is the correct code */
-	    shift_table[DECOMP_SCATTER][dir+4*index] 
-	      = subgrid_vol_cb + bound[1-cb][DECOMP_SCATTER][dir];
-	    
-	    bound[1-cb][DECOMP_SCATTER][dir]++;
-	    
-	  }
-	  else {                                           
-	    /* On node. Note the linear part of its (cb3, linear) bit,
-	       using a reverse lookup */
-	    shift_table[DECOMP_SCATTER][dir+4*index] = 
-	      invtab[blinear].linearcb;
-	  }
+						bound[1-cb][DECOMP_SCATTER][dir]++;
+					}
 	
-	
-	  /* Scatter:  decomp_hvv_{plus,minus} */
-	  /* Operation:  a^B(shift(x,type=1),dir) <- U^dag(x,dir)*decomp(psi(x),dir) */
-	  /* Send forwards - also called a receive from backward */
-	  if (fnode != my_node) {
-	    /* Offnode */
-	    /* Append to Tail 1, increase boundary count */
-	    shift_table[DECOMP_HVV_SCATTER][dir+4*index]           
-	      = subgrid_vol_cb + bound[1-cb][DECOMP_HVV_SCATTER][dir];
-	    
-	    bound[1-cb][DECOMP_HVV_SCATTER][dir]++;                  
-	    
-	  }
-	  else {
-	    /* On node. Note the linear part of its (cb3, linear) bit,
-	       using a reverse lookup */
-	    shift_table[DECOMP_HVV_SCATTER][dir+4*index]           /* Onnode */
-	      = invtab[flinear].linearcb ;
-	  }
-	  
-	  
-	  /* Gather:  mvv_recons_{plus,minus} */
-	  /* Operation:  chi(x) <-  \sum_dir U(x,dir)*a^F(shift(x,type=2),dir) */
-	  /* Receive from forward */
-	  if (fnode != my_node) {
-	    /* Offnode */
-	    /* Append to Tail 2, increase boundary count */
-	    
-	    shift_table[RECONS_MVV_GATHER][dir+4*index] =
-	      2*subgrid_vol_cb + (bound[cb][RECONS_MVV_GATHER][dir]);
-	    
-	    bound[cb][RECONS_MVV_GATHER][dir]++;
-	    
-	  }
-	  else {
-	    /* On node. Note the linear part of its (cb3, linear) bit,
-	       using a reverse lookup. Note this is a recons post shift,
-	       so the linear coordinate to invert is mine rather than the neighbours */
-	    shift_table[RECONS_MVV_GATHER][dir+4*index] =
-	      invtab[qdp_index].linearcb ;
-	  }
-      
-	  /* Gather:  recons_{plus,minus} */
-	  /* Operation:  chi(x) +=  \sum_dir recons(a^B(shift(x,type=3),dir),dir) */
-	  /* Receive from backward */
-	  if (bnode != my_node) {
-	    
-	    shift_table[RECONS_GATHER][dir+4*index] = 
-	      2*subgrid_vol_cb + bound[cb][RECONS_GATHER][dir];
-	    
-	    bound[cb][RECONS_GATHER][dir]++;
-	    
-	  }
-	  else {
-	    /* On node. Note the linear part of its (cb3, linear) bit,
-	       using a reverse lookup. Note this is a recons post shift,
-	       so the linear coordinate to invert is mine rather than the neighbours */
-	  
-	    shift_table[RECONS_GATHER][dir+4*index] = 
-	      invtab[qdp_index].linearcb ;
-	  }
-	} 
-      }
+					/* Scatter:  decomp_hvv_{plus,minus} */
+					/* Operation:  a^B(shift(x,type=1),dir) <- U^dag(x,dir)*decomp(psi(x),dir) */
+					/* Send forwards - also called a receive from backward */
+					if (shift_table[DECOMP_HVV_SCATTER][dir+4*index] == -1) 
+					{
+						/* Offnode */
+						/* Append to Tail 1, increase boundary count */
+						shift_table[DECOMP_HVV_SCATTER][dir+4*index]           
+							= subgrid_vol_cb + bound[1-cb][DECOMP_HVV_SCATTER][dir];
+
+						bound[1-cb][DECOMP_HVV_SCATTER][dir]++;
+					}
+		
+					/* Gather:  mvv_recons_{plus,minus} */
+					/* Operation:  chi(x) <-  \sum_dir U(x,dir)*a^F(shift(x,type=2),dir) */
+					/* Receive from forward */
+					if (shift_table[RECONS_MVV_GATHER][dir+4*index] == -1) 
+					{
+						/* Offnode */
+						/* Append to Tail 2, increase boundary count */
+						shift_table[RECONS_MVV_GATHER][dir+4*index] =
+							2*subgrid_vol_cb + (bound[cb][RECONS_MVV_GATHER][dir]);
+
+						bound[cb][RECONS_MVV_GATHER][dir]++;
+					}
+			
+					/* Gather:  recons_{plus,minus} */
+					/* Operation:  chi(x) +=  \sum_dir recons(a^B(shift(x,type=3),dir),dir) */
+					/* Receive from backward */
+					if (shift_table[RECONS_GATHER][dir+4*index] == -1) 
+					{
+						shift_table[RECONS_GATHER][dir+4*index] = 
+							2*subgrid_vol_cb + bound[cb][RECONS_GATHER][dir];
+
+						bound[cb][RECONS_GATHER][dir]++;
+					}
+				} 
+			}
     }
-    
-    
+
+//===================== end JB ============================
+
     /* Sanity check - make sure the sending and receiving counters match */
-    for(int cb=0; cb < 2; cb++) {
-      for(int dir=0; dir < 4; dir++) {
-
-	/* Sanity 1: Must have same number of boundary sites on each cb for 
-	   a given operation */
-	for(int i = 0; i < 4; i++) { 
-	  if (bound[1-cb][i][dir] != bound[cb][i][dir]) {
-	    
-	    QMP_error("SSE Wilson dslash - make_shift_tables: type 0 diff. cb send/recv counts do not match: %d %d",
-		      bound[1-cb][i][dir],bound[cb][i][dir]);
-	    QMP_abort(1);
-	  }
-	}
-      }
+    for(int cb=0; cb < 2; cb++)
+    {
+			for(int dir=0; dir < 4; dir++)
+			{
+			/* Sanity 1: Must have same number of boundary sites on each cb for
+			   a given operation */
+			for(int i = 0; i < 4; i++)
+			{
+				if (bound[1-cb][i][dir] != bound[cb][i][dir])
+				{
+					QMP_error("SSE Wilson dslash - make_shift_tables: type 0 diff. cb send/recv counts do not match: %d %d",
+						  bound[1-cb][i][dir],bound[cb][i][dir]);
+					QMP_abort(1);
+				}
+			}
+		}
     }
-
 
       /* Now I want to make the offset table into the half spinor temporaries */
   /* The half spinor temporaries will look like this:
@@ -570,15 +682,17 @@ namespace CPlusPlusWilsonDslash {
   */
 
   /* 4 dims, 4 types, rest of the magic is to align the thingie */
-    xoffset_table = (HalfSpinor **)malloc(4*4*subgrid_vol*sizeof(HalfSpinor*)+Cache::CacheLineSize);
-    if( xoffset_table == 0 ) {
-      QMP_error("init_wnxtsu3dslash: could not initialize offset_table[i]");
-      QMP_abort(1);
-    }
+	xoffset_table = (HalfSpinor **)malloc(4*4*subgrid_vol*sizeof(HalfSpinor*)+Cache::CacheLineSize);
+	if( xoffset_table == 0 )
+	{
+		QMP_error("init_wnxtsu3dslash: could not initialize offset_table[i]");
+		QMP_abort(1);
+	}
 
     pad = 0; 
-    if( ((ptrdiff_t)xoffset_table % Cache::CacheLineSize) != 0 ) { 
-      pad = Cache::CacheLineSize - ((ptrdiff_t)xoffset_table % Cache::CacheLineSize);
+    if( ((ptrdiff_t)xoffset_table % Cache::CacheLineSize) != 0 )
+    { 
+		pad = Cache::CacheLineSize - ((ptrdiff_t)xoffset_table % Cache::CacheLineSize);
     }    
 
     /* This is the bit what aligns straight from AMD Manual */
@@ -590,127 +704,146 @@ namespace CPlusPlusWilsonDslash {
     int num=0;
     int offsite_found=0;
     int offset;
-    for(int dir =0; dir < 4; dir++) { 
+    for(int dir =0; dir < 4; dir++)
+    {
+		/* Loop through all the sites. Remap the offsets either to local arrays or pointers */
 
-      /* Loop through all the sites. Remap the offsets either to local 
-	 arrays or pointers */
-      
-      for(int site=0; site < subgrid_vol; site++) { 
+#pragma omp parallel for private(offset)		// loop6: OK
+		for(int site=0; site < subgrid_vol; site++)
+		{
+			offset = shift_table[DECOMP_SCATTER][dir+4*site];
+			if( offset >= subgrid_vol_cb )
+			{
+				/* Found an offsite guy. It's address must be to the send back buffer */
+				/* send to back index = recv from forward index = 0  */
+#pragma omp atomic
+				offsite_found++;
 
-	
-	offset = shift_table[DECOMP_SCATTER][dir+4*site];
-	 if( offset >= subgrid_vol_cb ) { 
-	   /* Found an offsite guy. It's address must be to the send back buffer */
-	   /* send to back index = recv from forward index = 0  */
-	   offsite_found++;
-	   
-	   offset_table[ dir + 4*(site + subgrid_vol*DECOMP_SCATTER) ] =
-	     send_bufs[0][num]+(offset - subgrid_vol_cb);
-	 }
-	 else { 
-	   /* Guy is onsite: This is DECOMP_SCATTER so offset to chi1 */
-	   offset_table[ dir + 4*(site + subgrid_vol*DECOMP_SCATTER) ] =
-	     chi1+shift_table[DECOMP_SCATTER][dir+4*site]+subgrid_vol_cb*dir;
-	 }
-      }
+				offset_table[ dir + 4*(site + subgrid_vol*DECOMP_SCATTER) ] =
+					send_bufs[0][num]+(offset - subgrid_vol_cb);
+			 }
+			 else
+			 {
+			   /* Guy is onsite: This is DECOMP_SCATTER so offset to chi1 */
+				offset_table[ dir + 4*(site + subgrid_vol*DECOMP_SCATTER) ] =
+					chi1+shift_table[DECOMP_SCATTER][dir+4*site]+subgrid_vol_cb*dir;
+			 }
+		}
       
-      if( offsite_found > 0 ) { 
-	/* If we found an offsite guy, next direction has to 
-	   go into the next dir part of the send bufs */
-	num++; 
-      }
+		/* If we found an offsite guy, next direction has to 
+		go into the next dir part of the send bufs */
+		if( offsite_found > 0 ) 
+			num++; 
     }
     
     /* DECOMP_HVV_SCATTER */
     /* Restart num-s */
-    num=0;
-    for(int dir =0; dir <Nd; dir++) { 
-      offsite_found=0;
-      for(int site=0; site < subgrid_vol; site++) { 
-	offset = shift_table[DECOMP_HVV_SCATTER][dir+4*site];
-	if( offset >= subgrid_vol_cb ) { 
-	  /* Found an offsite guy. It's address must be to the send forw buffer */
-	  /* send to forward / receive from backward index = 1 */
-	  offsite_found++;
-	  
-	  offset_table[ dir + 4*(site + subgrid_vol*DECOMP_HVV_SCATTER) ] =
-	    send_bufs[1][num]+(offset - subgrid_vol_cb);
-	}
-	else { 
-	  /* Guy is onsite. This is DECOMP_HVV_SCATTER so offset to chi2 */
-	  offset_table[ dir + 4*(site + subgrid_vol*DECOMP_HVV_SCATTER) ] =
-	    chi2+shift_table[DECOMP_HVV_SCATTER][dir+4*site ]+subgrid_vol_cb*dir;
-	}
-      }
-      if( offsite_found > 0 ) { 
-	num++; 
-      }
+	num=0;
+	for(int dir =0; dir <Nd; dir++) 
+	{ 
+		offsite_found=0;
+		
+#pragma omp parallel for private(offset)		// loop7: OK
+		for(int site=0; site < subgrid_vol; site++) 
+		{ 
+			offset = shift_table[DECOMP_HVV_SCATTER][dir+4*site];
+			if( offset >= subgrid_vol_cb ) 
+			{ 
+				/* Found an offsite guy. It's address must be to the send forw buffer */
+				/* send to forward / receive from backward index = 1 */
+#pragma omp atomic
+				offsite_found++;
+
+				offset_table[ dir + 4*(site + subgrid_vol*DECOMP_HVV_SCATTER) ] =
+					send_bufs[1][num]+(offset - subgrid_vol_cb);
+			}
+			else 
+			{ 
+				/* Guy is onsite. This is DECOMP_HVV_SCATTER so offset to chi2 */
+				offset_table[ dir + 4*(site + subgrid_vol*DECOMP_HVV_SCATTER) ] =
+					chi2+shift_table[DECOMP_HVV_SCATTER][dir+4*site ]+subgrid_vol_cb*dir;
+			}
+		}
+
+		if( offsite_found > 0 ) 
+			num++; 
     }
 
-     /* RECONS_MVV_GATHER */
-     num=0;
-     for(int dir =0; dir <Nd; dir++) { 
-       offsite_found=0;
-       for(int site=0; site < subgrid_vol; site++) { 
-	 offset = shift_table[RECONS_MVV_GATHER][dir+4*site];
-	 if( offset >= 2*subgrid_vol_cb ) { 
-	   /* Found an offsite guy. It's address must be to the recv from front buffer */
-	   /* recv_from front index = send to back index = 0 */
-	   offsite_found++;
-	   offset_table[ dir + 4*(site + subgrid_vol*RECONS_MVV_GATHER) ] =
-	     recv_bufs[0][num]+(offset - 2*subgrid_vol_cb);
-	 }
-	 else { 
-	   /* Guy is onsite */
-	   /* This is RECONS_MVV_GATHER so offset with respect to chi1 */
-	   offset_table[ dir + 4*(site + subgrid_vol*RECONS_MVV_GATHER) ] =
-	     chi1+shift_table[RECONS_MVV_GATHER][dir+4*site ]+subgrid_vol_cb*dir;
-	 }
-       }
-       if( offsite_found > 0 ) { 
-	 num++; 
-       }
-     }
+	/* RECONS_MVV_GATHER */
+	num=0;
+	for(int dir =0; dir <Nd; dir++) 
+	{ 
+		offsite_found=0;
 
-     /* RECONS_GATHER */
-     num=0;
-     for(int dir=0; dir <Nd; dir++) { 
-       offsite_found=0;
-       for(int site=0; site < subgrid_vol; site++) { 
-	 offset = shift_table[RECONS_GATHER][dir+4*site];
-	 if( offset >= 2*subgrid_vol_cb ) { 
-	   /* Found an offsite guy. It's address must be to the recv from back buffer */
-	   /* receive from back = send to forward index =  1*/
-	   offsite_found++;
-	   offset_table[ dir + 4*(site + subgrid_vol*RECONS_GATHER) ] =
-	     recv_bufs[1][num]+(offset - 2*subgrid_vol_cb);
-	 }
-	 else { 
-	   /* Guy is onsite */
-	   /* This is RECONS_GATHER so offset with respect to chi2 */
-	   offset_table[ dir + 4*(site + subgrid_vol*RECONS_GATHER ) ] = 
-	     chi2+shift_table[RECONS_GATHER][dir+4*site ]+subgrid_vol_cb*dir;
-	 }
-       }
-       if( offsite_found > 0 ) { 
-	 num++; 
-       }
-     }
-     
+#pragma omp parallel for private(offset)		// loop8: OK
+		for(int site=0; site < subgrid_vol; site++) 
+		{ 
+			offset = shift_table[RECONS_MVV_GATHER][dir+4*site];
+			if( offset >= 2*subgrid_vol_cb ) 
+			{ 
+				/* Found an offsite guy. It's address must be to the recv from front buffer */
+				/* recv_from front index = send to back index = 0 */
+#pragma omp atomic
+				offsite_found++;
 
-     
+				offset_table[ dir + 4*(site + subgrid_vol*RECONS_MVV_GATHER) ] =
+					recv_bufs[0][num]+(offset - 2*subgrid_vol_cb);
+			}
+			else 
+			{ 
+				/* Guy is onsite */
+				/* This is RECONS_MVV_GATHER so offset with respect to chi1 */
+				offset_table[ dir + 4*(site + subgrid_vol*RECONS_MVV_GATHER) ] =
+					chi1+shift_table[RECONS_MVV_GATHER][dir+4*site ]+subgrid_vol_cb*dir;
+			}
+		}
+
+		if( offsite_found > 0 ) 
+			num++; 
+	}
+
+	/* RECONS_GATHER */
+	num=0;
+	for(int dir=0; dir <Nd; dir++) 
+	{ 
+		offsite_found=0;
+
+#pragma omp parallel for private(offset)		// loop9: OK
+		for(int site=0; site < subgrid_vol; site++) 
+		{ 
+			offset = shift_table[RECONS_GATHER][dir+4*site];
+			if( offset >= 2*subgrid_vol_cb ) 
+			{ 
+				/* Found an offsite guy. It's address must be to the recv from back buffer */
+				/* receive from back = send to forward index =  1*/
+#pragma omp atomic
+				offsite_found++;
+				offset_table[ dir + 4*(site + subgrid_vol*RECONS_GATHER) ] =
+					recv_bufs[1][num]+(offset - 2*subgrid_vol_cb);
+			}
+			else 
+			{ 
+				/* Guy is onsite */
+				/* This is RECONS_GATHER so offset with respect to chi2 */
+				offset_table[ dir + 4*(site + subgrid_vol*RECONS_GATHER ) ] = 
+					chi2+shift_table[RECONS_GATHER][dir+4*site ]+subgrid_vol_cb*dir;
+			}
+		}
+
+		if( offsite_found > 0 ) 
+			num++; 
+	}
+
      /* Free shift table - it is no longer needed. We deal solely with offsets */
-     for(int i=0; i < 4; i++) { 
-       free( (shift_table)[i] );
+     for(int i=0; i < 4; i++) 
+     { 
+		free( (shift_table)[i] );
      }
      free( shift_table );
      
      free( invtab );
+
   }
-
-
-
-
 
 
   

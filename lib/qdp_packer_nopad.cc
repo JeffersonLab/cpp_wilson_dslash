@@ -7,16 +7,17 @@ namespace CPlusPlusWilsonDslash {
   template<typename T1, typename T2>
 void qdpPackGauge(const multi1d<T1>&_u, multi1d<T2>& u_tmp)
 {
-  int volume = Layout::sitesOnNode();
-  
-  for(int ix = 0; ix < volume; ix++) 
-  {
-    for(int mu = 0; mu < 4; mu++) 
-    { 
-      u_tmp[ mu + 4*(ix) ] =
-	transpose( _u[mu].elem(ix).elem() );
-    }
-  }
+	int volume = Layout::sitesOnNode();
+
+#pragma omp parallel for
+	for(int ix = 0; ix < volume; ix++) 
+	{
+		for(int mu = 0; mu < 4; mu++) 
+		{ 
+			u_tmp[ mu + 4*(ix) ] =
+				transpose( _u[mu].elem(ix).elem() );
+		}
+	}
 }
 
  

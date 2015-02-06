@@ -2,6 +2,8 @@
 #include "testClover.h"
 
 #include "qdp.h"
+#include <iostream>
+
 using namespace QDP;
 
 #ifndef DSLASH_M_W_H

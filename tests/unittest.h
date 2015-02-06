@@ -6,6 +6,10 @@
 #include <vector>
 
 #include <dslash_config.h>
+
+#include <iostream>
+using namespace std;
+
 using namespace QDP; 
 
 namespace Assertions { 
