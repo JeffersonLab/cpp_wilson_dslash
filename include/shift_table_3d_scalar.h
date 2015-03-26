@@ -232,7 +232,7 @@ namespace CPlusPlusWilsonDslash {
       /* I want it cache line aligned? */
       xsite_table = (int *)malloc(sizeof(int)*total_vol+Cache::CacheLineSize);
       if(xsite_table == 0x0 ) { 
-	cerr << "Couldnt allocate site table\n" ;
+	std::cerr << "Couldnt allocate site table\n" ;
 	exit(1);
       }
     

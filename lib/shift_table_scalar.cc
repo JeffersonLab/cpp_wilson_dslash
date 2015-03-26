@@ -22,7 +22,7 @@ namespace CPlusPlusWilsonDslash {
 
     for(int mu=0; mu < 4; mu++)  {
       if ( latt_size[mu] % 2 != 0 ) {
-	cerr << "This is a Dslash with checkerboarding in 4 dimensions. Each GLOBAL dimension must be even,  Your lattice is not like this: latt_size[" <<
+	std::cerr << "This is a Dslash with checkerboarding in 4 dimensions. Each GLOBAL dimension must be even,  Your lattice is not like this: latt_size[" <<
 	  mu <<"]="<<latt_size[mu]<< std::endl; 
 	exit(1);
       }
@@ -79,6 +79,7 @@ namespace CPlusPlusWilsonDslash {
     }
     site_table = (int *)((char *)xsite_table + pad);    
 
+#pragma omp parallel for collapse(5)
     for(int p=0; p < 2; p++) { 	    
       for(int t=0; t < tot_size[3]; t++) { 
 	for(int z=0; z < tot_size[2]; z++) {
@@ -116,6 +117,7 @@ namespace CPlusPlusWilsonDslash {
     /* is  shift_table(i,dir,cb,mu) and NOT  i + soffset(..)    */
     
     /* Loop over directions and sites, building up shift tables */
+#pragma omp parallel for collapse(2)
     for(int cb=0; cb < 2; cb++) {
       for(int site = 0; site < total_vol_cb; ++site) { 
         int fcoord[4], bcoord[4], coord[4];
