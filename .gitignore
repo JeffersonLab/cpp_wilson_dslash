@@ -4,3 +4,5 @@ configure
 include/Makefile.in
 lib/Makefile.in
 tests/Makefile.in
+autom4te.cache
+include/dslash_config_internal.h.in~
