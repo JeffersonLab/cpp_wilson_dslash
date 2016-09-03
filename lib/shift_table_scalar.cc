@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstddef>
-
+#include "allocate.h"
 namespace CPlusPlusWilsonDslash { 
 
   namespace { 
@@ -39,7 +39,7 @@ namespace CPlusPlusWilsonDslash {
     total_vol_cb = total_vol/2;
 
 
-    //    int* inv_table = (int *)malloc(total_vol*sizeof(int));
+    //    int* inv_table = (int *)CPlusPlusWilsonDslash::alloc(total_vol*sizeof(int));
     // if( inv_table == (int *)NULL ) { 
     //   std::cerr << "Could not allocate site table " << std::endl;
     //   exit(1);
@@ -51,7 +51,7 @@ namespace CPlusPlusWilsonDslash {
     // setupPathTable(getLinearSiteIndex, inv_table);
 
       
-    xshift_table = (int *)malloc(4*total_vol*2*sizeof(int)+Cache::CacheLineSize);
+    xshift_table = (int *)CPlusPlusWilsonDslash::alloc(4*total_vol*2*sizeof(int)+Cache::CacheLineSize);
       
     if ( xshift_table == 0x0 ) {
       std::cerr << "Could not allocate xshift table" << std::endl;
@@ -65,7 +65,7 @@ namespace CPlusPlusWilsonDslash {
     shift_table = (int *)((char *)xshift_table + pad);
 
 
-    xsite_table = (int *)malloc(total_vol*sizeof(int)+Cache::CacheLineSize);
+    xsite_table = (int *)CPlusPlusWilsonDslash::alloc(total_vol*sizeof(int)+Cache::CacheLineSize);
     
     if ( xsite_table == 0x0 ) {
       std::cerr << "Could not allocate site table " << std::endl;
@@ -147,7 +147,7 @@ namespace CPlusPlusWilsonDslash {
       }
     }
 
-    //    free(inv_table);
+    //    CPlusPlusWilsonDslash::dealloc(inv_table);
   }
 
 
@@ -341,7 +341,7 @@ namespace CPlusPlusWilsonDslash {
       // and bin the points into even-odd path arrays...
       
       // First I have to make the even-odd path arrays...
-      xpath_table =(int *)malloc(sizeof(int)*total_vol+Cache::CacheLineSize );
+      xpath_table =(int *)CPlusPlusWilsonDslash::alloc(sizeof(int)*total_vol+Cache::CacheLineSize );
       if( xpath_table == (int *)NULL ) { 
 	cerr << "Failed to allocate xpath_table" << std::endl;
 	exit(1);

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cache.h>
 #include <cstdlib>
+#include "allocate.h"
 
 namespace CPlusPlusWilsonDslash {
 
@@ -13,8 +14,8 @@ namespace CPlusPlusWilsonDslash {
 
     
     ~ShiftTable3D() {
-      std::free(xshift_table);
-      std::free(xsite_table);
+      CPlusPlusWilsonDslash::dealloc(xshift_table);
+      CPlusPlusWilsonDslash::dealloc(xsite_table);
     }
 
     inline
@@ -214,7 +215,7 @@ namespace CPlusPlusWilsonDslash {
 	 total vol sites
 	 2 types (FWD, BKWD)
       */
-      xshift_table = (int *)malloc(3*total_vol*2*sizeof(int) + Cache::CacheLineSize);
+      xshift_table = (int *)CPlusPlusWilsonDslash::alloc(3*total_vol*2*sizeof(int) + Cache::CacheLineSize);
       if ( xshift_table == 0x0 ) { 
 	std::cerr << "Couldnt allocate xshift table " << std::endl;
 	exit(1);
@@ -230,7 +231,7 @@ namespace CPlusPlusWilsonDslash {
       /* Allocate the site table and the shift table */
       /* Now I want to build the site table */
       /* I want it cache line aligned? */
-      xsite_table = (int *)malloc(sizeof(int)*total_vol+Cache::CacheLineSize);
+      xsite_table = (int *)CPlusPlusWilsonDslash::alloc(sizeof(int)*total_vol+Cache::CacheLineSize);
       if(xsite_table == 0x0 ) { 
 	std::cerr << "Couldnt allocate site table\n" ;
 	exit(1);

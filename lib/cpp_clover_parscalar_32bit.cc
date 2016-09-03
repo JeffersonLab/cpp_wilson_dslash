@@ -13,7 +13,7 @@
 #include <cpp_clover_types.h>
 
 #include <shift_table_parscalar.h>
-
+#include "allocate.h"
 #include <qmp.h>
 #define QMP_COMMS 
 
@@ -817,7 +817,7 @@ CloverSchur4D<float>::CloverSchur4D(const int latt_size[],
 				       getLinearSiteIndex,
 				       getNodeNumber);
 
-    xt_spinor = (FourSpinor *)malloc(2*s_tab->subgridVolCB()*sizeof(FourSpinor)
+    xt_spinor = (FourSpinor *)CPlusPlusWilsonDslash::alloc(2*s_tab->subgridVolCB()*sizeof(FourSpinor)
 				     +Cache::CacheLineSize);
     if( xt_spinor == (FourSpinor *)NULL ) { 
       QMP_error("Couldnt allocate temporary xt_spinor");
@@ -829,7 +829,7 @@ CloverSchur4D<float>::CloverSchur4D(const int latt_size[],
     }
     t_spinor = (FourSpinor *)((unsigned char *)xt_spinor + pad);
 
-    xt_spinor2 = (FourSpinor *)malloc(2*s_tab->subgridVolCB()*sizeof(FourSpinor)
+    xt_spinor2 = (FourSpinor *)CPlusPlusWilsonDslash::alloc(2*s_tab->subgridVolCB()*sizeof(FourSpinor)
 				     +Cache::CacheLineSize);
     if( xt_spinor2 == (FourSpinor *)NULL ) { 
       QMP_error("Couldnt allocate temporary xt_spinor");
@@ -849,8 +849,8 @@ CloverSchur4D<float>::CloverSchur4D(const int latt_size[],
   {
     delete s_tab;
     delete tab;
-    free(xt_spinor);
-    free(xt_spinor2);
+    CPlusPlusWilsonDslash::dealloc(xt_spinor);
+    CPlusPlusWilsonDslash::dealloc(xt_spinor2);
 
   }
 

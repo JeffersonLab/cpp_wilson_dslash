@@ -2,6 +2,7 @@
 #define TABLES_PARSCALAR_H
 
 #include <qmp.h>
+#include "allocate.h"
 
 namespace CPlusPlusWilsonDslash {
 
@@ -112,7 +113,7 @@ namespace CPlusPlusWilsonDslash {
     }
   private:
 
-    static QMP_mem_t* xchi;
+    static void* xchi;
     
     HalfSpinor *chi1;
     HalfSpinor *chi2;
@@ -138,7 +139,7 @@ namespace CPlusPlusWilsonDslash {
   };
 
   template<typename HalfSpinor, int Nd>
-    QMP_mem_t* DslashTables<HalfSpinor, Nd>::xchi = 0;
+    void* DslashTables<HalfSpinor, Nd>::xchi = nullptr;
 
   template<typename HalfSpinor, int Nd>
     DslashTables<HalfSpinor,Nd>::~DslashTables() 
@@ -228,11 +229,6 @@ namespace CPlusPlusWilsonDslash {
 	      pad = 0;
 	    }
 	    
-	    /* If the size + pad == CACHE_SET_SIZE, you may experience
-	       cache thrashing so pad a prime number of lines to eliminate that */
-	    if ( ((recv[i][num].size + pad) % Cache::CacheSetSize) == 0 ) { 
-	      pad += 3*Cache::CacheLineSize;
-	    }
 	    
 	    recv[i][num].pad = pad;
 	    offset += recv[i][num].size + pad;
@@ -258,17 +254,17 @@ namespace CPlusPlusWilsonDslash {
 	 2 x chisize -- for the half spinor temps (2 cb's)
 	 10*CacheCacheLine - 5 lines of padding between
 	 comms bufs and chi1, and chi1 and chi2 */
-      int total_allocate = 2*chisize+2*offset+10*Cache::CacheLineSize;
+      int total_allocate = 2*chisize+2*offset;
       
-      if(xchi == 0) {
-        if ((xchi = QMP_allocate_aligned_memory(total_allocate,Cache::CacheSetSize,0)) == 0) {
+      if(xchi == nullptr) {
+        if ((xchi = CPlusPlusWilsonDslash::alloc(total_allocate)) == nullptr) {
           QMP_error("init_wnxtsu3dslash: could not initialize xchi1");
           QMP_abort(1);
         }
       }
       
       /* Get the aligned pointer out. This is the start of our memory */
-      unsigned char* chi = (unsigned char *)QMP_get_memory_pointer(xchi);
+      unsigned char* chi = (unsigned char *)xchi;
       unsigned char* send_bufs = chi + offset;
       
       /* Put pointers to the send and receive buffers */

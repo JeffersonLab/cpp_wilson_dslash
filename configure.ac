@@ -225,7 +225,7 @@ if test "X${QDPXX_GIVEN}X" = "XyesX"; then
     Use --with-qdp++=<dir> to select a working version.])
     fi 
 
-
+    AC_DEFINE(SSE_USE_QDPXX, [1], [Dslash uses QDPXX])
 
     dnl *********************************************************
     dnl ***              end of section with QDP++            ***

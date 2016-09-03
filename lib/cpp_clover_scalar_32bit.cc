@@ -8,7 +8,7 @@
 #include <cpp_clover_scalar.h>
 #include <cpp_dslash_scalar_32bit.h>
 #include <cpp_clover_site_apply_32bit.h>
-
+#include "allocate.h"
 using namespace CPlusPlusWilsonDslash::DslashScalar32Bit;
 using namespace CPlusPlusWilsonDslash::Dslash32BitTypes;
 using namespace CPlusPlusWilsonDslash::Cache;
@@ -28,7 +28,7 @@ namespace CPlusPlusClover {
 					      getLinearSiteIndex,
 					      nodeNum);
 
-    xt_spinor = (FourSpinor *)malloc(2*s->totalVolCB()*sizeof(FourSpinor)
+    xt_spinor = (FourSpinor *)CPlusPlusWilsonDslash::alloc(2*s->totalVolCB()*sizeof(FourSpinor)
 				    +Cache::CacheLineSize);
     if( xt_spinor == (FourSpinor *)NULL ) { 
       std::cerr << "Unable to allocate temporary" << std::endl;
@@ -42,7 +42,7 @@ namespace CPlusPlusClover {
   }
       
 
-  CloverSchur4D<float>::~CloverSchur4D() { delete s; free(xt_spinor); }
+  CloverSchur4D<float>::~CloverSchur4D() { delete s; CPlusPlusWilsonDslash::dealloc(xt_spinor); }
 
 
 

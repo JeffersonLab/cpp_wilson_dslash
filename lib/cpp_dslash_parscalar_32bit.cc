@@ -172,6 +172,7 @@ void Dslash<float>::operator()(float* res,
 		 int (*getNodeNumber)(const int coord[])
 		 ) 
   {
+	  if ( tab == nullptr && s_tab == nullptr ) {
     /* Get the dimensions of the machine */
     const int *machine_size = QMP_get_logical_dimensions();
     
@@ -216,7 +217,10 @@ void Dslash<float>::operator()(float* res,
     subgrid[2]=sz;
     subgrid[3]=st;
 
+
     tab = new DslashTables<HalfSpinor,4>(subgrid);
+
+
     s_tab = new ShiftTable<HalfSpinor>(subgrid, 
 				       tab->getChi1(), 
 				       tab->getChi2(), 
@@ -225,14 +229,17 @@ void Dslash<float>::operator()(float* res,
 				       getSiteCoords,
 				       getLinearSiteIndex,
 				       getNodeNumber);
-
+    }
   }
 
   /* Destructor */
   Dslash<float>::~Dslash() 
   {
+	  // Never free
+#if 0
     delete s_tab;
     delete tab;
+#endif
   }
 
 

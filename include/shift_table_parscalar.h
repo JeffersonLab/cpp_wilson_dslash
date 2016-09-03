@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <cache.h>
 #include <qmp.h>
-
+#include "allocate.h"
 #include "shift_table_parscalar_types.h"
 
 namespace CPlusPlusWilsonDslash {
@@ -25,8 +25,8 @@ namespace CPlusPlusWilsonDslash {
 	       int (*getNodeNumber)(const int coord[]));
 
     ~ShiftTable() {
-      free(xoffset_table);
-      free(xsite_table);
+      CPlusPlusWilsonDslash::dealloc(xoffset_table);
+      CPlusPlusWilsonDslash::dealloc(xsite_table);
     }
 
     inline
@@ -75,7 +75,7 @@ namespace CPlusPlusWilsonDslash {
       for(mu=0; mu < 4; mu++) { 
 	gcoords[mu] = log_coords[mu]*subgrid_size[mu];
       }
-      free(log_coords);
+      // CPlusPlusWilsonDslash::dealloc(log_coords);
  
       cb=linearsite/subgrid_vol_cb;
       
@@ -232,7 +232,7 @@ namespace CPlusPlusWilsonDslash {
 
     /* Now I want to build the site table */
     /* I want it cache line aligned? */
-    xsite_table = (int *)malloc(sizeof(int)*subgrid_vol+Cache::CacheLineSize);
+    xsite_table = (int *)CPlusPlusWilsonDslash::alloc(sizeof(int)*subgrid_vol+Cache::CacheLineSize);
     if(xsite_table == 0x0 ) 
     { 
 		QMP_error("Couldnt allocate site table");
@@ -249,7 +249,7 @@ namespace CPlusPlusWilsonDslash {
     /* I want an 'inverse site table'
        this is a one off, so I don't care so much about alignment 
      */
-    InvTab *invtab = (InvTab *)malloc(sizeof(InvTab)*subgrid_vol);
+    InvTab *invtab = (InvTab *)CPlusPlusWilsonDslash::alloc(sizeof(InvTab)*subgrid_vol);
     if(invtab == 0x0 ) 
     { 
 		QMP_error("Couldnt allocate inv site table");
@@ -257,9 +257,10 @@ namespace CPlusPlusWilsonDslash {
     }
 
     /* Sanity Check the passed in Geometry Functions */
-#pragma omp parallel for collapse(2)	// loop1: OK
+	// loop1: OK
 	for(int p=0; p < 2; p++) 
 	{
+#pragma omp parallel for
 		for(int site=0; site < subgrid_vol_cb; site++) 
 		{ 
 			int gcoord[4];
@@ -405,7 +406,7 @@ namespace CPlusPlusWilsonDslash {
     int **shift_table;
 
     /* This 4 is for the 4 tables: Table 1-4*/
-    if ((shift_table = (int **)malloc(4*sizeof(int*))) == 0 ) 
+    if ((shift_table = (int **)CPlusPlusWilsonDslash::alloc(4*sizeof(int*))) == 0 )
     {
 		QMP_error("init_wnxtsu3dslash: could not initialize shift_table");
 		QMP_abort(1);
@@ -414,7 +415,7 @@ namespace CPlusPlusWilsonDslash {
     for(int i=0; i < 4; i++) 
     { 
 		/* This 4 is for the 4 comms dierctions: */
-		if ((shift_table[i] = (int *)malloc(4*subgrid_vol*sizeof(int))) == 0) 
+		if ((shift_table[i] = (int *)CPlusPlusWilsonDslash::alloc(4*subgrid_vol*sizeof(int))) == 0)
 		{
 			QMP_error("init_wnxtsu3dslash: could not initialize shift_table");
 			QMP_abort(1);
@@ -682,7 +683,7 @@ namespace CPlusPlusWilsonDslash {
   */
 
   /* 4 dims, 4 types, rest of the magic is to align the thingie */
-	xoffset_table = (HalfSpinor **)malloc(4*4*subgrid_vol*sizeof(HalfSpinor*)+Cache::CacheLineSize);
+	xoffset_table = (HalfSpinor **)CPlusPlusWilsonDslash::alloc(4*4*subgrid_vol*sizeof(HalfSpinor*)+Cache::CacheLineSize);
 	if( xoffset_table == 0 )
 	{
 		QMP_error("init_wnxtsu3dslash: could not initialize offset_table[i]");
@@ -837,11 +838,11 @@ namespace CPlusPlusWilsonDslash {
      /* Free shift table - it is no longer needed. We deal solely with offsets */
      for(int i=0; i < 4; i++) 
      { 
-		free( (shift_table)[i] );
+		CPlusPlusWilsonDslash::dealloc( (shift_table)[i] );
      }
-     free( shift_table );
+     CPlusPlusWilsonDslash::dealloc( shift_table );
      
-     free( invtab );
+     CPlusPlusWilsonDslash::dealloc( invtab );
 
   }
 
