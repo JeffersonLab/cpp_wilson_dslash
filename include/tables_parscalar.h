@@ -252,13 +252,13 @@ namespace CPlusPlusWilsonDslash {
 	 This is the size of one of the Chi-s either forward or backward.
 	 The factor of 4 is the 4 Mu directions
          The second factor of 4 is for the 4 types.*/
-      int chisize = sizeof(HalfSpinor)*subgrid_vol_cb*4*Nd;
+      size_t chisize = sizeof(HalfSpinor)*subgrid_vol_cb*4*Nd;
       
       /* Total amount: 2 x offset -- for the comms.
 	 2 x chisize -- for the half spinor temps (2 cb's)
 	 10*CacheCacheLine - 5 lines of padding between
 	 comms bufs and chi1, and chi1 and chi2 */
-      int total_allocate = 2*chisize+2*offset+10*Cache::CacheLineSize;
+      size_t total_allocate = 2*chisize+2*offset+10*Cache::CacheLineSize;
       
       if(xchi == 0) {
         if ((xchi = QMP_allocate_aligned_memory(total_allocate,Cache::CacheSetSize,0)) == 0) {
