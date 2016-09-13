@@ -5,7 +5,7 @@ using namespace QDP;
 namespace CPlusPlusWilsonDslash {
 
   template<typename T1, typename T2>
-void qdpPackGauge(const multi1d<T1>&_u, multi1d<T2>& u_tmp)
+void qdpPackGauge(const multi1d<T1>&_u,  T2* u_tmp)
 {
 	int volume = Layout::sitesOnNode();
 
@@ -21,12 +21,12 @@ void qdpPackGauge(const multi1d<T1>&_u, multi1d<T2>& u_tmp)
 }
 
  
-void qdp_pack_gauge(const multi1d<LatticeColorMatrixF>&_u, multi1d<PrimitiveSU3MatrixF>& u_tmp)
+void qdp_pack_gauge(const multi1d<LatticeColorMatrixF>&_u, PrimitiveSU3MatrixF* u_tmp)
   {
     qdpPackGauge<>(_u, u_tmp);
   }
 
-void qdp_pack_gauge(const multi1d<LatticeColorMatrixD>&_u, multi1d<PrimitiveSU3MatrixD>& u_tmp)
+void qdp_pack_gauge(const multi1d<LatticeColorMatrixD>&_u, PrimitiveSU3MatrixD* u_tmp)
   {
     qdpPackGauge<>(_u, u_tmp);
   }

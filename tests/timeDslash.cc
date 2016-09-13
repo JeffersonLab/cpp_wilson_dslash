@@ -59,13 +59,19 @@ timeDslash::run(void)
 		    Layout::QDPXX_nodeNumber);
   
   /// Pack the gauge fields
-  multi1d<PrimitiveSU3MatrixF> packed_gauge __attribute__((aligned(16))); 
-  packed_gauge.resize( 4 * Layout::sitesOnNode() );
+ // multi1d<PrimitiveSU3MatrixF> packed_gauge __attribute__((aligned(16)));
+  // packed_gauge.resize( 4 * Layout::sitesOnNode() );
+
+  PrimitiveSU3MatrixF* packed_gauge =(PrimitiveSU3MatrixF *)QDP::Allocator::theQDPAllocator::Instance().allocate(
+		  	  	  	  	  	  	  	  	  	  	  4*Layout::sitesOnNode()*sizeof(PrimitiveSU3MatrixF), QDP::Allocator::DEFAULT);
+
   qdp_pack_gauge(u, packed_gauge);
 
-  multi1d<PrimitiveSU3MatrixD> packed_gauged __attribute__((aligned(16)));
-  packed_gauged.resize( 4 * Layout::sitesOnNode() );
-  qdp_pack_gauge(ud, packed_gauged);
+ // multi1d<PrimitiveSU3MatrixD> packed_gauged __attribute__((aligned(16)));
+ // packed_gauged.resize( 4 * Layout::sitesOnNode() );
+
+
+
 
  
 
@@ -111,7 +117,11 @@ timeDslash::run(void)
   QDPIO::cout << "\t Performance is: " << perf << " Mflops (sp) in Total" << std::endl;
   QDPIO::cout << "\t Performance is: " << perf / (double)Layout::numNodes() << " per MPI Process" << std::endl;
   QDPIO::cout << std::endl;
-  
+  QDP::Allocator::theQDPAllocator::Instance().free(packed_gauge);
+  PrimitiveSU3MatrixD* packed_gauged =(PrimitiveSU3MatrixD *)QDP::Allocator::theQDPAllocator::Instance().allocate(
+     		  	  	  	  	  	  	  	  	  	  	  4*Layout::sitesOnNode()*sizeof(PrimitiveSU3MatrixD), QDP::Allocator::DEFAULT);
+
+   qdp_pack_gauge(ud, packed_gauged);
 
   QDPIO::cout << "\t Timing with " << iters << " counts" << std::endl;
 
@@ -138,5 +148,5 @@ timeDslash::run(void)
   perf = Mflops/time;
   QDPIO::cout << "\t Performance is: " << perf << " Mflops (dp) in Total" << std::endl;
   QDPIO::cout << "\t Performance is: " << perf / (double)Layout::numNodes() << " per MPI Process" << std::endl;
-
+  QDP::Allocator::theQDPAllocator::Instance().free(packed_gauged);
 }

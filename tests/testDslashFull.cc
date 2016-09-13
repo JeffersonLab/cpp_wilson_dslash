@@ -59,10 +59,11 @@ testDslashFull::run(void)
 
   //  QDPIO::cout << "Need to allocate the packed gauge: "<< 4*Layout::sitesOnNode()*sizeof(PrimitiveSU3MatrixF) << std::endl << std::flush;
   
-  multi1d<PrimitiveSU3MatrixF> packed_gauge __attribute__((aligned(16)));
-  packed_gauge.resize(4*Layout::sitesOnNode());
+ // multi1d<PrimitiveSU3MatrixF> packed_gauge __attribute__((aligned(16)));
+ // packed_gauge.resize(4*Layout::sitesOnNode());
 
-
+  PrimitiveSU3MatrixF* packed_gauge =(PrimitiveSU3MatrixF *)QDP::Allocator::theQDPAllocator::Instance().allocate(
+		  	  	  	  	  	  	  	  	  	  	  4*Layout::sitesOnNode()*sizeof(PrimitiveSU3MatrixF), QDP::Allocator::DEFAULT);
   qdp_pack_gauge(u, packed_gauge);
 
   // Go through the test cases -- apply SSE dslash versus, QDP Dslash 
@@ -95,6 +96,7 @@ testDslashFull::run(void)
 
     }
   }
+  QDP::Allocator::theQDPAllocator::Instance().free(packed_gauge);
 
   Dslash<double> D64(Layout::lattSize().slice(),
 			 Layout::QDPXX_getSiteCoords,
@@ -103,8 +105,11 @@ testDslashFull::run(void)
 
 
    /// Pack the gauge fields
-   multi1d<PrimitiveSU3MatrixD> packed_gauged __attribute__((aligned(16)));
-   packed_gauged.resize( 4 * Layout::sitesOnNode() );
+//  multi1d<PrimitiveSU3MatrixD> packed_gauged __attribute__((aligned(16)));
+//  packed_gauged.resize( 4 * Layout::sitesOnNode() );
+
+   PrimitiveSU3MatrixD* packed_gauged =(PrimitiveSU3MatrixD *)QDP::Allocator::theQDPAllocator::Instance().allocate(
+   		  	  	  	  	  	  	  	  	  	  	  4*Layout::sitesOnNode()*sizeof(PrimitiveSU3MatrixD), QDP::Allocator::DEFAULT);
 
   qdp_pack_gauge(ud, packed_gauged);
 
@@ -140,4 +145,5 @@ testDslashFull::run(void)
 
     }
    }
+   QDP::Allocator::theQDPAllocator::Instance().free(packed_gauged);
 }

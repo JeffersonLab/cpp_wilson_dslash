@@ -11,7 +11,8 @@
 #include "dslash_config.h"
 
 #ifdef SSE_USE_QDPXX
-#include "qdp_pool_allocator.h"
+#include "qdp.h"
+#include "qdp_allocator.h"
 #else
 #include <cstdlib>
 #endif
@@ -21,7 +22,13 @@ namespace  CPlusPlusWilsonDslash {
 inline
 void *alloc(size_t numbytes) {
 #ifdef SSE_USE_QDPXX
-	return (void *)QDP::Allocator::theQDPPoolAllocator::Instance().alloc(numbytes);
+	void* ret_val = (void *)QDP::Allocator::theQDPAllocator::Instance().allocate(numbytes, QDP::Allocator::DEFAULT);
+	if( ret_val == nullptr ) {
+	   QDP::QDPIO::cout << "cpp_wilson_dslash: alloc failed. Dumping map and exiting" << std::endl;
+	   QDP::Allocator::theQDPAllocator::Instance().dump();
+	   QDP::QDP_abort(1);
+        }
+	return ret_val;
 #else
 	return (void *)std::malloc(numbytes);
 #endif
@@ -30,7 +37,7 @@ void *alloc(size_t numbytes) {
 inline
 void dealloc(void *mem) {
 #ifdef SSE_USE_QDPXX
-	QDP::Allocator::theQDPPoolAllocator::Instance().free(mem);
+	QDP::Allocator::theQDPAllocator::Instance().free(mem);
 #else
 	std::free(mem);
 #endif
