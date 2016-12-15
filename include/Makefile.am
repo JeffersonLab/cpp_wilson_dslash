@@ -1,4 +1,5 @@
-nobase_include_HEADERS= cpp_dslash.h \
+nobase_include_HEADERS= allocate.h \
+	cpp_dslash.h \
 	cpp_clover.h \
 	cache.h \
 	dslash_config.h \
