@@ -1,7 +1,7 @@
 #ifndef SSE_SIGN_32BIT_H
 #define SSE_SIGN_32BIT_H
 
-#include <xmmintrin.h>
+
 namespace CPlusPlusWilsonDslash { 
 
   namespace  DslashParscalar32Bit { 
