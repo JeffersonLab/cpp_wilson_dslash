@@ -16,7 +16,8 @@ using namespace CPlusPlusWilsonDslash::Dslash64BitTypes;
 
 
 namespace CPlusPlusWilsonDslash {
-
+ShiftTable3D<Dslash<double>::HalfSpinor>* Dslash3D<double>::s_tab = nullptr;
+DslashTables<Dslash<double>::HalfSpinor, 3>* Dslash3D<double>::tab = nullptr;
   namespace DslashParscalar64Bit {
     /* this routine is similar to wnxtsu3dslash, except instead of handling the second site's worth in the same loop, the second spin component's worth must be handled seperately */
     void decomp_plus_3d(size_t lo, size_t hi, int id, const void *ptr)

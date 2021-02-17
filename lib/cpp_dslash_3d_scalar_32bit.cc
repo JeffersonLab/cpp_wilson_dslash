@@ -7,9 +7,7 @@ using namespace CPlusPlusWilsonDslash::DslashScalar32Bit;
 using namespace CPlusPlusWilsonDslash::Dslash32BitTypes;
 
 namespace CPlusPlusWilsonDslash {
- 
-
-  /* Constructor */
+   /* Constructor */
   Dslash3D<float>::Dslash3D(const int latt_size[],      
 			    void (*getSiteCoords)(int coord[], int node, int linearsite),
 			    int (*getLinearSiteIndex)(const int coord[]),

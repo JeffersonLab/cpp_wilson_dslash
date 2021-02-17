@@ -16,6 +16,10 @@ using namespace CPlusPlusWilsonDslash::Dslash64BitTypes;
 
 namespace CPlusPlusWilsonDslash { 
 
+
+ShiftTable<Dslash<double>::HalfSpinor>* Dslash<double>::s_tab = nullptr;
+DslashTables<Dslash<double>::HalfSpinor, 4>* Dslash<double>::tab = nullptr;
+
   void Dslash<double>::operator()(double* res, 
 				    double* psi, 
 				    double* u, 

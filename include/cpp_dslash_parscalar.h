@@ -109,12 +109,9 @@ namespace CPlusPlusWilsonDslash {
     }; // Class
 
 
-     ShiftTable<Dslash<float>::HalfSpinor>* Dslash<float>::s_tab = nullptr;
-     DslashTables<Dslash<float>::HalfSpinor, 4>* Dslash<float>::tab = nullptr;
 
 
-     ShiftTable<Dslash<double>::HalfSpinor>* Dslash<double>::s_tab = nullptr;
-     DslashTables<Dslash<double>::HalfSpinor, 4>* Dslash<double>::tab = nullptr;
+
 
   template<>
     class Dslash3D<float> {
@@ -149,8 +146,8 @@ namespace CPlusPlusWilsonDslash {
       
     private:
       // Temporary space...
-      ShiftTable3D<HalfSpinor>* s_tab;
-      DslashTables<HalfSpinor,3>* tab;
+     static ShiftTable3D<HalfSpinor>* s_tab;
+     static DslashTables<HalfSpinor,3>* tab;
       
       // Tab
       Dslash3D();
@@ -189,8 +186,8 @@ namespace CPlusPlusWilsonDslash {
 		      int cb);
       
     private:
-      ShiftTable3D<HalfSpinor>* s_tab;
-      DslashTables<HalfSpinor,3>* tab;
+      static ShiftTable3D<HalfSpinor>* s_tab;
+      static DslashTables<HalfSpinor,3>* tab;
       
       // Tab
       Dslash3D();

@@ -20,6 +20,9 @@ using namespace CPlusPlusWilsonDslash::Dslash32BitTypes;
 
 namespace CPlusPlusWilsonDslash {
 
+ShiftTable3D<Dslash<float>::HalfSpinor>* Dslash3D<float>::s_tab = nullptr;
+DslashTables<Dslash<float>::HalfSpinor, 3>* Dslash3D<float>::tab = nullptr;
+
   namespace DslashParscalar32Bit {
 
     void decomp_plus_3d(size_t lo,size_t hi, int id, const void *ptr) /*need to fix decomp_minus */

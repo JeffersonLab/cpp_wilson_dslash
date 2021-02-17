@@ -15,6 +15,10 @@ using namespace CPlusPlusWilsonDslash::Dslash32BitTypes;
 
 namespace CPlusPlusWilsonDslash { 
 
+// Temporary space...
+ShiftTable<Dslash<float>::HalfSpinor>* Dslash<float>::s_tab = nullptr;
+DslashTables<Dslash<float>::HalfSpinor, 4>* Dslash<float>::tab = nullptr;
+
 // Your actual operator
 void Dslash<float>::operator()(float* res, 
 			float* psi, 
