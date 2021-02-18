@@ -2,21 +2,21 @@
 include(CMakeFindDependencyMacro)
 
 
-set(CPP_DSLASH_PARALLEL_ARCH @dslashParallelArch@)
-set(CPP_DSLASH_USE_OPENMP @CPP_DSLASH_USE_OPENMP@) 
-set(CPP_DSLASH_USE_SSE2   @CPP_DSLASH_USE_SSE2@)
-set(CPP_DSLASH_USE_QDPXX  @CPP_DSLASH_USE_QDPXX@)
+set(CPPWilsonDslash_PARALLEL_ARCH @dslashParallelArch@)
+set(CPPWilsonDslash_ENABLE_OPENMP @CPPWilsonDslash_ENABLE_OPENMP@) 
+set(CPPWilsonDslash_ENABLE_SSE2   @CPPWilsonDslash_ENABLE_SSE2@)
+set(CPPWilsonDslash_ENABLE_QDPXX  @CPPWilsonDslash_ENABLE_QDPXX@)
 
-if( CPP_DSLASH_USE_OPENMP ) 
+if( CPPWilsonDslash_ENABLE_OPENMP ) 
   find_dependency(OpenMP REQUIRED)
   find_dependency(Threads REQUIRED)
 endif()
 
-if( CPP_DSLASH_PARALLEL_ARCH STREQUAL "parscalar")
+if( CPPWilsonDslash_PARALLEL_ARCH STREQUAL "parscalar")
    find_dependency(QMP REQUIRED)
 endif()
 
-if( CPP_DSLASH_USE_QDPXX )
+if( CPPWilsonDslash_ENABLE_QDPXX )
    find_dependency(QDPXX REQUIRED)
 endif()
 

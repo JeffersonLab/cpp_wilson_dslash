@@ -4,7 +4,7 @@ add_library(dslash)
 # An AM_CONDITIONAL if statement to decide which fermion type
 #
 
-if( QDP_ARCH_SCALAR ) 
+if( dslashParallelArch STREQUAL "scalar" ) 
   target_sources(dslash PRIVATE
   	shift_table_scalar.cc 
   	cpp_dslash_scalar_32bit.cc
@@ -15,14 +15,14 @@ if( QDP_ARCH_SCALAR )
 	cpp_clover_scalar_64bit.cc
   ) 
 
-  if(CPP_DSLASH_USE_OPENMP) 
+  if(CPPWilsonDslash_ENABLE_OPENMP) 
     target_sources(dslash PRIVATE dispatch_scalar_openmp.cc)
   else()
 	target_sources(dslash PRIVATE dispatch_scalar.cc)
   endif()  
 endif()
 
-if( QDP_ARCH_PARSCALAR ) 
+if( dslashParallelArch STREQUAL "parscalar" ) 
   target_sources(dslash PRIVATE
     cpp_dslash_parscalar_32bit.cc  
     cpp_dslash_parscalar_64bit.cc
@@ -32,7 +32,7 @@ if( QDP_ARCH_PARSCALAR )
     cpp_dslash_parscalar_utils_64bit.cc
   )
 
- if(CPP_DSLASH_USE_OPENMP) 
+ if(CPPWilsonDslash_ENABLE_OPENMP) 
     target_sources(dslash PRIVATE dispatch_parscalar_openmp.cc)
   else()
 	target_sources(dslash PRIVATE dispatch_parscalar.cc)
@@ -41,11 +41,11 @@ if( QDP_ARCH_PARSCALAR )
   target_link_libraries(dslash PUBLIC QMP::qmp)
 endif()
 
-if(CPP_DSLASH_USE_OPENMP)
+if(CPPWilsonDslash_ENABLE_OPENMP)
 	target_link_libraries(dslash PUBLIC OpenMP::OpenMP_CXX)
 endif()
 
-if( CPP_DSLASH_USE_QDPXX )
+if( CPPWilsonDslash_ENABLE_QDPXX )
 	target_sources(dslash PRIVATE qdp_packer_nopad.cc qdp_packer_3d.cc)
 	target_link_libraries(dslash PUBLIC QDPXX::qdp)
 endif()
