@@ -24,18 +24,19 @@ option(CPPWilsonDslash_ENABLE_SSE2 "USE SSE2" OFF )
 option(CPPWilsonDslash_ENABLE_NOCOMMS "Disable Communications" OFF)
 option(CPPWilsonDslash_ENABLE_NOCOMPUTE "Disable Computation"  OFF)
 
+option(CPPWilsonDslash_ENABLE_SANITIZERS "Enable memory and undefined behaviour Sanitizers" OFF)
 
 # Configuration based on the options: Parallel arch
 # Convert user entry to lower so we only need to match
 string(TOLOWER ${CPPWilsonDslash_PARALLEL_ARCH} dslashParallelArch)
 if( dslashParallelArch STREQUAL "scalar")
-  message(STATUS "CPP_Dslash: using scalar arch")
+  message(STATUS "CPPWilsonDslash: using scalar arch")
   set(CPP_DSLASH_SCALAR 1)      # Macro in Config internal.h
 elseif( dslashParallelArch STREQUAL "parscalar")
-  message(STATUS "CPP_Dslash: using parscalar arch")
+  message(STATUS "CPPWilsonDslash: using parscalar arch")
   set(CPP_DSLASH_PARSCALAR 1)   # Macro in  Config internal.h
 else() 
-  message(FATAL_ERROR "CPP_Dslash: Unknown value ${CPP_DSLASH_PARALLEL_ARCH}. Specify scalar or parscalar or use QDPXX")
+  message(FATAL_ERROR "CPPWilsonDslash: Unknown value ${CPP_DSLASH_PARALLEL_ARCH}. Specify scalar or parscalar or use QDPXX")
 endif()
 
 
@@ -75,7 +76,21 @@ configure_file(include/dslash_config_internal.h.cmake.in
 
 # Install it? (Or make it a public header later?
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/include/dslash_config_internal.h DESTINATION include)
-  
+
+
+
+# Deal with Sanitizer
+if( CPPWilsonDslash_ENABLE_SANITIZERS )
+   if( ( CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 3.1)
+      OR ( CMAKE_CXX_COMPILER_ID MATCHES "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 4.8) )
+      
+      message(STATUS "CPPWilsonDslash: Setting Sanitizer options")
+      set(CPPWilsonDslash_SANITIZER_OPTS "-fsanitize=address,undefined")
+   else()
+      message(STATUS "Don't know how to enable sanitizers for ${CMAKE_CXX_COMPILER_ID}... Ignoring")
+   endif()
+endif()
+	
 add_subdirectory(lib)
 add_subdirectory(tests)
 

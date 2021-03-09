@@ -55,8 +55,10 @@ target_include_directories(dslash PUBLIC
 			$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/../include>
 			$<INSTALL_INTERFACE:include>)
 			
-
-
+if( CPPWilsonDslash_SANITIZER_OPTS )
+   target_compile_options(dslash PUBLIC ${CPPWilsonDslash_SANITIZER_OPTS})
+   target_link_options(dslash PUBLIC ${CPPWilsonDslash_SANITIZER_OPTS})
+endif()
 
 # Install the library and the targets
 # into the export for the targets
