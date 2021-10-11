@@ -101,12 +101,12 @@ configure_package_config_file(Config.cmake.in CPPWilsonDslashConfig.cmake
 # Make the version file
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
-    CPPWilsonDslashVersion.cmake
+    CPPWilsonDslashConfigVersion.cmake
     VERSION ${PACKAGE_VERSION}
     COMPATIBILITY AnyNewerVersion
     )
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/CPPWilsonDslashVersion.cmake 
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/CPPWilsonDslashConfigVersion.cmake 
 			  ${CMAKE_CURRENT_BINARY_DIR}/CPPWilsonDslashConfig.cmake 
 			  DESTINATION lib/cmake/CPPWilsonDslash)
 	    
