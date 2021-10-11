@@ -56,7 +56,7 @@ target_include_directories(dslash PUBLIC
 			$<INSTALL_INTERFACE:include>)
 			
 if( CPPWilsonDslash_SANITIZER_OPTS )
-   target_compile_options(dslash PUBLIC ${CPPWilsonDslash_SANITIZER_OPTS})
+   target_compile_options(dslash PRIVATE ${CPPWilsonDslash_SANITIZER_OPTS})
    target_link_options(dslash PUBLIC ${CPPWilsonDslash_SANITIZER_OPTS})
 endif()
 

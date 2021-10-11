@@ -81,14 +81,9 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/include/dslash_config_internal.h DESTI
 
 # Deal with Sanitizer
 if( CPPWilsonDslash_ENABLE_SANITIZERS )
-   if( ( CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 3.1)
-      OR ( CMAKE_CXX_COMPILER_ID MATCHES "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 4.8) )
-      
-      message(STATUS "CPPWilsonDslash: Setting Sanitizer options")
-      set(CPPWilsonDslash_SANITIZER_OPTS "-fsanitize=address,undefined")
-   else()
-      message(STATUS "Don't know how to enable sanitizers for ${CMAKE_CXX_COMPILER_ID}... Ignoring")
-   endif()
+  include(cmake/CheckSanitizeOpts.cmake)
+  check_sanitizer_options( "${CPPWilsonDslash_ENABLE_SANITIZERS}" CPPWilsonDslash_SANITIZER_OPTS )
+  message(STATUS "CPPWilsonDslash: Setting Sanitizer options: ${CPPWilsonDslash_SANITIZER_OPTS}")
 endif()
 	
 add_subdirectory(lib)
